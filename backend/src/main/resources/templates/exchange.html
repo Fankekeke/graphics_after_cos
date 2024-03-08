@@ -1,0 +1,45 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="referrer" content="no-referrer" />
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/modal/css/normalize.css}" /><!--CSS RESET-->
+    <link th:href="@{/statics/modal/css/example.css}" rel="stylesheet" type="text/css">
+    <!-- Style dependencies -->
+    <link rel="stylesheet" th:href="@{/statics/modal/dist/vintage-popup.min.css}" >
+    <link rel="stylesheet" th:href="@{/statics/modal/dist/popup-material-theme.min.css}" >
+    <title></title>
+</head>
+
+<body>
+
+<div class="htmleaf-container" style="width: 1200px;margin: 0 auto">
+    <div class="htmleaf-content" style="width: 80%;margin: 0 auto;margin-top: 100px;">
+        <p style="font-style: italic;font-size: 35px">兑 换</p>
+        <div id="popupTrigger" class="btn htmleaf-demo" data-popup-target="demoPopup">
+            <a href="#">打开模态窗口</a>
+        </div>
+    </div>
+</div>
+<!-- Popup -->
+<div class="popup" tabindex="-1" role="dialog" data-popup-id="demoPopup">
+    <div class="popup__container">
+        <div class="popup__close"><span></span><span></span></div>
+        <div class="popup__content">
+            <span>Default popup<br><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam et sem tellus. Sed eget odio posuere, dictum elit lacinia, porttitor justo. Praesent id pulvinar ante. Aliquam molestie cursus diam eget molestie. In hac habitasse platea dictumst. In scelerisque nunc vitae risus maximus, et elementum neque faucibus. Aenean lorem sem, rhoncus vel pellentesque nec, blandit quis risus. Praesent tempus porttitor dui, sed convallis est imperdiet eu. Morbi viverra ex nec mauris molestie, eget pellentesque felis dictum. In vitae nisi eu dui mattis lobortis. Duis ultrices lectus placerat hasellus a lectus ligula. Mauris hendrerit purus sit amet lobortis eleifend. Aliquam tellus orci, fringilla sit amet nisl rhoncus, elementum elementum augue. Praesent quis mi at quam faucibus euismod.</span>
+            <br><br>
+            <a href="#">Link</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{/statics/js/jquery-1.11.3.min.js}"></script>
+<!-- Popup -->
+<script th:src="@{/statics/modal/dist/vintage-popup.min.js}"></script>
+<!-- Initialize popup -->
+<script>$('#popupTrigger').popup();</script>
+</body>
+</html>

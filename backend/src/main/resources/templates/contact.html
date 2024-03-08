@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/lib.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/1362.css}">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/form/default.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/form/reset.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/form/style.css}">
+    <!--    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
+    <!--    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/notice/htmleaf-demo.css}">-->
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/notice/animate.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/notice/noticejs.css}">
+    <link rel="stylesheet" th:href="@{/statics/css/mdui/mdui.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/semantic/semantic.min.css}">
+    <script type="text/javascript" th:src="@{/statics/js/jquery-1.11.3.min.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/org1480746227.js}" data-main="baseMain"></script>
+    <script th:src="@{/statics/js/jquery-2.1.4.js}"></script>
+    <script th:src="@{/statics/js/form/modernizr.js}"></script> <!-- Modernizr -->
+    <script th:src="@{/statics/js/form/main.js}"></script> <!-- Resource jQuery -->
+    <script th:src="@{/statics/js/notice.js}"></script>
+    <script th:src="@{/statics/js/semantic/semantic.min.js}"></script>
+    <script th:src="@{/statics/js/mdui/mdui.min.js}"></script>
+    <title>软件在能够复用前必须先能用</title>
+    <style type="text/css">
+        html {
+            background: rgb(247, 247, 247)
+        }
+        .icon_awesome {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+
+<body style="background: rgb(247,247,247);">
+<div id="header" class="index_nav" style="background-color: white;box-shadow: 0px 2px 3px #dedede;">
+    <div class="content">
+        <a href="index.html" id="logo"><img th:src="@{/statics/images/1482810077929.png}" height="40"/></a>
+        <ul id="nav">
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/index.html'}" target="_self"><span data-title="首页">首页</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/product.html?pageNo=1&type=-1'}" target="_self">
+                    <span data-title="产品展示">产品展示</span>
+                </a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/team.html'}" target="_self"><span data-title="我们团队">我们团队</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/news.html/1'}" target="_self"><span data-title="资讯中心">资讯中心</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a active" th:href="@{'/web/contact.html'}" target="_self"><span data-title="联系我们">联系我们</span></a>
+            </li>
+            <li class="navitem">
+                <a th:if="${session.user} == null" class="nav-a " th:href="@{'/web/login.html'}" target="_self"><span data-title="登录">登录</span></a>
+                <a th:if="${session.user} != null" class="nav-a" onclick="inst.open()" href="javascript:void(0);" target="_self"><span data-title="个人信息" th:text="${session.user.account}"></span></a>
+            </li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <a id="headSHBtn" href="javascript:;"><i class="fa fa-bars"></i></a>
+</div>
+<div id="sitecontent" style="padding-top: 70px">
+    <div class="npagePage Pageyemian" id="page_none" style="padding-top: 100px">
+        <div class="content">
+            <div class="header">
+                <p class="title">系统定制</p>
+                <p class="subtitle">System Custom</p>
+            </div>
+            <div class="fw postbody">
+                <div>
+                    <form id="customForm" class="cd-form floating-labels" style="margin: 0 auto"
+                          th:action="@{/web/systemCustom}" method="post" target="iframe_userInterface">
+                        <fieldset>
+                            <div class="error-message">
+                                <p>定制您的系统</p>
+                            </div>
+                            <div class="icon">
+                                <label class="cd-label" for="cd-name">您的称呼</label>
+                                <input class="user" type="text" name="userName" id="cd-name" required>
+                            </div>
+                            <div class="icon">
+                                <label class="cd-label" for="cd-email">联系方式</label>
+                                <input class="email error" type="text" name="contact" id="cd-email" required>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>项目规格</legend>
+                            <div>
+                                <p class="cd-select icon">
+                                    <select class="budget" name="proType">
+                                        <option value="1">仅后台</option>
+                                        <option value="2">前后台</option>
+                                        <option value="3">小程序</option>
+                                        <option value="4">安 卓</option>
+                                    </select>
+                                </p>
+                            </div>
+
+                            <div class="icon">
+                                <label class="cd-label" for="cd-name">备注</label>
+                                <input class="remark" type="text" name="remark" id="cd-remark" required>
+                            </div>
+
+                            <div class="icon">
+                                <label class="cd-label" for="cd-textarea">技术要求</label>
+                                <textarea class="message" name="proTechnology" id="cd-textarea" required></textarea>
+                            </div>
+
+                            <div>
+                                <input type="submit" value="立 即 发 送" id="btn7">
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <iframe id="iframe_userInterface" name="iframe_userInterface" style="display: none;"></iframe>
+
+                <hr/>
+                <p><br/></p>
+                <table align="center">
+                    <tbody>
+                    <tr class="firstRow">
+                        <td style="word-break: break-all;padding-left:80px;" width="460" valign="top">
+                            <p><span>客服服务</span>
+                            </p>
+                            <p><br/></p>
+                            <ul class="list list-paddingleft-2" style="list-style-type: square;">
+                                <li>
+                                    <p>联系电话：<span style="font-size: 14px;"><strong>XXX<br/></strong></span></p>
+                                </li>
+                                <li>
+                                    <p>Email：
+                                        <a href="https://www.baidu.com/" target="_self" textvalue="webservice@web.net"
+                                           style="color: rgb(84, 141, 212); text-decoration: underline;"><span
+                                                style="color: rgb(84, 141, 212);">webservice@web.net</span></a>
+                                    </p>
+                                    <p><br/></p>
+                                </li>
+                            </ul>
+                            <p><br/></p>
+                        </td>
+                        <td style="word-break: break-all;" width="460" valign="top">
+                            <p><span
+                                    style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 18px; color: rgb(38, 38, 38);">网盟合作 / 广告投放&nbsp;</span>
+                            </p>
+                            <p><br/></p>
+                            <ul class="list list-paddingleft-2" style="list-style-type: square;">
+                                <li>
+                                    <p>联系人：赵先生 / 张女士</p>
+                                </li>
+                                <li>
+                                    <p>Email：zhaodong@web.net</p>
+                                </li>
+                            </ul>
+                            <p><br/></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="word-break: break-all;padding-left:80px;" width="460" valign="top">
+                            <p><span
+                                    style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 18px; color: rgb(38, 38, 38);"><br/></span>
+                            </p>
+                            <p><span
+                                    style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 18px; color: rgb(38, 38, 38);">媒体联系</span>
+                            </p>
+                            <p><br/></p>
+                            <ul class="list list-paddingleft-2" style="list-style-type: square;">
+                                <li>
+                                    <p>联系人：尹先生</p>
+                                </li>
+                                <li>
+                                    <p>Email：yinlei@web.net</p>
+                                </li>
+                                <li>
+                                    <p>联系人：李先生</p>
+                                </li>
+                                <li>
+                                    <p>Email：lilei@web.net</p>
+                                </li>
+                            </ul>
+                            <p><br/></p>
+                        </td>
+                        <td style="word-break: break-all;" width="460" valign="top">
+                            <p><span
+                                    style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 18px; color: rgb(38, 38, 38);"><br/></span>
+                            </p>
+                            <p><span
+                                    style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 18px; color: rgb(38, 38, 38);">售后服务</span>
+                            </p>
+                            <p><br/></p>
+                            <ul class="list list-paddingleft-2" style="list-style-type: square;">
+                                <li>
+                                    <p>联系人：李先生</p>
+                                </li>
+                                <li>
+                                    <p>Email：lilei@web.net</p>
+                                </li>
+                                <li>
+                                    <p>联系人：曾女士<br/></p>
+                                </li>
+                                <li>
+                                    <p>Email：zeng@web.net</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><br/></p>
+            </div>
+            <div id="pages"></div>
+        </div>
+    </div>
+</div>
+
+<div id="indexPage">
+    <div id="mcontact" class="module" style="background-color: rgb(247,247,247);">
+        <div class="bgmask"></div>
+        <div class="content">
+            <div class="header wow fadeInUp fw" data-wow-delay=".1s">
+                <p class="title" style="margin-top: 60px">README</p>
+            </div>
+            <div id="contactlist" class="fw">
+                <div id="contactinfo" class="fl wow" data-wow-delay=".2s">
+
+                    <h3 class="ellipsis name">显卡售后服务</h3>
+                    <p class="ellipsis add"><span>地点：</span>保密</p>
+                    <p class="ellipsis zip"><span>邮编：</span>044000</p>
+                    <p class="ellipsis tel"><span>电话：</span>199XXXX0631</p>
+                    <p class="ellipsis mobile"><span>手机：</span>199XXXX0631</p>
+                    <p class="ellipsis fax"><span>传真：</span>保密</p>
+                    <p class="ellipsis email"><span>邮箱：</span>doufo_uncle@163.com</p>
+                    <div>
+                        <a class="fl" href="javascript:;"><i class="fa fa-weibo"></i></a>
+                        <a class="fl" href="javascript:;"><i class="fa fa-qq"></i></a>
+                        <a class="fl" href="javascript:;"><i class="fa fa-weixin"></i></a>
+                    </div>
+                </div>
+                <div id="contactform" class="fr wow" data-wow-delay=".2s">
+                    <form action="#" method="post">
+                        <p>
+                            <input type="text" class="inputtxt name" name="name" placeholder="姓名" autocomplete="off"/>
+                        </p>
+                        <p>
+                            <input type="text" class="inputtxt email" name="email" placeholder="邮箱" autocomplete="off"/>
+                        </p>
+                        <p>
+                            <input type="text" class="inputtxt tel" name="tel" placeholder="电话" autocomplete="off"/>
+                        </p>
+                        <p>
+                            <textarea class="inputtxt cont" name="content" placeholder="内容" autocomplete="off"></textarea>
+                        </p>
+                        <p>
+                            <input class="inputsub" type="submit" value="提交"/>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mdui-drawer mdui-drawer-close" id="drawer" style="background: rgb(247,247,247);">
+    <img src="//maps.gstatic.com/tactile/pane/default_geocode-1x.png" alt="" width="100%" height="80px"/>
+    <ul class="mdui-list">
+        <li class="mdui-list-item">
+            <a class="ui teal image label">
+                <img src="https://semantic-ui.com/images/avatar/small/veronika.jpg">
+                <span th:if="${session.user} != null" th:text="${session.user.account}"></span>
+                <div class="detail" th:if="${session.user} != null">
+                    <span th:if="${session.user.invite == 1}">推广人员</span>
+                    <span th:if="${session.user.invite == 2}">普通用户</span>
+                </div>
+            </a>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/user','_self')">
+            <div class="icon_awesome"><i class="fa fa-address-card" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">个人信息</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/order/1','_self')">
+            <div class="icon_awesome"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">历史订单</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/system','_self')">
+            <div class="icon_awesome"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></i></div>
+            <div class="mdui-list-item-content">我要定制</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
+            <div class="icon_awesome"><i class="fa fa-list-alt" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">我的消息</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
+            <div class="icon_awesome"><i class="fa fa-share-alt-square" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">申请推广人</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/developer','_self')">
+            <div class="icon_awesome"><i class="fa fa-retweet" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">申请开发者</div>
+        </li>
+        <li class="mdui-subheader">运营邀请</li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/money','_self')">
+            <div class="icon_awesome"><i class="fa fa-money" aria-hidden="true"></i></i></div>
+            <div class="mdui-list-item-content">我的余额</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/withdraw','_self')">
+            <div class="icon_awesome"><i class="fa fa-cubes" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">提现申请</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/record','_self')">
+            <div class="icon_awesome"><i class="fa fa-tasks" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">提现记录</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" style="position: fixed;bottom: 50px;width: 100%" onclick="window.open('/web/logout','_self')">
+            <div class="icon_awesome red"><i class="fa fa-sign-out" aria-hidden="true" style="color: red"></i></div>
+            <div class="mdui-list-item-content">退出登录</div>
+        </li>
+    </ul>
+</div>
+
+<div id="footer" style="margin-top: 15px">
+    <p>
+        COPYRIGHT (©) 2020 显卡售后服务
+        <a href="http://www.beian.gov.cn/portal/index.do" style="width: 300px;margin-top: 0;margin-left: 50px"><img th:src="@{/statics/images/kimo.png}" style="margin-top: 10px"/>&nbsp;粤ICP备2021090004号-1</a>
+    </p>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    var inst = new mdui.Drawer('#drawer', {overlay: true});
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#customForm").submit(function (e) {
+            setTimeout(() => {
+                new NoticeJs({
+                    text: '发送成功',
+                    position: 'bottomLeft',
+                    animation: {
+                        open: 'animated flipInX',
+                        close: 'animated flipOutX'
+                    }
+                }).show();
+                $("#cd-remark").val("")
+                $("#cd-textarea").val("")
+            }, 500)
+        });
+    });
+</script>

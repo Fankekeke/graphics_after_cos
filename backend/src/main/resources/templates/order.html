@@ -1,0 +1,804 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/lib.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/1362.css}">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" th:href="@{/statics/css/mdui/mdui.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/semantic/semantic.min.css}">
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
+    <script type="text/javascript" th:src="@{/statics/js/jquery-1.11.3.min.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/jquery-2.1.4.js}"></script>
+    <script th:src="@{/statics/js/jq-paginator.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/org1480746227.js}" data-main="baseMain"></script>
+    <script th:src="@{/statics/js/semantic/semantic.min.js}"></script>
+    <script th:src="@{/statics/js/mdui/mdui.min.js}"></script>
+    <title>软件在能够复用前必须先能用</title>
+    <style type="text/css">
+        html {
+            background: rgb(247,247,247)
+        }
+        .icon_awesome {
+            margin-right: 20px;
+        }
+        .demo {
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+        .demo li{
+            float:left
+        }
+        .demo li a{
+            float:left
+        }
+        *, :after, :before {
+            content:none;
+        }
+    </style>
+</head>
+
+<body style="background: rgb(247,247,247)">
+<div id="header" class="index_nav" style="background-color: white;box-shadow: 0px 2px 3px #dedede">
+    <div class="content">
+        <a href="index.html" id="logo"><img th:src="@{/statics/images/1482810077929.png}" height="40"/></a>
+        <ul id="nav">
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/index.html'}" target="_self"><span data-title="首页">首页</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/product.html?pageNo=1&type=-1'}" target="_self">
+                    <span data-title="产品展示">产品展示</span>
+                </a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/team.html'}" target="_self"><span data-title="我们团队">我们团队</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a" th:href="@{'/web/news.html/1'}" target="_self"><span data-title="资讯中心">资讯中心</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/contact.html'}" target="_self"><span data-title="联系我们">联系我们</span></a>
+            </li>
+            <li class="navitem">
+                <a th:if="${session.user} == null" class="nav-a " th:href="@{'/web/login.html'}" target="_self"><span data-title="登录">登录</span></a>
+                <a th:if="${session.user} != null" class="nav-a active" onclick="inst.open()" href="javascript:void(0);" target="_self"><span data-title="个人信息" th:text="${session.user.account}"></span></a>
+            </li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <a id="headSHBtn" href="javascript:;"><i class="fa fa-bars"></i></a>
+</div>
+<div id="sitecontent" style="min-height: 750px">
+    <div id="newsPage" class="npagePage Pageanli">
+        <div class="content" style="margin-top: 90px;overflow: hidden">
+            <div id="newslist" style="width: 100%;margin-top: 50px">
+                <div class="wrapper">
+                    <p style="margin-left: 50px;font-size: 30px;color: #000000;font-style:italic;text-align: left">历史订单</p>
+                    <div class="mdui-container" style="text-align: left;margin-bottom: 45px" th:if="${session.user} != null">
+                        <div class="mdui-row" th:if="${orderList.records.size() != 0}">
+                            <div class="mdui-col-sm-12 mdui-col-md-12">
+                                <table class="ui celled black table">
+                                    <thead>
+                                    <tr><th>订单编号</th>
+                                        <th>项目名称</th>
+                                        <th>用户</th>
+                                        <th>价格</th>
+                                        <th>需要部署</th>
+                                        <th>订单状态</th>
+                                        <th>支付方式</th>
+                                        <th>下单时间</th>
+                                    </tr></thead>
+                                    <tbody id="orderTable">
+                                    <tr>
+                                        <td data-label="code"><a>ORD-1606569067018</a></td>
+                                        <td data-label="code">图书管理系统</td>
+                                        <td data-label="account">
+                                            <img class="ui mini rounded image" src="https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoz6IJDVJms3r2Z5m2Y3QBkzo7EJ23maJfJ5hRq0VCAiclCTHMzKpg8TQcpHdA48PMUCHSBJYAHQhw/132">
+                                        </td>
+                                        <td data-label="Job"> <a class="ui tag mini label">￥299.0</a></td>
+                                        <td data-label="device"><a class="ui green mini basic label">是</a></td>
+                                        <td data-label="device">已支付</td>
+                                        <td data-label="device">微信</td>
+                                        <td data-label="device">2021-11-03 22:17:36</td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="code"><a>ORD-1606569067018</a></td>
+                                        <td data-label="code">图书管理系统</td>
+                                        <td data-label="account">
+                                            <img class="ui mini rounded image" src="https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoz6IJDVJms3r2Z5m2Y3QBkzo7EJ23maJfJ5hRq0VCAiclCTHMzKpg8TQcpHdA48PMUCHSBJYAHQhw/132">
+                                        </td>
+                                        <td data-label="Job"> <a class="ui tag mini label">￥299.0</a></td>
+                                        <td data-label="device"><a class="ui green mini basic label">是</a></td>
+                                        <td data-label="device">已支付</td>
+                                        <td data-label="device">微信</td>
+                                        <td data-label="device">2021-11-03 22:17:36</td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="code"><a>ORD-1606569067018</a></td>
+                                        <td data-label="code">图书管理系统</td>
+                                        <td data-label="account">
+                                            <img class="ui mini rounded image" src="https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoz6IJDVJms3r2Z5m2Y3QBkzo7EJ23maJfJ5hRq0VCAiclCTHMzKpg8TQcpHdA48PMUCHSBJYAHQhw/132">
+                                        </td>
+                                        <td data-label="Job"> <a class="ui tag mini label">￥299.0</a></td>
+                                        <td data-label="device"><a class="ui green mini basic label">是</a></td>
+                                        <td data-label="device">已支付</td>
+                                        <td data-label="device">微信</td>
+                                        <td data-label="device">2021-11-03 22:17:36</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="mdui-col-sm-12 mdui-col-md-12" style="padding-left: 10px">
+                                <div id="pages" class="demo customBootstrap">
+                                    <p style="margin-bottom: 10px">当前第 <span id="demo1-text"></span> 页</p>
+                                    <ul id="demo1" class="pagination"></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mdui-row" style="margin-top: 150px;height: 400px" th:if="${orderList.records.size() == 0}">
+                            <div class="wow" style="position: absolute;left: 38%;">
+                                <img th:src="@{/statics/images/em/no-data.png}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+
+<div id="indexPage">
+    <div id="mcontact" class="module" style="background-color: rgb(247,247,247);">
+        <div class="bgmask"></div>
+        <div class="content">
+            <div class="header wow fadeInUp fw" data-wow-delay=".1s">
+                <p class="title" style="margin-top: 60px">README</p>
+            </div>
+            <div id="contactlist" class="fw">
+                <div id="contactinfo" class="fl wow" data-wow-delay=".2s">
+
+                    <h3 class="ellipsis name">显卡售后服务</h3>
+                    <p class="ellipsis add"><span>地点：</span>保密</p>
+                    <p class="ellipsis zip"><span>邮编：</span>044000</p>
+                    <p class="ellipsis tel"><span>电话：</span>199XXXX0631</p>
+                    <p class="ellipsis mobile"><span>手机：</span>199XXXX0631</p>
+                    <p class="ellipsis fax"><span>传真：</span>保密</p>
+                    <p class="ellipsis email"><span>邮箱：</span>doufo_uncle@163.com</p>
+                    <div>
+                        <a class="fl" href="javascript:;"><i class="fa fa-weibo"></i></a>
+                        <a class="fl" href="javascript:;"><i class="fa fa-qq"></i></a>
+                        <a class="fl" href="javascript:;"><i class="fa fa-weixin"></i></a>
+                    </div>
+                </div>
+                <div id="contactform" class="fr wow" data-wow-delay=".2s">
+                    <form action="#" method="post">
+                        <p>
+                            <input type="text" class="inputtxt name" name="name" placeholder="姓名" autocomplete="off"/>
+                        </p>
+                        <p>
+                            <input type="text" class="inputtxt email" name="email" placeholder="邮箱" autocomplete="off"/>
+                        </p>
+                        <p>
+                            <input type="text" class="inputtxt tel" name="tel" placeholder="电话" autocomplete="off"/>
+                        </p>
+                        <p>
+                            <textarea class="inputtxt cont" name="content" placeholder="内容" autocomplete="off"></textarea>
+                        </p>
+                        <p>
+                            <input class="inputsub" type="submit" value="提交"/>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mdui-drawer mdui-drawer-close" id="drawer" style="background: rgb(247,247,247);">
+    <img src="//maps.gstatic.com/tactile/pane/default_geocode-1x.png" alt="" width="100%" height="80px"/>
+    <ul class="mdui-list">
+        <li class="mdui-list-item">
+            <a class="ui teal image label">
+                <img src="https://semantic-ui.com/images/avatar/small/veronika.jpg">
+                <span th:if="${session.user} != null" th:text="${session.user.account}"></span>
+                <div class="detail">
+                    <span th:if="${session.user.invite == 1}">推广人员</span>
+                    <span th:if="${session.user.invite == 2}">普通用户</span>
+                </div>
+            </a>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/user','_self')">
+            <div class="icon_awesome"><i class="fa fa-address-card" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">个人信息</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/order/1','_self')">
+            <div class="icon_awesome"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">历史订单</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/system','_self')">
+            <div class="icon_awesome"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></i></div>
+            <div class="mdui-list-item-content">我要定制</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
+            <div class="icon_awesome"><i class="fa fa-list-alt" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">我的消息</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
+            <div class="icon_awesome"><i class="fa fa-share-alt-square" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">申请推广人</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/developer','_self')">
+            <div class="icon_awesome"><i class="fa fa-retweet" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">申请开发者</div>
+        </li>
+        <li class="mdui-subheader">运营邀请</li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/money','_self')">
+            <div class="icon_awesome"><i class="fa fa-money" aria-hidden="true"></i></i></div>
+            <div class="mdui-list-item-content">我的余额</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/withdraw','_self')">
+            <div class="icon_awesome"><i class="fa fa-cubes" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">提现申请</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/record','_self')">
+            <div class="icon_awesome"><i class="fa fa-tasks" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">提现记录</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" style="position: fixed;bottom: 50px;width: 100%" onclick="window.open('/web/logout','_self')">
+            <div class="icon_awesome red"><i class="fa fa-sign-out" aria-hidden="true" style="color: red"></i></div>
+            <div class="mdui-list-item-content">退出登录</div>
+        </li>
+    </ul>
+</div>
+
+<div id="footer" style="margin-top: 15px">
+    <p>
+        COPYRIGHT (©) 2020 显卡售后服务
+        <a href="http://www.beian.gov.cn/portal/index.do" style="width: 300px;margin-top: 0;margin-left: 50px"><img th:src="@{/statics/images/kimo.png}" style="margin-top: 10px"/>&nbsp;粤ICP备2021090004号-1</a>
+    </p>
+</div>
+<div id="shares">
+    <a id="sshare"><i class="fa fa-share-alt"></i></a>
+    <a href="javascript:;" id="gotop"><i class="fa fa-angle-up"></i></a>
+</div>
+<div id="online_open"><i class="fa fa-comments-o"></i></div>
+<div id="online_lx">
+    <div id="olx_head">联系我们<i class="fa fa-times fr" id="online_close"></i></div>
+    <ul id="olx_qq">
+        <li>
+            <a href="javascript:;" style="font-size: 14px; color: #777">想建站或软件开发?</a>
+        </li>
+    </ul>
+    <div id="olx_tel">
+        <div style="color: #777"><i class="fa fa-phone" style="margin-right: 8px;"></i>请联系我们</div>
+        <p style="color: #777; font-size: 16px">199XXXX0631<br/></p>
+    </div>
+</div>
+<!-- 订单详情 -->
+<div class="mdui-dialog" id="example-4">
+    <div class="mdui-progress" id="md-progress">
+        <div class="mdui-progress-indeterminate"></div>
+    </div>
+    <div style="padding: 25px">
+        <h3 class="ui header">
+            订单详情
+            <div class="sub header" id="orderCodeLabel">副标题</div>
+        </h3>
+        <div class="ui steps" id="deployProcess">
+            <div class="step">
+                <i class="truck icon"></i>
+                <div class="content">
+                    <div class="title">下单</div>
+                    <div class="description" style="width: 126px"></div>
+                </div>
+            </div>
+            <div class="step">
+                <i class="payment icon"></i>
+                <div class="content">
+                    <div class="title">部署</div>
+                    <div class="description" style="width: 126px"></div>
+                </div>
+            </div>
+            <div class="step">
+                <i class="info icon"></i>
+                <div class="content">
+                    <div class="title">完成</div>
+                    <div class="description" style="width: 126px"></div>
+                </div>
+            </div>
+        </div>
+        <div id="orderInfoList">
+            <div class="ui top attached tabular menu">
+                <div class="active item" data-tab="platform">订单信息</div>
+                <div class="item" data-tab="userInfo">我要评价</div>
+            </div>
+            <div data-tab="platform" class="ui bottom attached active tab segment" style="border: none;width: 96%;">
+                <div class="column" style="margin: 0 auto">
+                    <div class="mdui-row" style="margin-top: 25px">
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">项目名称：</h5>
+                            <span style="margin-left: 10px" id="proNameLabel">教务管理系统</span>
+                        </div>
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">项目价格：</h5>
+                            <span style="margin-left: 10px" id="priceLabel"></span>
+                        </div>
+                    </div>
+                    <div class="mdui-row" style="margin-top: 35px">
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">支付时间：</h5>
+                            <span style="margin-left: 10px" id="orderTimeLabel"></span>
+                        </div>
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">附件类型：</h5>
+                            <span style="margin-left: 10px" id="needDeployLabel"></span>
+                        </div>
+                    </div>
+                    <div class="mdui-row" style="margin-top: 35px">
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">部署人：</h5>
+                            <span style="margin-left: 10px" id="playerLabel"></span>
+                        </div>
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">联系方式：</h5>
+                            <span style="margin-left: 10px" id="phoneLabel"></span>
+                        </div>
+                    </div>
+                    <div class="mdui-row" style="margin-top: 35px">
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">支付方式：</h5>
+                            <span style="margin-left: 10px" id="payTypeLabel"></span>
+                        </div>
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">订单状态：</h5>
+                            <span style="margin-left: 10px" id="orderStatusLabel"></span>
+                        </div>
+                    </div>
+                    <div class="mdui-row" style="margin-top: 35px">
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">购买人：</h5>
+                            <span style="margin-left: 10px" id="userNameLabel"></span>
+                        </div>
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline;color: #0d71bb;cursor:pointer" id="download">点我下载</h5>
+                        </div>
+                    </div>
+                    <h4 class="ui header" style="margin-top: 50px">
+                        <img th:src="@{/statics/images/file_474793.png}" height="40">
+                        <div class="content">
+                            联系
+                            <div class="sub header">对此订单有疑问</div>
+                        </div>
+                    </h4>
+                    <div class="ui message">
+                        <h4 class="ui header">服务条款的变更 </h4>
+                        <p>请联系微信-sgy19980228</p>
+                    </div>
+                </div>
+            </div>
+            <div data-tab="userInfo" class="ui bottom attached tab segment" style="border: none;width: 96%;">
+                <div class="column" style="margin: 0 auto;margin-top: 25px">
+                    <div class="ui small form">
+                        <div class="two fields">
+                            <div class="inline field disabled">
+                                <label>订单编号</label>
+                                <input placeholder="订单编号" id="orderCodeField" type="text" style="width: 70%">
+                            </div>
+                            <div class="inline field disabled">
+                                <label>所属项目</label>
+                                <input placeholder="所属项目" id="proNameField" type="text" style="width: 70%">
+                            </div>
+                        </div>
+                        <div class="inline field">
+                            <label>评价分数</label>
+                            <div class="ui large star rating" data-rating="4" data-max-rating="5"></div>
+                        </div>
+                        <div class="field" style="margin-top: 20px">
+                            <label>评价内容</label>
+                            <textarea rows="3" style="width: 96%" id="orderContent"></textarea>
+                        </div>
+                        <div id="selectPicDiv">
+                            <input class="right floated" type="file" name="selectPic" id="selectPic" style="opacity: 0;position: absolute;width: 80px;height: 36px;">
+                            <button class="ui teal basic label">上传图片</button>
+                        </div>
+                        <div style="height: 85px;margin-top: 10px">
+                            <img id="orderEvaluationPic" class="ui tiny rounded bordered image" src="https://semantic-ui.com/images/wireframe/white-image.png" style="height: 82px;width: 82px">
+                        </div>
+                        <div class="ui primary submit button" style="float: right;margin-top: 45px" id="evaluationUpload">上传</div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $("#orderInfoList .tabular.menu .item").tab();
+                $("#orderInfoList .ui.rating").rating();
+            </script>
+        </div>
+        <div class="ui fluid placeholder" id="orderInfoPar" style="margin-top: 35px">
+            <div class="image header">
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="paragraph">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="paragraph">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="paragraph">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="image header">
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="paragraph">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="paragraph">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="paragraph">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="paragraph">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="paragraph">
+                <div class="line"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 附件订单详情 -->
+<div class="mdui-dialog" id="example-5">
+    <div class="mdui-progress">
+        <div class="mdui-progress-indeterminate"></div>
+    </div>
+    <div style="padding: 25px">
+        <h3 class="ui header">
+            订单详情
+            <div class="sub header" id="orderAnnexCodeLabel">副标题</div>
+        </h3>
+        <div id="orderAnnexInfoList">
+            <div class="ui top attached tabular menu">
+                <div class="active item" data-tab="platform">订单信息</div>
+            </div>
+            <div data-tab="platform" class="ui bottom attached active tab segment" style="border: none;width: 96%;">
+                <div class="column" style="margin: 0 auto">
+                    <div class="mdui-row" style="margin-top: 25px">
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">附件名称：</h5>
+                            <span style="margin-left: 10px" id="annexNameLabel"></span>
+                        </div>
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">附件价格：</h5>
+                            <span style="margin-left: 10px" id="priceAnnexLabel"></span>
+                        </div>
+                    </div>
+                    <div class="mdui-row" style="margin-top: 35px">
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">支付时间：</h5>
+                            <span style="margin-left: 10px" id="orderTimeAnnexLabel"></span>
+                        </div>
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">附件类型：</h5>
+                            <span style="margin-left: 10px" id="annexTypeLabel"></span>
+                        </div>
+                    </div>
+                    <div class="mdui-row" style="margin-top: 35px">
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">支付方式：</h5>
+                            <span style="margin-left: 10px" id="paymentTypeLabel"></span>
+                        </div>
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">字数：</h5>
+                            <span style="margin-left: 10px" id="wordCountLabel"></span>
+                        </div>
+                    </div>
+                    <div class="mdui-row" style="margin-top: 35px">
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">作者：</h5>
+                            <span style="margin-left: 10px" id="playersLabel"></span>
+                        </div>
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">订单状态：</h5>
+                            <span style="margin-left: 10px" id="orderStatusAnnexLabel"></span>
+                        </div>
+                    </div>
+                    <div class="mdui-row" style="margin-top: 35px">
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline">附件编号：</h5>
+                            <span style="margin-left: 10px" id="annexCodeLabel"></span>
+                        </div>
+                        <div class="mdui-col-xs-6">
+                            <h5 class="ui header" style="display: inline;color: #0d71bb;cursor:pointer" id="downloadAnnex">点我下载</h5>
+                        </div>
+                    </div>
+                    <h4 class="ui header" style="margin-top: 50px">
+                        <img th:src="@{/statics/images/file_474793.png}" height="40">
+                        <div class="content">
+                            联系
+                            <div class="sub header">对此订单有疑问</div>
+                        </div>
+                    </h4>
+                    <div class="ui message">
+                        <h4 class="ui header">服务条款的变更 </h4>
+                        <p>请联系微信-sgy19980228</p>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $("#orderAnnexInfoList .tabular.menu .item").tab();
+                $("#orderAnnexInfoList .ui.rating").rating();
+            </script>
+        </div>
+        <div class="ui fluid placeholder" id="orderAnnexInfoPar" style="margin-top: 35px">
+            <div class="image header">
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="paragraph">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="paragraph">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="paragraph">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="image header">
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="paragraph">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="paragraph">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="paragraph">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="paragraph">
+                <div class="line"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hide">
+</div>
+</body>
+<script th:src="@{/statics/js/mdui/mdui.min.js}"></script>
+<script type="text/javascript">
+    var inst = new mdui.Drawer('#drawer', {overlay: true});
+</script>
+<script th:inline="javascript">
+    let selectFileName = ''
+    let proCode = ''
+    let annexLocal = ''
+    function orderInfoByCode(orderCode) {
+        $("#orderInfoList").hide()
+        $("#deployProcess").hide()
+        $("#orderInfoPar").show()
+        $("#md-progress").show()
+        $("#orderCodeLabel").text(orderCode)
+        $.ajax({
+            url:"/business/orderInfoByCode",
+            type: "GET",
+            data: {orderCode: orderCode},
+            dataType: "json",
+            success: function(response){
+                proCode = response.proCode
+                if (response.deployProcess.length !== 0) {
+                    response.deployProcess.forEach(item => {
+                        if (item.status == 1) {
+                            $("#deployProcess .step:eq(0) .content .description").text(item.operateTime)
+                            if (item.currentStatus == 1) {
+                                $("#deployProcess .step:eq(0)").attr("class", "active step")
+                            }
+                        }
+                        if (item.status == 2) {
+                            $("#deployProcess .step:eq(1) .content .description").text(item.operateTime != null ? item.operateTime : '')
+                            if (item.currentStatus == 1) {
+                                $("#deployProcess .step:eq(1)").attr("class", "active step")
+                            }
+                        }
+                        if (item.status == 3) {
+                            $("#deployProcess .step:eq(2) .content .description").text(item.operateTime != null ? item.operateTime : '')
+                            if (item.currentStatus == 1) {
+                                $("#deployProcess .step:eq(2)").attr("class", "active step")
+                            }
+                        }
+                    })
+                }
+                if (response.evaluation !== null) {
+                    $("#orderContent").val(response.evaluation.content)
+                    if (response.evaluation.pic !== null) {
+                        $("#orderEvaluationPic").attr("src", "/imagesWeb/" + response.evaluation.pic);
+                    }
+                    $(".ui.rating").rating("set rating", response.evaluation.score)
+                    $("#evaluationUpload").hide()
+                    $("#selectPicDiv").hide()
+                }
+                $("#orderCodeField").val(orderCode)
+                $("#proNameField").val(response.proName)
+                $("#phoneLabel").text(response.mobile)
+                $("#orderStatusLabel").text(response.orderStatus)
+                $("#payTypeLabel").text(response.paymentType)
+                $("#orderTimeLabel").text(response.orderTime)
+                $("#priceLabel").text(response.needDeploy == 1 ? ('￥' + response.orderPrice + ' + 30') : ('￥ ' + response.orderPrice))
+                $("#userNameLabel").text(response.account)
+                $("#playerLabel").text(response.players)
+                $("#proNameLabel").text(response.proName)
+                $("#needDeployLabel").html('<a class="ui '+(response.needDeploy == 0 ? 'red' : 'green')+' mini basic label">'+(response.needDeploy == 0 ? '否' : '是')+'</a>')
+                setTimeout(() => {
+                    $("#orderInfoList").show()
+                    $("#deployProcess").show()
+                    $("#orderInfoPar").hide()
+                    $("#md-progress").hide()
+                }, 1000)
+            }
+        });
+    }
+    function orderAnnexInfoByCode(orderCode) {
+        $("#orderAnnexInfoList").hide()
+        $("#orderAnnexInfoPar").show()
+        $("#orderAnnexCodeLabel").text(orderCode)
+        $.ajax({
+            url:"/business/orderInfoByCode",
+            type: "GET",
+            data: {orderCode: orderCode},
+            dataType: "json",
+            success: function(response){
+                annexLocal = response.annexLocal
+                $("#annexNameLabel").text(response.annexName)
+                $("#priceAnnexLabel").text('￥' + response.price)
+                $("#orderTimeAnnexLabel").text(response.orderTime)
+                $("#annexTypeLabel").text(response.annexType)
+                $("#paymentTypeLabel").text(response.paymentType)
+                $("#wordCountLabel").text(response.wordCount + '字')
+                $("#playersLabel").text(response.players)
+                $("#orderStatusAnnexLabel").html('<a class="ui green mini basic label">已支付</a>')
+                $("#annexCodeLabel").text(response.annexCode)
+                setTimeout(() => {
+                    $("#orderAnnexInfoList").show()
+                    $("#orderAnnexInfoPar").hide()
+                }, 1000)
+            }
+        });
+    }
+    $('#selectPic').change(function(){
+        var formData = new FormData();
+        formData.append("avatar", $("#selectPic")[0].files[0]);
+        $.ajax({
+            url: "/business/fileUpload",
+            type: "post",
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'text',
+            success: function(data) {
+                selectFileName = data
+                console.log(selectFileName)
+                $("#orderEvaluationPic").attr("src", "/imagesWeb/" + data);
+            }
+        });
+    })
+    $('#download').on('click',function(event){
+        var url= "/business/download/" + proCode;
+        window.location.href = url;
+    })
+    $('#downloadAnnex').on('click',function(event){
+        var url= "/business/downloadAnnex/" + annexLocal;
+        window.location.href = url;
+    })
+    $('#evaluationUpload').on('click',function(event){
+        let formData = {orderCode: $("#orderCodeField").val(), score: $(".ui.rating").rating("get rating"), content: $("#orderContent").val(), pic: selectFileName === '' ? null : selectFileName}
+        $.ajax({
+            url: "/business/evaluationOrder",
+            type: "post",
+            data: formData,
+            dataType: "json",
+            success: function(data) {
+                mdui.snackbar({
+                    message: '评论成功！',
+                    position: 'left-bottom',
+                });
+                setTimeout(() => {
+                    location.reload();
+                }, 1000)
+            }
+        });
+    })
+    $('#orderTable').on('click','.orderCodeCheck',function(event){
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        if ($(this).html().search("AORD") != -1) {
+            // $("#example-4").hide()
+            // $("#example-5").show()
+            orderAnnexInfoByCode($(this).html())
+            var inst = new mdui.Dialog("#example-5", {history: false});
+            inst.open()
+        } else {
+            // $("#example-5").hide()
+            // $("#example-4").show()
+            $("#orderContent").val("")
+            selectFileName = ""
+            $("#orderEvaluationPic").attr("src", "https://semantic-ui.com/images/wireframe/white-image.png");
+            orderInfoByCode($(this).html())
+            var inst = new mdui.Dialog("#example-4", {history: false});
+            inst.open()
+        }
+    })
+    let headImgUrl = '[[${session.user.headImgUrl}]]';
+    $(document).ready(function(){
+        var setCount = 0;
+        var message = [[${orderList}]];
+        if (message.records !== 0) {
+            let orderTable = ''
+            message.records.forEach(item => {
+                orderTable += '<tr>\n' +
+                    '    <td data-label="code"><a class="orderCodeCheck">'+item.code+'</a></td>\n' +
+                    '    <td data-label="code"><span class="proNamePopup" data-content='+item.proName+'>'+item.proName.slice(0,5)+'...</span></td>\n' +
+                    '    <td data-label="account">\n' +
+                    '        <img class="ui mini rounded image" src='+headImgUrl+'>\n' +
+                    '    </td>\n' +
+                    '    <td data-label="Job"> <a class="ui tag mini label">￥'+(item.orderPrice).toFixed(1)+'</a></td>\n' +
+                    '    <td data-label="device"><a class="ui '+(item.needDeploy == 0 ? 'red' : 'green')+' mini basic label">'+(item.needDeploy == 0 ? '否' : '是')+'</a></td>\n' +
+                    '    <td data-label="device">'+item.orderStatus+'</td>\n' +
+                    '    <td data-label="device">'+item.paymentType+'</td>\n' +
+                    '    <td data-label="device">'+item.orderTime+'</td>\n' +
+                    '</tr>'
+            })
+            $("#orderTable").html(orderTable)
+            $('.proNamePopup').popup();
+        }
+        var pageNo = 1;
+        $("#demo1").jqPaginator({
+            totalPages: 1,
+            visiblePages: 10,
+            currentPage: message.current,
+            page: '<li class="page"><a href="/web/order/{{page}}">{{page}}</a></li>',
+            onPageChange: function(n) {
+                $("#demo1-text").html(n)
+                pageNo = n
+            }
+        })
+    });
+</script>
+</html>

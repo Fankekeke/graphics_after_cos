@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/lib.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/1362.css}">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <script type="text/javascript" th:src="@{/statics/js/jquery-1.11.3.min.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/org1480746227.js}" data-main="baseMain"></script>
+    <title>软件在能够复用前必须先能用</title>
+</head>
+
+<body>
+<div id="header" class="index_nav">
+    <div class="content">
+        <a href="index.html" id="logo"><img th:src="@{/statics/images/1482810077929.png}" height="40"/></a>
+        <ul id="nav">
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/index.html'}" target="_self"><span data-title="首页">首页</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/product.html?pageNo=1&type=-1'}" target="_self"><span data-title="产品展示">产品展示</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/team.html'}" target="_self"><span data-title="我们团队">我们团队</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/news.html/1'}" target="_self"><span data-title="资讯中心">资讯中心</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/contact.html'}" target="_self"><span data-title="联系我们">联系我们</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " target="_blank"><span data-title="登录">登录</span></a>
+            </li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <a id="headSHBtn" href="javascript:;"><i class="fa fa-bars"></i></a>
+</div>
+<div id="sitecontent">
+
+    <div class="npagePage Pageservice">
+        <div id="banner">
+            <div th:style="'background:url(' + @{/statics/images/1482746918654.jpg} + ');'"></div>
+        </div>
+        <div class="content">
+            <div class="header">
+                <p class="title">服务范围</p>
+                <p class="subtitle">SERVICE</p>
+            </div>
+            <div id="servicelist">
+                <ul class="wrap">
+                    <li class="serviceitem">
+                        <a href="#" target="_self">
+                            <p class="service_img"><img th:src="@{/statics/images/1481781330301.png}" width="320"
+                                                        height="120"/></p>
+                            <div class="service_info">
+                                <p class="title">生产经验</p>
+                                <p class="description">我们拥有8年生产及销售经验</p>
+                            </div>
+                        </a>
+                        <a href="#" target="_self" class="details">more<i class="fa fa-angle-right"></i></a>
+                    </li>
+                    <li class="serviceitem">
+                        <a href="#" target="_self">
+                            <p class="service_img"><img th:src="@{/statics/images/1481772762811.png}" width="320"
+                                                        height="120"/></p>
+                            <div class="service_info">
+                                <p class="title">出口国家</p>
+                                <p class="description">进出口国家三十多个，多款产品获得国家专利认证 ... </p>
+                            </div>
+                        </a>
+                        <a href="#" target="_self" class="details">more<i class="fa fa-angle-right"></i></a>
+                    </li>
+                    <li class="serviceitem">
+                        <a href="#" target="_self">
+                            <p class="service_img"><img th:src="@{/statics/images/1481772776706.png}" width="320"
+                                                        height="120"/></p>
+                            <div class="service_info">
+                                <p class="title">厂房面积</p>
+                                <p class="description">厂房占地面积一万多平，高科技产业园区，现代化生产车间 ... </p>
+                            </div>
+                        </a>
+                        <a href="#" target="_self" class="details">more<i class="fa fa-angle-right"></i></a>
+                    </li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <div id="pages"></div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p>
+        COPYRIGHT (©) 2020 显卡售后服务
+        <a href="http://www.beian.gov.cn/portal/index.do" style="width: 300px;margin-top: 0;margin-left: 50px"><img th:src="@{/statics/images/kimo.png}" style="margin-top: 10px"/>&nbsp;粤ICP备2021090004号-1</a>
+    </p>
+</div>
+<div id="shares">
+    <a id="sshare"><i class="fa fa-share-alt"></i></a>
+    <a href="#" target="_self" id="sweibo"><i class="fa fa-weibo"></i></a>
+    <a href="javascript:;" id="sweixin"><i class="fa fa-weixin"></i></a>
+    <a href="javascript:;" id="gotop"><i class="fa fa-angle-up"></i></a>
+</div>
+<div class="fixed" id="fixed_weixin">
+    <div class="fixed-container">
+        <div id="qrcode"></div>
+        <p>扫描二维码分享到微信</p>
+    </div>
+</div>
+<div id="online_open"><i class="fa fa-comments-o"></i></div>
+<div id="online_lx">
+    <div id="olx_head">在线咨询<i class="fa fa-times fr" id="online_close"></i></div>
+    <ul id="olx_qq">
+        <li>
+            <a href="tencent://message/?uin=XXX&Site=wangdahai&Menu=yes"><i class="fa fa-qq"></i>XXX</a>
+        </li>
+    </ul>
+    <div id="olx_tel">
+        <div><i class="fa fa-phone"></i>联系电话</div>
+        <p>XXX<br/></p>
+    </div>
+</div>
+<div class="hide">
+</div>
+</body>
+
+
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel='stylesheet prefetch' th:href="@{/statics/css/image/normalize.css}">
+    <link rel='stylesheet prefetch' th:href="@{/statics/css/image/htmleaf-demo.css}">
+    <link rel='stylesheet prefetch' th:href="@{/statics/css/image/main.css}">
+
+    <link rel='stylesheet prefetch' th:href="@{/statics/css/tab/reset.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/tab/default.css}">
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons'>
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/tab/styles.css}">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/lib.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/1362.css}">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" th:href="@{/statics/css/mdui/mdui.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/semantic/semantic.min.css}">
+    <script type="text/javascript" th:src="@{/statics/js/jquery-1.11.3.min.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/jquery-2.1.4.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/org1480746227.js}" data-main="baseMain"></script>
+    <script type="text/javascript" th:src="@{/statics/js/stopExecutionOnTimeout.js}"></script>
+    <script th:src="@{/statics/js/semantic/semantic.min.js}"></script>
+    <script th:src="@{/statics/js/mdui/mdui.min.js}"></script>
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            var message = [[${proInfo}]];
+            console.log(JSON.stringify(message))
+        });
+    </script>
+
+    <script type="text/javascript" th:src="@{/statics/js/jquery.easing.min.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/main.js}"></script>
+
+    <script>
+        $(document).ready(function () {
+            var activePos = $('.tabs-header .active').position();
+            function changePos() {
+                activePos = $('.tabs-header .active').position();
+                $('.border').stop().css({
+                    left: activePos.left,
+                    width: $('.tabs-header .active').width()
+                });
+            }
+            changePos();
+            var tabHeight = $('.tab.active').height();
+            function animateTabHeight() {
+                tabHeight = $('.tab.active').height();
+                $('.tabs-content').stop().css({ height: tabHeight + 'px' });
+            }
+            animateTabHeight();
+            function changeTab() {
+                var getTabId = $('.tabs-header .active a').attr('tab-id');
+                $('.tab').stop().fadeOut(300, function () {
+                    $(this).removeClass('active');
+                }).hide();
+                $('.tab[tab-id=' + getTabId + ']').stop().fadeIn(300, function () {
+                    $(this).addClass('active');
+                    animateTabHeight();
+                });
+            }
+            $('.tabs-header a').on('click', function (e) {
+                e.preventDefault();
+                var tabId = $(this).attr('tab-id');
+                $('.tabs-header a').stop().parent().removeClass('active');
+                $(this).stop().parent().addClass('active');
+                changePos();
+                tabCurrentItem = tabItems.filter('.active');
+                $('.tab').stop().fadeOut(300, function () {
+                    $(this).removeClass('active');
+                }).hide();
+                $('.tab[tab-id="' + tabId + '"]').stop().fadeIn(300, function () {
+                    $(this).addClass('active');
+                    animateTabHeight();
+                });
+            });
+            var tabItems = $('.tabs-header ul li');
+            var tabCurrentItem = tabItems.filter('.active');
+            $('#next').on('click', function (e) {
+                e.preventDefault();
+                var nextItem = tabCurrentItem.next();
+                tabCurrentItem.removeClass('active');
+                if (nextItem.length) {
+                    tabCurrentItem = nextItem.addClass('active');
+                } else {
+                    tabCurrentItem = tabItems.first().addClass('active');
+                }
+                changePos();
+                changeTab();
+            });
+            $('#prev').on('click', function (e) {
+                e.preventDefault();
+                var prevItem = tabCurrentItem.prev();
+                tabCurrentItem.removeClass('active');
+                if (prevItem.length) {
+                    tabCurrentItem = prevItem.addClass('active');
+                } else {
+                    tabCurrentItem = tabItems.last().addClass('active');
+                }
+                changePos();
+                changeTab();
+            });
+            $('[ripple]').on('click', function (e) {
+                var rippleDiv = $('<div class="ripple" />'), rippleOffset = $(this).offset(), rippleY = e.pageY - rippleOffset.top, rippleX = e.pageX - rippleOffset.left, ripple = $('.ripple');
+                rippleDiv.css({
+                    top: rippleY - ripple.height() / 2,
+                    left: rippleX - ripple.width() / 2,
+                    background: $(this).attr('ripple-color')
+                }).appendTo($(this));
+                window.setTimeout(function () {
+                    rippleDiv.remove();
+                }, 1500);
+            });
+        });
+    </script>
+    <title>软件在能够复用前必须先能用</title>
+    <style type="text/css">
+        html {
+            background: rgb(247, 247, 247)
+        }
+        .icon_awesome {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+
+<body style="background: rgb(247,247,247);">
+<div id="header" class="index_nav" style="background-color: white;box-shadow: 0px 2px 3px #dedede;">
+    <div class="content">
+        <a href="index.html" id="logo"><img th:src="@{/statics/images/1482810077929.png}" height="40"/></a>
+        <ul id="nav">
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/index.html'}" target="_self"><span data-title="首页">首页</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a active" th:href="@{'/web/product.html?pageNo=1&type=-1'}" target="_self">
+                    <span data-title="产品展示">产品展示</span>
+                </a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/team.html'}" target="_self"><span data-title="我们团队">我们团队</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/news.html/1'}" target="_self"><span data-title="资讯中心">资讯中心</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/contact.html'}" target="_self"><span data-title="联系我们">联系我们</span></a>
+            </li>
+            <li class="navitem">
+                <a th:if="${session.user} == null" class="nav-a " th:href="@{'/web/login.html'}" target="_self"><span data-title="登录">登录</span></a>
+                <a th:if="${session.user} != null" class="nav-a " onclick="inst.open()" href="javascript:void(0);" target="_self"><span data-title="个人信息" th:text="${session.user.account}"></span></a>
+            </li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <a id="headSHBtn" href="javascript:;"><i class="fa fa-bars"></i></a>
+</div>
+<div id="sitecontent" style="min-height: 750px">
+
+    <div class="npagePage Pageanli" id="mproject">
+<!--        <div id="banner" style="padding-top: 0px">-->
+<!--            <div th:style="'background:url(' + @{/statics/images/banner/banner_2.png} + ');background-position:0 -150px;'"></div>-->
+<!--        </div>-->
+        <div class="content" style="margin-top: 90px;padding: 50px 0px">
+            <div style="width: 80%;margin: 0 auto;">
+                <p style="margin-top: 50px;font-size: 35px;color: #000000;font-style:italic" th:text="${proInfo.proName}"></p>
+                <p style="text-align: right;font-style:italic;margin-right: 20px;margin-top: 20px">产品著作权：
+                    <span th:if="${proInfo.releaseUser != null}" style="color: #2e2f2f" th:text="${proInfo.releaseUser}"></span>
+                    <span th:if="${proInfo.releaseUser == null}" style="color: #2e2f2f">- -</span>
+                </p>
+
+                <div style="margin-top: 50px;line-height: 40px;height: 80px">
+                    <div style="width: 33.3%;float: left;margin: 0 auto"><b style="color: #000000;font-size: 14px">订单编号：</b><span th:text="${proInfo.code}"></span></div>
+                    <div style="width: 33.3%;float: left;margin: 0 auto"><b style="color: #000000;font-size: 14px">产品价格：</b><span style="color: red">￥<span th:text="${proInfo.proPrice}"></span></span></div>
+                    <div style="width: 33.3%;float: left;margin: 0 auto"><b style="color: #000000;font-size: 14px">项目类型：</b>
+                        <span th:if="${proInfo.proType == 1}">仅后台</span>
+                        <span th:if="${proInfo.proType == 2}">前后台</span>
+                        <span th:if="${proInfo.proType == 3}">小程序</span>
+                        <span th:if="${proInfo.proType == 4}">安 卓</span>
+                    </div>
+                    <div style="width: 100%;float: left;margin: 0 auto"><b style="color: #2e2f2f;font-size: 14px">项目分类：</b><span th:text="${proInfo.proSort}"></span></div>
+                </div>
+            </div>
+
+            <div class="module-content" style="margin-top: 20px">
+                <div class="tabs wow" style="width: 80%;margin: 60px auto 10px">
+                    <div class="tabs-header">
+                        <div class="border"></div>
+                        <ul>
+                            <li class="active"><a href="#tab-1" tab-id="1" ripple="ripple" ripple-color="#FFF">产品介绍</a></li>
+                            <li><a href="#tab-2" tab-id="2" ripple="ripple" ripple-color="#FFF">技术方案</a></li>
+                            <li><a href="#tab-3" tab-id="3" ripple="ripple" ripple-color="#FFF">产品视频</a></li>
+                            <li><a href="#tab-4" tab-id="4" ripple="ripple" ripple-color="#FFF">项目图册</a></li>
+                        </ul>
+                        <nav class="tabs-nav"><i id="prev" ripple="ripple" ripple-color="#FFF" class="material-icons">&#xE314;</i><i id="next" ripple="ripple" ripple-color="#FFF" class="material-icons">&#xE315;</i></nav>
+                    </div>
+                    <div class="tabs-content">
+                        <div tab-id="1" class="tab active">
+                            <p th:text="${proInfo.proIntroduce}" style="font-size: 12px;line-height: 40px;color: #000000;text-indent:50px;"></p>
+                        </div>
+                        <div tab-id="2" class="tab">
+                            <p th:text="${proInfo.proTechnology}" style="font-size: 12px;line-height: 40px;color: #000000;text-indent:50px;"></p>
+                        </div>
+                        <div tab-id="3" class="tab">
+                            <video controls style="width: 100%">
+                                <source th:src="@{'/videoWeb/'+${proInfo.proVoide}}"
+                                        type="video/mp4">
+                                Sorry, your browser doesn't support embedded videos.
+                            </video>
+                        </div>
+                        <div tab-id="4" class="tab">
+                            <div class="ag7-main" style="width: 100%;padding: 0px;height: 450px">
+                                <div class="ag7-bannerslide">
+                                    <ul class="slidebox" style="height: 450px;overflow: hidden">
+                                        <li th:each="image:${proInfo.proPic.split(',')}">
+                                            <a href="#" target="_self">
+                                                <img th:src="@{'/imagesWeb/'+${image}}" style="width: 100%">
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="slideinfo" style="height: auto">
+<!--                                        <div class="slidetitle">-->
+<!--                                            <h2></h2>-->
+<!--                                            <h3></h3>-->
+<!--                                        </div>-->
+                                        <div class="slidelist">
+                                            <ul>
+                                                <li th:each="image:${proInfo.proPic.split(',')}">
+                                                    <img width="50" height="22" th:src="@{'/imagesWeb/'+${image}}" alt="">
+                                                </li>
+                                            </ul>
+                                            <span class="mask"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="indexPage">
+    <div id="mcontact" class="module" style="background-color: rgb(247,247,247);">
+        <div class="bgmask"></div>
+        <div class="content">
+            <div class="header wow fadeInUp fw" data-wow-delay=".1s">
+                <p class="title" style="margin-top: 60px">README</p>
+            </div>
+            <div id="contactlist" class="fw">
+                <div id="contactinfo" class="fl wow" data-wow-delay=".2s">
+
+                    <h3 class="ellipsis name">显卡售后服务</h3>
+                    <p class="ellipsis add"><span>地点：</span>保密</p>
+                    <p class="ellipsis zip"><span>邮编：</span>044000</p>
+                    <p class="ellipsis tel"><span>电话：</span>199XXXX0631</p>
+                    <p class="ellipsis mobile"><span>手机：</span>199XXXX0631</p>
+                    <p class="ellipsis fax"><span>传真：</span>保密</p>
+                    <p class="ellipsis email"><span>邮箱：</span>doufo_uncle@163.com</p>
+                    <div>
+                        <a class="fl" href="javascript:;"><i class="fa fa-weibo"></i></a>
+                        <a class="fl" href="javascript:;"><i class="fa fa-qq"></i></a>
+                        <a class="fl" href="javascript:;"><i class="fa fa-weixin"></i></a>
+                    </div>
+                </div>
+                <div id="contactform" class="fr wow" data-wow-delay=".2s">
+                    <form action="#" method="post">
+                        <p>
+                            <input type="text" class="inputtxt name" name="name" placeholder="姓名" autocomplete="off"/>
+                        </p>
+                        <p>
+                            <input type="text" class="inputtxt email" name="email" placeholder="邮箱" autocomplete="off"/>
+                        </p>
+                        <p>
+                            <input type="text" class="inputtxt tel" name="tel" placeholder="电话" autocomplete="off"/>
+                        </p>
+                        <p>
+                            <textarea class="inputtxt cont" name="content" placeholder="内容" autocomplete="off"></textarea>
+                        </p>
+                        <p>
+                            <input class="inputsub" type="submit" value="提交"/>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mdui-drawer mdui-drawer-close" id="drawer" style="background: rgb(247,247,247);">
+    <img src="//maps.gstatic.com/tactile/pane/default_geocode-1x.png" alt="" width="100%" height="80px"/>
+    <ul class="mdui-list">
+        <li class="mdui-list-item">
+            <a class="ui teal image label">
+                <img src="https://semantic-ui.com/images/avatar/small/veronika.jpg">
+                <span th:if="${session.user} != null" th:text="${session.user.account}"></span>
+                <div class="detail" th:if="${session.user} != null">
+                    <span th:if="${session.user.invite == 1}">推广人员</span>
+                    <span th:if="${session.user.invite == 2}">普通用户</span>
+                </div>
+            </a>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/user','_self')">
+            <div class="icon_awesome"><i class="fa fa-address-card" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">个人信息</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/order/1','_self')">
+            <div class="icon_awesome"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">历史订单</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/system','_self')">
+            <div class="icon_awesome"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></i></div>
+            <div class="mdui-list-item-content">我要定制</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
+            <div class="icon_awesome"><i class="fa fa-list-alt" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">我的消息</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/system','_self')">
+            <div class="icon_awesome"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></i></div>
+            <div class="mdui-list-item-content">我要定制</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
+            <div class="icon_awesome"><i class="fa fa-list-alt" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">我的消息</div>
+        </li>
+        <li class="mdui-subheader">运营邀请</li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/money','_self')">
+            <div class="icon_awesome"><i class="fa fa-money" aria-hidden="true"></i></i></div>
+            <div class="mdui-list-item-content">我的余额</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/withdraw','_self')">
+            <div class="icon_awesome"><i class="fa fa-cubes" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">提现申请</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/record','_self')">
+            <div class="icon_awesome"><i class="fa fa-tasks" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">提现记录</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" style="position: fixed;bottom: 50px;width: 100%" onclick="window.open('/web/logout','_self')">
+            <div class="icon_awesome red"><i class="fa fa-sign-out" aria-hidden="true" style="color: red"></i></div>
+            <div class="mdui-list-item-content">退出登录</div>
+        </li>
+    </ul>
+</div>
+
+<div id="footer">
+    <p>
+        COPYRIGHT (©) 2020 显卡售后服务
+        <a href="http://www.beian.gov.cn/portal/index.do" style="width: 300px;margin-top: 0;margin-left: 50px"><img th:src="@{/statics/images/kimo.png}" style="margin-top: 10px"/>&nbsp;粤ICP备2021090004号-1</a>
+    </p>
+</div>
+<div id="shares">
+    <a id="sshare"><i class="fa fa-share-alt"></i></a>
+    <!--			<a href="#" target="_self" id="sweibo"><i class="fa fa-weibo"></i></a>-->
+    <!--			<a href="javascript:;" id="sweixin"><i class="fa fa-weixin"></i></a>-->
+    <a href="javascript:;" id="gotop"><i class="fa fa-angle-up"></i></a>
+</div>
+<!--		<div class="fixed" id="fixed_weixin">-->
+<!--			<div class="fixed-container">-->
+<!--				<div id="qrcode"></div>-->
+<!--				<p>扫描二维码分享到微信</p>-->
+<!--			</div>-->
+<!--		</div>-->
+<div id="online_open"><i class="fa fa-comments-o"></i></div>
+<div id="online_lx">
+    <div id="olx_head">联系我们<i class="fa fa-times fr" id="online_close"></i></div>
+    <ul id="olx_qq">
+        <li>
+            <!--					<a href="tencent://message/?uin=XXX&Site=wangdahai&Menu=yes"><i class="fa fa-qq"></i>XXX</a>-->
+            <a href="javascript:;" style="font-size: 14px; color: #777">想建站或软件开发?</a>
+        </li>
+    </ul>
+    <div id="olx_tel">
+        <div style="color: #777"><i class="fa fa-phone" style="margin-right: 8px;"></i>请联系我们</div>
+        <p style="color: #777">199XXXX0631<br/></p>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    var inst = new mdui.Drawer('#drawer', {overlay: true});
+</script>
+</html>

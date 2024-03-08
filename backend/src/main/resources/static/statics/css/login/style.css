@@ -1,0 +1,10 @@
+﻿.slider-btn{position:absolute;width:44px;height:44px;left:0;top:-7px;z-index:12;cursor:pointer;background-image:url(../../images/sprite.3.2.0.png);background-position:0 -84px;transition:inherit}
+.ver-tips{position:absolute;left:0;bottom:-22px;background:rgba(255,255,255,.9);height:22px;line-height:22px;font-size:12px;width:100%;margin:0;text-align:left;padding:0 8px;transition:all .4s}
+.slider-tips{bottom:0}
+.ver-tips i{display:inline-block;width:22px;height:22px;vertical-align:top;background-image:url(../../images/sprite.3.2.0.png);background-position:-4px -1229px}
+.ver-tips span{display:inline-block;vertical-align:top;line-height:22px;color:#455}
+.active-tips{display:block}
+.hidden{display:none}
+.re-btn{position:absolute;left:0;bottom:0;height:28px;padding:0 16px}
+.re-btn a{display:inline-block;width:14px;height:14px;margin:7px 0;background-image:url(../../images/sprite.3.2.0.png);background-position:0 -1179px;cursor:pointer}
+.re-btn a:hover{background-position:0 -1193px}

@@ -1,0 +1,447 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/lib.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/1362.css}">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" th:href="@{/statics/css/mdui/mdui.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/semantic/semantic.min.css}">
+    <script type="text/javascript" th:src="@{/statics/js/jquery-1.11.3.min.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/org1480746227.js}" data-main="indexMain"></script>
+    <script th:src="@{/statics/js/semantic/semantic.min.js}"></script>
+    <title>软件在能够复用前必须先能用</title>
+    <style type="text/css">
+        .icon_awesome {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="header" class="index_nav" style="box-shadow: 0px 2px 3px #dedede">
+    <div class="content">
+        <a href="index.html" id="logo"><img th:src="@{/statics/images/1482810077929.png}" height="40"/></a>
+        <ul id="nav">
+            <li class="navitem">
+                <a class="nav-a  active " th:href="@{'/web/index.html'}" target="_self"><span data-title="首页">首页</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/product.html?pageNo=1&type=-1'}" target="_self">
+                    <span data-title="产品展示">产品展示</span>
+                </a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/team.html'}" target="_self"><span data-title="我们团队">我们团队</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/news.html/1'}" target="_self"><span data-title="资讯中心">资讯中心</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/contact.html'}" target="_self"><span data-title="联系我们">联系我们</span></a>
+            </li>
+            <li class="navitem">
+                <a th:if="${session.user} == null" class="nav-a " th:href="@{'/web/login.html'}" target="_self"><span data-title="登录">登录</span></a>
+                <a th:if="${session.user} != null" class="nav-a" onclick="inst.open()" href="javascript:void(0);" target="_self"><span data-title="个人信息" th:text="${session.user.account}"></span></a>
+            </li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <a id="headSHBtn" href="javascript:;"><i class="fa fa-bars"></i></a>
+</div>
+<div id="sitecontent">
+    <div id="indexPage">
+        <div id="mslider" class="module">
+            <script type="text/javascript">
+                $(function () {
+                    $("#mslider li video").each(function (index, element) {
+                        element.play();
+                    });
+                })
+            </script>
+        </div>
+        <div id="mindex" data-options-ease="Expo.easeInOut" data-options-speed="1" data-options-sscreen="0"></div>
+        <div class="module" style="height: 550px;margin-top: 80px">
+            <div style="width: 1200px;margin: 0 auto">
+                <div class="home-banner-content-wrapper wow" style="width: 600px;float: left;padding-top: 150px">
+                    <h1 style="font-size: 38px;line-height: 46px;margin-bottom: 16px;font-weight: 400;color: rgba(0,0,0,.85);">极简制作，一键呈现</h1>
+                    <p style="font-size: 16px;line-height: 46px;margin-bottom: 16px;font-weight: 400;">为您提供专业的云上毕设服务，满足不同行业的个性化需求</p>
+                </div>
+                <div class="wrapper" id="antD" style="text-align: right;width: 600px;float: right"></div>
+                <script>
+                    $("#antD").load("svg.html");
+                </script>
+            </div>
+        </div>
+        <div id="mproject" class="module">
+            <div class="bgmask"></div>
+            <div class="content layoutnone">
+                <div class="header wow">
+                    <p class="title">产品展示</p>
+                    <p class="subtitle">PRODUCT</p>
+                </div>
+                <div class="module-content" id="projectlist">
+                    <div class="projectSubList" id="projectSubList_">
+                        <div class="projectSubHeader">
+                            <p class="title"></p>
+                            <p class="subtitle"></p>
+                        </div>
+                        <div class="wrapper">
+                            <ul class="content_list" data-options-sliders="3" data-options-margin="15"
+                                data-options-ease="1" data-options-speed="1">
+                                <li id="projectitem_0" class="projectitem wow" th:each="project:${proInfo}">
+                                    <a th:href="@{'/web/project.html/'+${project.id}}" class="projectitem_content"
+                                       target="_self">
+                                        <div class="projectitem_wrapper">
+                                            <div class="project_img" style="overflow: hidden;height: 360px"><img
+                                                    th:src="@{'/imagesWeb/'+${project.proPic.split(',')[0]}}"
+                                                    alt="" width="650" height="385"/></div>
+                                            <div class="project_info">
+                                                <div>
+                                                    <p class="title" th:text="${project.proName}"></p>
+                                                    <p class="subtitle" th:if="${project.proType == 1}">仅后台</p>
+                                                    <p class="subtitle" th:if="${project.proType == 2}">前后台</p>
+                                                    <p class="subtitle" th:if="${project.proType == 3}">小程序</p>
+                                                    <p class="subtitle" th:if="${project.proType == 4}">安卓</p>
+                                                    <p class="description hide" th:text="${project.proIntroduce}"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--wrapper-->
+                    </div>
+                    <!--projectSubList-->
+                    <a href="#project/" class="more wow">MORE<i class="fa fa-angle-right"></i></a>
+                </div>
+                <!--projectlist-->
+                <div class="clear"></div>
+            </div>
+        </div>
+        <!--project-->
+<!--        <div id="mteam" class="module">-->
+<!--            <div class="bgmask"></div>-->
+<!--            <div class="content layoutnone">-->
+<!--                <div class="header wow">-->
+<!--                    <p class="title">我们团队</p>-->
+<!--                    <p class="subtitle">Team</p>-->
+<!--                </div>-->
+<!--                <div class="module-content fw">-->
+<!--                    <div class="wrapper">-->
+<!--                        <ul class="content_list" data-options-sliders="2" data-options-margin="140"-->
+<!--                            data-options-ease="1" data-options-speed="0.5">-->
+<!--                            <li id="teamitem_0" class="wow">-->
+<!--                                <div class="header wow" data-wow-delay=".2s">-->
+<!--                                    <a href="#" target="_self"><img th:src="@{/statics/images/head/head_1.jpg}"-->
+<!--                                                                    alt="斗佛Uncle "-->
+<!--                                                                    width="180" height="180"/></a>-->
+<!--                                </div>-->
+<!--                                <div class="summary wow">-->
+<!--                                    <p class="title">-->
+<!--                                        <a href="#">斗佛Uncle </a>-->
+<!--                                    </p>-->
+<!--                                    <p class="subtitle">猿类</p>-->
+<!--                                    <p class="description wow">用代码行数来测评软件开发进度，就相对于用重量来计算飞机建造进度。</p>-->
+<!--                                </div>-->
+<!--                                <a href="#" target="_self" class="details">more<i class="fa fa-angle-right"></i></a>-->
+<!--                            </li>-->
+<!--                            <li id="teamitem_1" class="wow">-->
+<!--                                <div class="header wow" data-wow-delay=".2s">-->
+<!--                                    <a href="#" target="_self"><img th:src="@{/statics/images/head/head_2.jpg}"-->
+<!--                                                                    alt="悲伤的橘子树zz"-->
+<!--                                                                    width="180" height="180"/></a>-->
+<!--                                </div>-->
+<!--                                <div class="summary wow">-->
+<!--                                    <p class="title">-->
+<!--                                        <a href="#">悲伤的橘子树</a>-->
+<!--                                    </p>-->
+<!--                                    <p class="subtitle">猿类</p>-->
+<!--                                    <p class="description wow">当你选择了一种语言，意味着你还选择了一组技术、一个社区</p>-->
+<!--                                </div>-->
+<!--                                <a href="#" target="_self" class="details">more<i class="fa fa-angle-right"></i></a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="clear"></div>-->
+<!--                <a href="#team/" class="more wow">MORE<i class="fa fa-angle-right"></i></a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div id="mpartner" class="module">-->
+<!--            <div class="bgmask"></div>-->
+<!--            <div class="content layoutslider">-->
+<!--                <div class="header wow fw" data-wow-delay=".1s">-->
+<!--                    <p class="title">合作伙伴</p>-->
+<!--                    <p class="subtitle">partner</p>-->
+<!--                </div>-->
+<!--                <div class="module-content fw">-->
+<!--                    <div class="wrapper">-->
+<!--                        <ul class="content_list" data-options-ease="1" data-options-speed="1">-->
+<!--                            <li id="partneritem_0" class="wow">-->
+<!--                                <a href="https://cloud.tencent.com" title="腾讯云" target="_self"-->
+<!--                                   style="padding: 0 5px;box-sizing: border-box">-->
+
+<!--                                    <p class="par_img"><img th:src="@{/statics/images/logo/tencent.png}" width="60"-->
+<!--                                                            height="60"-->
+<!--                                                            alt="腾讯云" style="width: 50px;"/></p>-->
+<!--                                    <p class="par_title">腾讯云</p>-->
+
+<!--                                </a>-->
+<!--                                <a href="https://www.jetbrains.com/" title="IDEA" target="_self"-->
+<!--                                   style="padding: 0 5px;box-sizing: border-box">-->
+
+<!--                                    <p class="par_img"><img th:src="@{/statics/images/logo/idea.jpg}" width="60"-->
+<!--                                                            height="60"-->
+<!--                                                            alt="IDEA" style="width: 50px;"/></p>-->
+<!--                                    <p class="par_title">IDEA</p>-->
+
+<!--                                </a>-->
+<!--                                <a href="https://www.w3cschool.cn/html/" title="HTML" target="_self"-->
+<!--                                   style="padding: 0 5px;box-sizing: border-box">-->
+
+<!--                                    <p class="par_img"><img th:src="@{/statics/images/logo/html.jpg}" width="60"-->
+<!--                                                            height="60"-->
+<!--                                                            alt="HTML" style="width: 50px;"/></p>-->
+<!--                                    <p class="par_title">HTML</p>-->
+
+<!--                                </a>-->
+<!--                                <a href="https://www.w3cschool.cn/css/" title="CSS" target="_self"-->
+<!--                                   style="padding: 0 5px;box-sizing: border-box">-->
+
+<!--                                    <p class="par_img"><img th:src="@{/statics/images/logo/css.png}" width="60"-->
+<!--                                                            height="60"-->
+<!--                                                            alt="CSS" style="width: 50px;"/></p>-->
+<!--                                    <p class="par_title">CSS</p>-->
+
+<!--                                </a>-->
+<!--                                <a href="https://www.w3cschool.cn/javascript/" title="JavaScript" target="_self"-->
+<!--                                   style="padding: 0 5px;box-sizing: border-box">-->
+
+<!--                                    <p class="par_img"><img th:src="@{/statics/images/logo/javascript.png}" width="60"-->
+<!--                                                            height="60" alt="JavaScript" style="width: 50px;"/></p>-->
+<!--                                    <p class="par_title">JavaScript</p>-->
+
+<!--                                </a>-->
+<!--                                <a href="https://cn.vuejs.org/" title="Vue" target="_self"-->
+<!--                                   style="padding: 0 5px;box-sizing: border-box">-->
+
+<!--                                    <p class="par_img"><img th:src="@{/statics/images/logo/vue.png}" width="60"-->
+<!--                                                            height="60"-->
+<!--                                                            alt="Vue" style="width: 50px;"/></p>-->
+<!--                                    <p class="par_title">Vue</p>-->
+
+<!--                                </a>-->
+<!--                                <a href="https://www.layui.com/" title="Layui" target="_self"-->
+<!--                                   style="padding: 0 5px;box-sizing: border-box">-->
+
+<!--                                    <p class="par_img"><img th:src="@{/statics/images/logo/layui.jpg}" width="60"-->
+<!--                                                            height="60"-->
+<!--                                                            alt="Spring" style="width: 50px;"/></p>-->
+<!--                                    <p class="par_title">Layui</p>-->
+
+<!--                                </a>-->
+<!--                                <a href="https://www.layui.com/" title="Ant Design" target="_self"-->
+<!--                                   style="padding: 0 5px;box-sizing: border-box">-->
+
+<!--                                    <p class="par_img"><img th:src="@{/statics/images/logo/ant.png}" width="60"-->
+<!--                                                            height="60"-->
+<!--                                                            alt="Spring" style="width: 50px;"/></p>-->
+<!--                                    <p class="par_title">Ant Design</p>-->
+
+<!--                                </a>-->
+<!--                                <a href="https://www.w3cschool.cn/java/" title="Java" target="_self"-->
+<!--                                   style="padding: 0 5px;box-sizing: border-box">-->
+
+<!--                                    <p class="par_img"><img th:src="@{/statics/images/logo/java.png}" width="60"-->
+<!--                                                            height="60"-->
+<!--                                                            alt="Java" style="width: 50px;"/></p>-->
+<!--                                    <p class="par_title">Java</p>-->
+
+<!--                                </a>-->
+<!--                                <a href="https://spring.io/" title="Spring" target="_self"-->
+<!--                                   style="padding: 0 5px;box-sizing: border-box">-->
+
+<!--                                    <p class="par_img"><img th:src="@{/statics/images/logo/spring.png}" width="60"-->
+<!--                                                            height="60"-->
+<!--                                                            alt="Spring" style="width: 50px;"/></p>-->
+<!--                                    <p class="par_title">Spring</p>-->
+
+<!--                                </a>-->
+<!--                                <a href="https://www.w3cschool.cn/mybatis/" title="MyBatis" target="_self"-->
+<!--                                   style="padding: 0 10px;box-sizing: border-box">-->
+
+<!--                                    <p class="par_img"><img th:src="@{/statics/images/logo/mybatis.png}" width="60"-->
+<!--                                                            height="60"-->
+<!--                                                            alt="MyBatis" style="width: 50px;"/></p>-->
+<!--                                    <p class="par_title">MyBatis</p>-->
+
+<!--                                </a>-->
+<!--                                <a href="https://www.w3cschool.cn/mybatis/" title="RabbitMQ" target="_self"-->
+<!--                                   style="padding: 0 10px;box-sizing: border-box">-->
+
+<!--                                    <p class="par_img"><img th:src="@{/statics/images/logo/rabbitmq.png}" width="60"-->
+<!--                                                            height="60" alt="MyBatis" style="width: 50px;"/></p>-->
+<!--                                    <p class="par_title">RabbitMQ</p>-->
+
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                            <li id="partneritem_8" class="wow">-->
+<!--                                <a href="https://www.e-learn.cn/content/qita/1542698" title="Swagger" target="_self"-->
+<!--                                   style="padding: 0 10px;box-sizing: border-box">-->
+
+<!--                                    <p class="par_img"><img th:src="@{/statics/images/logo/swagger.png}" width="60"-->
+<!--                                                            height="60"-->
+<!--                                                            alt="Swagger" style="width: 50px;"/></p>-->
+<!--                                    <p class="par_title">Swagger</p>-->
+
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div id="mcontact" class="module">
+            <div class="bgmask"></div>
+            <div class="content">
+                <div class="header wow fadeInUp fw" data-wow-delay=".1s">
+                    <p class="title" style="margin-top: 60px">README</p>
+                </div>
+                <div id="contactlist" class="fw">
+                    <div id="contactinfo" class="fl wow" data-wow-delay=".2s">
+
+                        <h3 class="ellipsis name">显卡售后服务</h3>
+                        <p class="ellipsis add"><span>地点：</span>保密</p>
+                        <p class="ellipsis zip"><span>邮编：</span>044000</p>
+                        <p class="ellipsis tel"><span>电话：</span>199XXXX0631</p>
+                        <p class="ellipsis mobile"><span>手机：</span>199XXXX0631</p>
+                        <p class="ellipsis fax"><span>传真：</span>保密</p>
+                        <p class="ellipsis email"><span>邮箱：</span>doufo_uncle@163.com</p>
+                        <div>
+                            <a class="fl" href="javascript:;"><i class="fa fa-weibo"></i></a>
+                            <a class="fl" href="javascript:;"><i class="fa fa-qq"></i></a>
+                            <a class="fl" href="javascript:;"><i class="fa fa-weixin"></i></a>
+                        </div>
+                    </div>
+                    <div id="contactform" class="fr wow" data-wow-delay=".2s">
+                        <form action="#" method="post">
+                            <p>
+                                <input type="text" class="inputtxt name" name="name" placeholder="姓名"
+                                       autocomplete="off"/>
+                            </p>
+                            <p>
+                                <input type="text" class="inputtxt email" name="email" placeholder="邮箱"
+                                       autocomplete="off"/>
+                            </p>
+                            <p>
+                                <input type="text" class="inputtxt tel" name="tel" placeholder="电话" autocomplete="off"/>
+                            </p>
+                            <p>
+                                <textarea class="inputtxt cont" name="content" placeholder="内容"
+                                          autocomplete="off"></textarea>
+                            </p>
+                            <p>
+                                <input class="inputsub" type="submit" value="提交"/>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mdui-drawer mdui-drawer-close" id="drawer" style="background: rgb(247,247,247);">
+    <img th:src="@{/statics/images/default_geocode-1x.png}" alt="" width="100%" height="80px"/>
+    <ul class="mdui-list">
+        <li class="mdui-list-item">
+            <a class="ui teal image label">
+                <img src="https://semantic-ui.com/images/avatar/small/veronika.jpg">
+                <span th:if="${session.user} != null" th:text="${session.user.account}"></span>
+                <div class="detail" th:if="${session.user} != null">
+                    <span th:if="${session.user.invite == 1}">推广人员</span>
+                    <span th:if="${session.user.invite == 2}">普通用户</span>
+                </div>
+            </a>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/user','_self')">
+            <div class="icon_awesome"><i class="fa fa-address-card" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">个人信息</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/order/1','_self')">
+            <div class="icon_awesome"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">历史订单</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/system','_self')">
+            <div class="icon_awesome"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></i></div>
+            <div class="mdui-list-item-content">我要定制</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
+            <div class="icon_awesome"><i class="fa fa-list-alt" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">我的消息</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
+            <div class="icon_awesome"><i class="fa fa-share-alt-square" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">申请推广人</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/developer','_self')">
+            <div class="icon_awesome"><i class="fa fa-retweet" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">申请开发者</div>
+        </li>
+        <li class="mdui-subheader">运营邀请</li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/money','_self')">
+            <div class="icon_awesome"><i class="fa fa-money" aria-hidden="true"></i></i></div>
+            <div class="mdui-list-item-content">我的余额</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/withdraw','_self')">
+            <div class="icon_awesome"><i class="fa fa-cubes" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">提现申请</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/record','_self')">
+            <div class="icon_awesome"><i class="fa fa-tasks" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">提现记录</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" style="position: fixed;bottom: 50px;width: 100%" onclick="window.open('/web/logout','_self')">
+            <div class="icon_awesome red"><i class="fa fa-sign-out" aria-hidden="true" style="color: red"></i></div>
+            <div class="mdui-list-item-content">退出登录</div>
+        </li>
+    </ul>
+</div>
+
+<div id="footer">
+    <p>
+        COPYRIGHT (©) 2020 显卡售后服务
+        <a href="http://www.beian.gov.cn/portal/index.do" style="width: 300px;margin-top: 0;margin-left: 50px"><img th:src="@{/statics/images/kimo.png}" style="margin-top: 10px"/>&nbsp;粤ICP备2021090004号-1</a>
+    </p>
+</div>
+<div id="shares">
+    <a id="sshare"><i class="fa fa-share-alt"></i></a>
+    <a href="javascript:;" id="gotop"><i class="fa fa-angle-up"></i></a>
+</div>
+<div id="online_open"><i class="fa fa-comments-o"></i></div>
+<div id="online_lx">
+    <div id="olx_head">联系我们<i class="fa fa-times fr" id="online_close"></i></div>
+    <ul id="olx_qq">
+        <li>
+            <a href="javascript:;" style="font-size: 14px; color: #777">想建站或软件开发?</a>
+        </li>
+    </ul>
+    <div id="olx_tel">
+        <div style="color: #777"><i class="fa fa-phone" style="margin-right: 8px;"></i>请联系我们</div>
+        <p style="color: #777; font-size: 16px">199XXXX0631<br/></p>
+    </div>
+</div>
+</body>
+<script th:src="@{/statics/js/mdui/mdui.min.js}"></script>
+<script type="text/javascript">
+    var inst = new mdui.Drawer('#drawer', {overlay: true});
+</script>
+</html>

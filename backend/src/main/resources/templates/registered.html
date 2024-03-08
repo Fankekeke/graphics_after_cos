@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+
+    <link type="text/css" rel="stylesheet" th:href="@{/statics/css/login/style.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/statics/css/login/styles.css}">
+
+    <script th:src="@{/statics/js/login/jquery-1.10.2.js}"></script>
+    <script th:src="@{/statics/js/login/img_ver.js}"></script>
+    <script th:src="@{/statics/js/login/vector.js}"></script>
+
+    <style>
+        .bxs-row {
+            margin-bottom:12px;
+        }
+        .logo-box {
+            width:404px;
+            border:1px solid #e5e5e5;
+            border-radius:4px;
+            box-shadow:0 4px 18px rgba(0,0,0,0.2);
+            position:relative;
+            overflow:hidden;
+            height:530px;
+        }
+        .login {
+            position:absolute;
+            width:320px;left:0;
+            top:0;
+            padding: 42px 42px 36px;
+            transition:all 0.8s;
+            margin-top: 70px;
+        }
+        .btn {
+            height: 44px;
+            width: 100%;
+            padding: 0 10px;
+            border: 1px solid #9da3a6;
+            background: #fff;
+            text-overflow: ellipsis;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            -khtml-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            color: #000;
+            font-size: 1em;
+            font-family: Helvetica,Arial,sans-serif;
+            font-weight: 400;
+            direction: ltr;
+            font-size:13px;
+        }
+        .submit {
+            background-color: #0070ba;
+            color:#fff;
+            border:1px solid #0070ba;
+        }
+        .submit:hover {
+            background-color:#005ea6;
+        }
+        .verBox {
+            position:absolute;
+            width:100%;
+            text-align:center;
+            left:404px;
+            top:0;
+            opacity:0;
+            transition:all 0.8s;
+            padding-top:100px;
+        }
+        .err {
+            margin:12px 0 0;
+            line-height:12px;
+            height:12px;
+            font-size:12px;
+            color:red;
+        }
+        .title{
+            margin: 30px 0 10px;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 1;
+            color: whitesmoke;
+        }
+    </style>
+    <script th:src="@{/statics/js/login/jquery-3.3.1.min.js}"></script>
+</head>
+<body>
+
+
+<div id="container">
+    <div id="output">
+        <div class="containerT" style="height: 600px">
+            <form class="form" id="entry_form"  th:action="@{/doregister.html}" method="post">
+                <img th:src="@{/statics/images/file_474793.png}" width="100px" onclick="location='./login.html'">
+                <div class="logo-box">
+                    <div class="title">注 册</div>
+                    <div class="login" style="">
+                        <div class="bxs-row" style="text-align:center;margin-top: -10px">
+                            <span class="tips" style="color:red;" th:text="${#httpServletRequest.getAttribute('error')}"></span>
+                        </div>
+                        <div class="bxs-row">
+                            <input type="text" placeholder="用户名" id="entry_name" value="admin" class="username" name="userName">
+                            <p class=" err err-username"></p>
+                        </div>
+                        <div class="bxs-row">
+                            <input type="password" placeholder="密码" id="entry_password" class="password" name="userPwd">
+                            <p class="err err-password"></p>
+                        </div>
+                        <div class="bxs-row">
+                            <input type="text" placeholder="邮箱" id="entry_mail" value="" class="email" name="email" style="width: 40%;display: inline-block">
+                            <input type="button" id="send-code" class="submit btn" value="发送" style="width: 20%;display: inline-block;height: 38px">
+                            <p class=" err err-username"></p>
+                        </div>
+                        <div class="bxs-row">
+                            <input type="text" placeholder="验证码" id="entry_verification" value="" class="verificationCode " name="verificationCode">
+                            <p class=" err err-username"></p>
+                        </div>
+                        <div class="bxs-row">
+                            <input id="submit" type="button" class="submit btn" value="注册">
+                        </div>
+                    </div>
+                    <div class="verBox">
+                        <div style="display:inline-block;">
+                            <img th:src="@{/statics/images/file_507417.png}" width="50%">
+                            <input type="button" class="submit btn" value="注册成功 立刻登录" style="width: 80%;margin-top: 65px" onclick="location='./login.html'">
+                        </div>
+                    </div>
+                </div>
+                <div id="prompt" class="prompt"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        Victor("container", "output");   //登录背景函数
+        $("#entry_name").focus();
+        $(document).keydown(function(event){
+            if(event.keyCode==13){
+                $("#entry_btn").click();
+            }
+        });
+    });
+</script>
+<script>
+    var InterValObj; //timer变量，控制时间
+    var count = 60; //间隔函数，1秒执行
+    var curCount = 60;//当前剩余秒数
+
+    $("#submit").on('click',function () {
+        if($(".password").val().trim() == ''||$(".username").val().trim() == '' || $("#entry_mail").val().trim() == '' || $("#entry_verification").val().trim() == '') {
+            $(".tips").html("请完整填写信息！");
+            return;
+        }
+        if($(".password").val().trim().length < 6) {
+            $(".tips").html("密码必须大于六位！");
+            return;
+        }
+        let regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+        if(!regExp.test($("#entry_mail").val().trim())){
+            $(".tips").html("您输入的E-mail地址不正确！");
+            return;
+        }
+        checkTcode()
+    })
+    $("#send-code").on('click',function () {
+        if($(".email").val().trim() == '') {
+            $(".tips").html("未填写E-mail地址！");
+            return;
+        }
+        let regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+        if(!regExp.test($(".email").val().trim())){
+            $(".tips").html("您输入的E-mail地址不正确！");
+        } else {
+            $.ajax({
+                url:"/web/verificationCode",
+                data: {email: $(".email").val().trim()},
+                type: "POST",
+                dataType: "json",
+                success:function(result){
+                    if (!result.data) {
+                        $(".tips").html("该E-mail地址已被注册！");
+                    } else{
+                        //设置button效果，开始计时
+                        $("#send-code").attr("disabled", "true");
+                        $("#send-code").val(curCount + "秒");
+                        InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+                    }
+                }
+            });
+        }
+    })
+    //timer处理函数
+    function SetRemainTime() {
+        if (curCount == 0) {
+            window.clearInterval(InterValObj);//停止计时器
+            $("#send-code").removeAttr("disabled");//启用按钮
+            $("#send-code").val("发送");
+            curCount = 60
+        } else {
+            curCount--;
+            $("#send-code").val(curCount + "秒");
+        }
+    }
+    // 验证码确认
+    function checkTcode() {
+        $.ajax({
+            url:"/web/checkTcode",
+            type: "POST",
+            data: {code: $("#entry_verification").val().trim()},
+            dataType: "json",
+            success: function(result){
+                if (!result.data) {
+                    $(".tips").html("验证码错误！")
+                } else{
+                    register()
+                }
+            }
+        });
+    }
+
+    function register() {
+        let param = {
+            account: $(".username").val().trim(),
+            email: $(".email").val().trim(),
+            password: $(".password").val().trim()
+        }
+        $.ajax({
+            url:"/web/registered",
+            type: "POST",
+            data: JSON.stringify(param),
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function(result){
+                if (result.data) {
+                    $(".login").css({
+                        "left":"-404px",
+                        "opacity":"0"
+                    });
+                    $(".verBox").css({
+                        "left":"0",
+                        "opacity":"1"
+                    });
+                } else {
+                    $(".tips").html("注册出现错误！")
+                }
+            }
+        });
+    }
+</script>
+<div style="text-align:center;">
+</div>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="referrer" content="no-referrer" />
+    <!--    <link type="text/css" rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.1.1/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/lib.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/1362.css}">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" th:href="@{/statics/css/base.css}">
+    <link rel="stylesheet" th:href="@{/statics/css/mdui/mdui.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/statics/css/semantic/semantic.min.css}">
+    <script type="text/javascript" th:src="@{/statics/js/jquery-1.11.3.min.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/jquery-2.1.4.js}"></script>
+    <script type="text/javascript" th:src="@{/statics/js/org1480746227.js}" data-main="baseMain"></script>
+    <script th:src="@{/js/jq-paginator.js}"></script>
+    <script th:src="@{/statics/js/semantic/semantic.min.js}"></script>
+    <script th:src="@{/statics/js/mdui/mdui.min.js}"></script>
+    <title>软件在能够复用前必须先能用</title>
+    <style type="text/css">
+        html {
+            background: rgb(247,247,247)
+        }
+
+        .icon_awesome {
+            margin-right: 20px;
+        }
+
+        #messContent div {
+            text-align: left;
+            line-height: 40px;
+        }
+
+        #messContent p {
+            text-align: left;
+            line-height: 40px;
+        }
+
+        #messContent h1 {
+            text-align: left;
+            line-height: 40px;
+        }
+
+        #messContent h2 {
+            text-align: left;
+            line-height: 40px;
+        }
+
+        #messContent h3 {
+            text-align: left;
+            line-height: 40px;
+        }
+
+        #messContent h4 {
+            text-align: left;
+            line-height: 40px;
+        }
+
+        #messContent h5 {
+            text-align: left;
+            line-height: 40px;
+        }
+
+        #messContent h6 {
+            text-align: left;
+            line-height: 40px;
+        }
+    </style>
+</head>
+
+<body style="background: rgb(247,247,247);">
+<div id="header" class="index_nav" style="background-color: white;box-shadow: 0px 2px 3px #dedede;">
+    <div class="content">
+        <a href="index.html" id="logo"><img th:src="@{/statics/images/1482810077929.png}" height="40"/></a>
+        <ul id="nav">
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/index.html'}" target="_self"><span data-title="首页">首页</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/product.html?pageNo=1&type=-1'}" target="_self">
+                    <span data-title="产品展示">产品展示</span>
+                </a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/team.html'}" target="_self"><span data-title="我们团队">我们团队</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a active" th:href="@{'/web/news.html/1'}" target="_self"><span data-title="资讯中心">资讯中心</span></a>
+            </li>
+            <li class="navitem">
+                <a class="nav-a " th:href="@{'/web/contact.html'}" target="_self"><span data-title="联系我们">联系我们</span></a>
+            </li>
+            <li class="navitem">
+                <a th:if="${session.user} == null" class="nav-a " th:href="@{'/web/login.html'}" target="_self"><span data-title="登录">登录</span></a>
+                <a th:if="${session.user} != null" class="nav-a " onclick="inst.open()" href="javascript:void(0);" target="_self"><span data-title="个人信息" th:text="${session.user.account}"></span></a>
+            </li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <a id="headSHBtn" href="javascript:;"><i class="fa fa-bars"></i></a>
+</div>
+<div id="sitecontent" style="background: rgb(247,247,247);">
+
+    <div id="newsPage" class="npagePage Pagenews">
+        <div class="content">
+            <div id="biddingInfo" class="sixteen columns row textblock blogsingle fullblog" style="margin-top: 90px;padding-top: 50px">
+                <p th:text="${message.messTitle}" style="font-size: 25px;color: #000000"></p>
+                <br/>
+                <div>
+                    发帖时间：<i><span th:text="${message.sendDate}"></span></i>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    浏览量：<i><span th:text="${message.accessNum}" style="color: red"></span></i>
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <div class="postbody" style="width: 100%">
+                    <div class="postcontent">
+                        <div id="messContent"
+                             style="margin: 0 auto;width: 70%;word-wrap:break-word;word-break:break-all;overflow: hidden;"
+                             th:utext="${message.content}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="mdui-drawer mdui-drawer-close" id="drawer" style="background: rgb(247,247,247);">
+    <img src="//maps.gstatic.com/tactile/pane/default_geocode-1x.png" alt="" width="100%" height="80px"/>
+    <ul class="mdui-list">
+        <li class="mdui-list-item">
+            <a class="ui teal image label">
+                <img src="https://semantic-ui.com/images/avatar/small/veronika.jpg">
+                <span th:if="${session.user} != null" th:text="${session.user.account}"></span>
+                <div class="detail" th:if="${session.user} != null">
+                    <span th:if="${session.user.invite == 1}">推广人员</span>
+                    <span th:if="${session.user.invite == 2}">普通用户</span>
+                </div>
+            </a>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/user','_self')">
+            <div class="icon_awesome"><i class="fa fa-address-card" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">个人信息</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/order/1','_self')">
+            <div class="icon_awesome"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">历史订单</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/system','_self')">
+            <div class="icon_awesome"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></i></div>
+            <div class="mdui-list-item-content">我要定制</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
+            <div class="icon_awesome"><i class="fa fa-list-alt" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">我的消息</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/system','_self')">
+            <div class="icon_awesome"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></i></div>
+            <div class="mdui-list-item-content">我要定制</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
+            <div class="icon_awesome"><i class="fa fa-list-alt" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">我的消息</div>
+        </li>
+        <li class="mdui-subheader">运营邀请</li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/money','_self')">
+            <div class="icon_awesome"><i class="fa fa-money" aria-hidden="true"></i></i></div>
+            <div class="mdui-list-item-content">我的余额</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/withdraw','_self')">
+            <div class="icon_awesome"><i class="fa fa-cubes" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">提现申请</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/record','_self')">
+            <div class="icon_awesome"><i class="fa fa-tasks" aria-hidden="true"></i></div>
+            <div class="mdui-list-item-content">提现记录</div>
+        </li>
+        <li class="mdui-list-item mdui-ripple" style="position: fixed;bottom: 50px;width: 100%" onclick="window.open('/web/logout','_self')">
+            <div class="icon_awesome red"><i class="fa fa-sign-out" aria-hidden="true" style="color: red"></i></div>
+            <div class="mdui-list-item-content">退出登录</div>
+        </li>
+    </ul>
+</div>
+
+<div id="footer" style="margin-top: 15px">
+    <p>
+        COPYRIGHT (©) 2020 显卡售后服务
+        <a href="http://www.beian.gov.cn/portal/index.do" style="width: 300px;margin-top: 0;margin-left: 50px"><img th:src="@{/statics/images/kimo.png}" style="margin-top: 10px"/>&nbsp;粤ICP备2021090004号-1</a>
+    </p>
+</div>
+<div id="shares">
+    <a id="sshare"><i class="fa fa-share-alt"></i></a>
+    <a href="javascript:;" id="gotop"><i class="fa fa-angle-up"></i></a>
+</div>
+<div id="online_open"><i class="fa fa-comments-o"></i></div>
+<div id="online_lx">
+    <div id="olx_head">联系我们<i class="fa fa-times fr" id="online_close"></i></div>
+    <ul id="olx_qq">
+        <li>
+            <a href="javascript:;" style="font-size: 14px; color: #777">想建站或软件开发?</a>
+        </li>
+    </ul>
+    <div id="olx_tel">
+        <div style="color: #777"><i class="fa fa-phone" style="margin-right: 8px;"></i>请联系我们</div>
+        <p style="color: #777; font-size: 16px">199XXXX0631<br/></p>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    var inst = new mdui.Drawer('#drawer', {overlay: true});
+</script>
+</html>

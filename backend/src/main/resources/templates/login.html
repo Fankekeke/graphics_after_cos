@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+
+    <link type="text/css" rel="stylesheet" th:href="@{/statics/css/login/style.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/statics/css/login/styles.css}">
+
+    <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+    <script th:src="@{/statics/js/login/jquery-1.10.2.js}"></script>
+    <script th:src="@{/statics/js/login/img_ver.js}"></script>
+    <script th:src="@{/statics/js/login/vector.js}"></script>
+
+    <style>
+        .bxs-row {
+            margin-bottom: 12px;
+        }
+
+        .logo-box {
+            width: 404px;
+            border: 1px solid #e5e5e5;
+            border-radius: 4px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            height: 420px;
+        }
+
+        .login {
+            position: absolute;
+            width: 320px;
+            left: 0;
+            top: 0;
+            padding: 42px 42px 36px;
+            transition: all 0.8s;
+            margin-top: 20px;
+        }
+
+        .btn {
+            height: 44px;
+            width: 100%;
+            padding: 0 10px;
+            border: 1px solid #9da3a6;
+            background: #fff;
+            text-overflow: ellipsis;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            -khtml-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            color: #000;
+            font-size: 1em;
+            font-family: Helvetica, Arial, sans-serif;
+            font-weight: 400;
+            direction: ltr;
+            font-size: 13px;
+        }
+
+        .submit {
+            background-color: #0070ba;
+            color: #fff;
+            border: 1px solid #0070ba;
+        }
+
+        .submit:hover {
+            background-color: #005ea6;
+        }
+
+        .verBox {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            left: 404px;
+            top: 0;
+            opacity: 0;
+            transition: all 0.8s;
+            padding-top: 100px;
+        }
+
+        .err {
+            margin: 12px 0 0;
+            line-height: 12px;
+            height: 12px;
+            font-size: 12px;
+            color: red;
+        }
+
+        .title {
+            margin: 30px 0 10px;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 1;
+            color: whitesmoke;
+        }
+    </style>
+    <script th:src="@{/statics/js/login/jquery-3.3.1.min.js}"></script>
+</head>
+<body>
+
+
+<div id="container">
+    <div id="output">
+        <div class="containerT">
+            <form class="form" id="entry_form" th:action="@{/web/dologin}" method="post">
+                <img th:src="@{/statics/images/1482810077929.png}" width="100px" onclick="location='registered.html'">
+                <div class="logo-box">
+                    <div class="title">登 录</div>
+                    <div class="login" style="">
+                        <div class="bxs-row" style="text-align:center;margin-top: -10px">
+                            <span class="tips" style="color:red;"
+                                  th:text="${#httpServletRequest.getAttribute('error')}"></span>
+                        </div>
+                        <div class="bxs-row">
+                            <input type="text" placeholder="用户名" id="entry_name" value="1258846421@qq.com"
+                                   class="username" name="email">
+                            <p class=" err err-username"></p>
+                        </div>
+                        <div class="bxs-row">
+                            <input type="password" placeholder="密码" id="entry_password" class="password" name="password"
+                                   value="123456">
+                            <p class="err err-password"></p>
+                        </div>
+                        <div class="bxs-row">
+                            <input type="button" class="submit btn" value="登录">
+                        </div>
+                    </div>
+                    <div class="verBox">
+                        <div id="imgVer" style="display:inline-block;"></div>
+                    </div>
+                </div>
+                <div id="prompt" class="prompt"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        Victor("container", "output");   //登录背景函数
+        $("#entry_name").focus();
+        $(document).keydown(function (event) {
+            if (event.keyCode == 13) {
+                $("#entry_btn").click();
+            }
+        });
+    });
+</script>
+<script>
+    // var obj = new WxLogin({
+    //     self_redirect:false,
+    //     id:"login_container",
+    //     appid: "wx033d0145ace6a85b",
+    //     scope: "snsapi_login",
+    //     redirect_uri: "http://na3mx9.natappfree.cc/wechat/callback",
+    //     // redirect_uri: "https://www.yxblshop.cn/wechat/callback",
+    //     state: Math.ceil(Math.random()*1000),
+    //     style: "black",
+    //     href: "data:text/css;base64,LmltcG93ZXJCb3ggLnFyY29kZSB7d2lkdGg6IDIwMHB4O30NCi5pbXBvd2VyQm94IC50aXRsZSB7ZGlzcGxheTogbm9uZTt9DQouaW1wb3dlckJveCAuaW5mbyB7d2lkdGg6IDIwMHB4O30NCi5zdGF0dXNfaWNvbiB7ZGlzcGxheTogbm9uZX0NCi5pbXBvd2VyQm94IC5zdGF0dXMge3RleHQtYWxpZ246IGNlbnRlcjt9DQojd3hfZGVmYXVsdF90aXAge2NvbG9yOiB3aGl0ZTt9DQojd3hfYWZ0ZXJfc2NhbiB7Y29sb3I6IHdoaXRlO30NCi5zdGF0dXNfdHh0IGg0IHtmb250LXNpemU6IDE0cHg7bWFyZ2luLWJvdHRvbTogNXB4O21hcmdpbi10b3A6IDVweDt9"
+    // });
+
+    imgVer({
+        el: '$("#imgVer")',
+        width: '260',
+        height: '116',
+        img: [
+            '../statics/images/verification/file_474842.png',
+            '../statics/images/verification/file_474843.png',
+            '../statics/images/verification/file_474845.png'
+        ],
+        success: function () {
+            // alert('执行登录函数');
+              $(".login").css({
+                  "left":"0",
+                  "opacity":"1"
+              });
+              $(".verBox").css({
+                  "left":"404px",
+                  "opacity":"0"
+              });
+            // alert("登录成功")
+            setTimeout(function () {
+                let form = document.getElementById('entry_form');
+                //再次修改input内容
+                form.submit();
+            }, 500);
+
+        },
+        error: function () {
+            //alert('错误什么都不执行')
+        }
+    });
+    $(".submit").on('click', function () {
+        if ($(".password").val() == '' || $(".username").val() == '') {
+            $(".tips").html("未填写用户名或密码！");
+        } else {
+            $(".login").css({
+                "left": "-404px",
+                "opacity": "0"
+            });
+            $(".verBox").css({
+                "left": "0",
+                "opacity": "1"
+            });
+        }
+    })
+</script>
+<div style="text-align:center;">
+</div>
+</body>
+</html>
