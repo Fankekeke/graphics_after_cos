@@ -119,7 +119,7 @@
             });
         });
     </script>
-    <title>软件在能够复用前必须先能用</title>
+    <title>显卡售后系统</title>
     <style type="text/css">
         html {
             background: rgb(247, 247, 247)
@@ -143,15 +143,15 @@
                     <span data-title="产品展示">产品展示</span>
                 </a>
             </li>
-            <li class="navitem">
-                <a class="nav-a " th:href="@{'/web/team.html'}" target="_self"><span data-title="我们团队">我们团队</span></a>
-            </li>
+<!--            <li class="navitem">-->
+<!--                <a class="nav-a " th:href="@{'/web/team.html'}" target="_self"><span data-title="我们团队">我们团队</span></a>-->
+<!--            </li>-->
             <li class="navitem">
                 <a class="nav-a " th:href="@{'/web/news.html/1'}" target="_self"><span data-title="资讯中心">资讯中心</span></a>
             </li>
-            <li class="navitem">
-                <a class="nav-a " th:href="@{'/web/contact.html'}" target="_self"><span data-title="联系我们">联系我们</span></a>
-            </li>
+<!--            <li class="navitem">-->
+<!--                <a class="nav-a " th:href="@{'/web/contact.html'}" target="_self"><span data-title="联系我们">联系我们</span></a>-->
+<!--            </li>-->
             <li class="navitem">
                 <a th:if="${session.user} == null" class="nav-a " th:href="@{'/web/login.html'}" target="_self"><span data-title="登录">登录</span></a>
                 <a th:if="${session.user} != null" class="nav-a " onclick="inst.open()" href="javascript:void(0);" target="_self"><span data-title="个人信息" th:text="${session.user.account}"></span></a>
@@ -169,22 +169,14 @@
 <!--        </div>-->
         <div class="content" style="margin-top: 90px;padding: 50px 0px">
             <div style="width: 80%;margin: 0 auto;">
-                <p style="margin-top: 50px;font-size: 35px;color: #000000;font-style:italic" th:text="${proInfo.proName}"></p>
-                <p style="text-align: right;font-style:italic;margin-right: 20px;margin-top: 20px">产品著作权：
-                    <span th:if="${proInfo.releaseUser != null}" style="color: #2e2f2f" th:text="${proInfo.releaseUser}"></span>
-                    <span th:if="${proInfo.releaseUser == null}" style="color: #2e2f2f">- -</span>
+                <p style="margin-top: 50px;font-size: 35px;color: #000000;font-style:italic" th:text="${proInfo.name}"></p>
+                <p style="text-align: right;font-style:italic;margin-right: 20px;margin-top: 20px">产品编号：
+                    <span th:if="${proInfo.code != null}" style="color: #2e2f2f" th:text="${proInfo.code}"></span>
                 </p>
 
                 <div style="margin-top: 50px;line-height: 40px;height: 80px">
-                    <div style="width: 33.3%;float: left;margin: 0 auto"><b style="color: #000000;font-size: 14px">订单编号：</b><span th:text="${proInfo.code}"></span></div>
-                    <div style="width: 33.3%;float: left;margin: 0 auto"><b style="color: #000000;font-size: 14px">产品价格：</b><span style="color: red">￥<span th:text="${proInfo.proPrice}"></span></span></div>
-                    <div style="width: 33.3%;float: left;margin: 0 auto"><b style="color: #000000;font-size: 14px">项目类型：</b>
-                        <span th:if="${proInfo.proType == 1}">仅后台</span>
-                        <span th:if="${proInfo.proType == 2}">前后台</span>
-                        <span th:if="${proInfo.proType == 3}">小程序</span>
-                        <span th:if="${proInfo.proType == 4}">安 卓</span>
-                    </div>
-                    <div style="width: 100%;float: left;margin: 0 auto"><b style="color: #2e2f2f;font-size: 14px">项目分类：</b><span th:text="${proInfo.proSort}"></span></div>
+                    <div style="width: 33.3%;float: left;margin: 0 auto"><b style="color: #000000;font-size: 14px">产品型号：</b><span th:text="${proInfo.model}"></span></div>
+                    <div style="width: 100%;float: left;margin: 0 auto"><b style="color: #2e2f2f;font-size: 14px">创建时间：</b><span th:text="${proInfo.createDate}"></span></div>
                 </div>
             </div>
 
@@ -194,31 +186,19 @@
                         <div class="border"></div>
                         <ul>
                             <li class="active"><a href="#tab-1" tab-id="1" ripple="ripple" ripple-color="#FFF">产品介绍</a></li>
-                            <li><a href="#tab-2" tab-id="2" ripple="ripple" ripple-color="#FFF">技术方案</a></li>
-                            <li><a href="#tab-3" tab-id="3" ripple="ripple" ripple-color="#FFF">产品视频</a></li>
-                            <li><a href="#tab-4" tab-id="4" ripple="ripple" ripple-color="#FFF">项目图册</a></li>
+                            <li><a href="#tab-4" tab-id="4" ripple="ripple" ripple-color="#FFF">产品图册</a></li>
                         </ul>
                         <nav class="tabs-nav"><i id="prev" ripple="ripple" ripple-color="#FFF" class="material-icons">&#xE314;</i><i id="next" ripple="ripple" ripple-color="#FFF" class="material-icons">&#xE315;</i></nav>
                     </div>
                     <div class="tabs-content">
                         <div tab-id="1" class="tab active">
-                            <p th:text="${proInfo.proIntroduce}" style="font-size: 12px;line-height: 40px;color: #000000;text-indent:50px;"></p>
-                        </div>
-                        <div tab-id="2" class="tab">
-                            <p th:text="${proInfo.proTechnology}" style="font-size: 12px;line-height: 40px;color: #000000;text-indent:50px;"></p>
-                        </div>
-                        <div tab-id="3" class="tab">
-                            <video controls style="width: 100%">
-                                <source th:src="@{'/videoWeb/'+${proInfo.proVoide}}"
-                                        type="video/mp4">
-                                Sorry, your browser doesn't support embedded videos.
-                            </video>
+                            <p th:text="${proInfo.name}" style="font-size: 12px;line-height: 40px;color: #000000;text-indent:50px;"></p>
                         </div>
                         <div tab-id="4" class="tab">
                             <div class="ag7-main" style="width: 100%;padding: 0px;height: 450px">
                                 <div class="ag7-bannerslide">
                                     <ul class="slidebox" style="height: 450px;overflow: hidden">
-                                        <li th:each="image:${proInfo.proPic.split(',')}">
+                                        <li th:each="image:${proInfo.images.split(',')}">
                                             <a href="#" target="_self">
                                                 <img th:src="@{'/imagesWeb/'+${image}}" style="width: 100%">
                                             </a>
@@ -231,7 +211,7 @@
 <!--                                        </div>-->
                                         <div class="slidelist">
                                             <ul>
-                                                <li th:each="image:${proInfo.proPic.split(',')}">
+                                                <li th:each="image:${proInfo.images.split(',')}">
                                                     <img width="50" height="22" th:src="@{'/imagesWeb/'+${image}}" alt="">
                                                 </li>
                                             </ul>
@@ -264,7 +244,7 @@
                     <p class="ellipsis tel"><span>电话：</span>199XXXX0631</p>
                     <p class="ellipsis mobile"><span>手机：</span>199XXXX0631</p>
                     <p class="ellipsis fax"><span>传真：</span>保密</p>
-                    <p class="ellipsis email"><span>邮箱：</span>doufo_uncle@163.com</p>
+                    <p class="ellipsis email"><span>邮箱：</span>fan1ke2ke@gmail.com</p>
                     <div>
                         <a class="fl" href="javascript:;"><i class="fa fa-weibo"></i></a>
                         <a class="fl" href="javascript:;"><i class="fa fa-qq"></i></a>
@@ -296,16 +276,12 @@
 </div>
 
 <div class="mdui-drawer mdui-drawer-close" id="drawer" style="background: rgb(247,247,247);">
-    <img src="//maps.gstatic.com/tactile/pane/default_geocode-1x.png" alt="" width="100%" height="80px"/>
+    <img th:src="@{/statics/images/default_geocode-1x.png}" alt="" width="100%" height="80px"/>
     <ul class="mdui-list">
         <li class="mdui-list-item">
             <a class="ui teal image label">
                 <img src="https://semantic-ui.com/images/avatar/small/veronika.jpg">
                 <span th:if="${session.user} != null" th:text="${session.user.account}"></span>
-                <div class="detail" th:if="${session.user} != null">
-                    <span th:if="${session.user.invite == 1}">推广人员</span>
-                    <span th:if="${session.user.invite == 2}">普通用户</span>
-                </div>
             </a>
         </li>
         <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/user','_self')">
@@ -318,32 +294,11 @@
         </li>
         <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/system','_self')">
             <div class="icon_awesome"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></i></div>
-            <div class="mdui-list-item-content">我要定制</div>
+            <div class="mdui-list-item-content">缴费记录</div>
         </li>
         <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
             <div class="icon_awesome"><i class="fa fa-list-alt" aria-hidden="true"></i></div>
-            <div class="mdui-list-item-content">我的消息</div>
-        </li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/system','_self')">
-            <div class="icon_awesome"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></i></div>
-            <div class="mdui-list-item-content">我要定制</div>
-        </li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
-            <div class="icon_awesome"><i class="fa fa-list-alt" aria-hidden="true"></i></div>
-            <div class="mdui-list-item-content">我的消息</div>
-        </li>
-        <li class="mdui-subheader">运营邀请</li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/money','_self')">
-            <div class="icon_awesome"><i class="fa fa-money" aria-hidden="true"></i></i></div>
-            <div class="mdui-list-item-content">我的余额</div>
-        </li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/withdraw','_self')">
-            <div class="icon_awesome"><i class="fa fa-cubes" aria-hidden="true"></i></div>
-            <div class="mdui-list-item-content">提现申请</div>
-        </li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/record','_self')">
-            <div class="icon_awesome"><i class="fa fa-tasks" aria-hidden="true"></i></div>
-            <div class="mdui-list-item-content">提现记录</div>
+            <div class="mdui-list-item-content">维修记录</div>
         </li>
         <li class="mdui-list-item mdui-ripple" style="position: fixed;bottom: 50px;width: 100%" onclick="window.open('/web/logout','_self')">
             <div class="icon_awesome red"><i class="fa fa-sign-out" aria-hidden="true" style="color: red"></i></div>
@@ -376,7 +331,7 @@
     <ul id="olx_qq">
         <li>
             <!--					<a href="tencent://message/?uin=XXX&Site=wangdahai&Menu=yes"><i class="fa fa-qq"></i>XXX</a>-->
-            <a href="javascript:;" style="font-size: 14px; color: #777">想建站或软件开发?</a>
+            <a href="javascript:;" style="font-size: 14px; color: #777">问题答疑?</a>
         </li>
     </ul>
     <div id="olx_tel">

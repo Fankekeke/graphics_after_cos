@@ -17,7 +17,7 @@
     <script type="text/javascript" th:src="@{/statics/js/jquery-2.1.4.js}"></script>
     <script type="text/javascript" th:src="@{/statics/js/org1480746227.js}" data-main="baseMain"></script>
     <script th:src="@{/statics/js/semantic/semantic.min.js}"></script>
-    <title>软件在能够复用前必须先能用</title>
+    <title>显卡售后系统</title>
     <style type="text/css">
         html {
             background: rgb(247,247,247)
@@ -42,15 +42,15 @@
                     <span data-title="产品展示">产品展示</span>
                 </a>
             </li>
-            <li class="navitem">
-                <a class="nav-a " th:href="@{'/web/team.html'}" target="_self"><span data-title="我们团队">我们团队</span></a>
-            </li>
+<!--            <li class="navitem">-->
+<!--                <a class="nav-a " th:href="@{'/web/team.html'}" target="_self"><span data-title="我们团队">我们团队</span></a>-->
+<!--            </li>-->
             <li class="navitem">
                 <a class="nav-a" th:href="@{'/web/news.html/1'}" target="_self"><span data-title="资讯中心">资讯中心</span></a>
             </li>
-            <li class="navitem">
-                <a class="nav-a " th:href="@{'/web/contact.html'}" target="_self"><span data-title="联系我们">联系我们</span></a>
-            </li>
+<!--            <li class="navitem">-->
+<!--                <a class="nav-a " th:href="@{'/web/contact.html'}" target="_self"><span data-title="联系我们">联系我们</span></a>-->
+<!--            </li>-->
             <li class="navitem">
                 <a th:if="${session.user} == null" class="nav-a " th:href="@{'/web/login.html'}" target="_self"><span data-title="登录">登录</span></a>
                 <a th:if="${session.user} != null" class="nav-a active" onclick="inst.open()" href="javascript:void(0);" target="_self"><span data-title="个人信息" th:text="${session.user.account}"></span></a>
@@ -72,10 +72,6 @@
                             <div class="mdui-col-sm-6 mdui-col-md-4" style="padding: 0">
                                 <div class="mdui-card">
                                     <div class="mdui-card-header">
-<!--                                        <img th:if="${session.user.sex} == 2" class="mdui-card-header-avatar" th:src="@{/statics/images/user/no.png}"/>-->
-<!--                                        <img th:if="${session.user.sex} == 0" class="mdui-card-header-avatar" th:src="@{/statics/images/user/man.png}"/>-->
-<!--                                        <img th:if="${session.user.sex} == 1" class="mdui-card-header-avatar" th:src="@{/statics/images/user/woman.png}"/>-->
-                                        <img class="mdui-card-header-avatar" th:src="${session.user.headImgUrl}"/>
                                         <div class="mdui-card-header-title"><span th:text="${session.user.account}" style="font-size: 15px"></span></div>
                                         <div class="mdui-card-header-subtitle"><span th:text="${session.user.createDate}"></span></div>
                                     </div>
@@ -92,133 +88,134 @@
                                     <div class="mdui-card-primary">
                                         <div class="mdui-card-primary-title"><span th:text="${session.user.account}"></span></div>
                                         <div class="mdui-card-primary-subtitle">
-                                            <span th:text="${session.user.schoolName != null ? session.user.schoolName : '未绑定'}"></span>
+                                            <span th:text="${session.user.email != null ? session.user.email : '未绑定'}"></span>
                                         </div>
                                     </div>
-                                    <div class="mdui-card-content"><i class="fa fa-money" aria-hidden="true"></i> 余额：
+                                    <div class="mdui-card-content"></i> 用户编号：
                                         <a class="ui label">
-                                            ￥<span th:text="${session.user.balance}">0.00</span>
+                                            <span th:text="${session.user.code}">0.00</span>
                                         </a>
                                     </div>
-                                    <div class="mdui-card-actions">
-                                        <button class="mdui-btn mdui-ripple">申请开发者</button>
-                                        <button class="mdui-btn mdui-ripple">申请推广人</button>
-                                        <button class="mdui-btn mdui-btn-icon mdui-float-right"><i class="fa fa-tag" aria-hidden="true"></i></button>
-                                    </div>
+<!--                                    <div class="mdui-card-actions">-->
+<!--                                        <button class="mdui-btn mdui-ripple">申请开发者</button>-->
+<!--                                        <button class="mdui-btn mdui-ripple">申请推广人</button>-->
+<!--                                        <button class="mdui-btn mdui-btn-icon mdui-float-right"><i class="fa fa-tag" aria-hidden="true"></i></button>-->
+<!--                                    </div>-->
                                 </div>
                             </div>
                             <div class="mdui-col-sm-8 mdui-col-md-8" style="padding: 0px 20px">
                                 <div style="box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);">
                                     <div class="ui top attached tabular menu">
-                                        <div class="active item" data-tab="platform">平台须知</div>
-                                        <div class="item" data-tab="userInfo">基本信息</div>
-                                        <div class="item" data-tab="safety">安全验证</div>
+                                        <div class="active item" data-tab="userInfo">基本信息</div>
                                     </div>
-                                    <div data-tab="platform" class="ui bottom attached active tab segment" style="height: 417px;border: none;width: 96%;">
-                                        <div class="column" style="width: 90%;margin: 0 auto">
-                                            <div class="ui raised segment">
-                                                <a class="ui red ribbon label">购买须知</a>
-                                                <div class="ui placeholder">
-                                                    <div class="line"></div>
-                                                    <div class="line"></div>
-                                                    <div class="line"></div>
-                                                    <div class="line"></div>
-                                                    <div class="line"></div>
-                                                    <div class="line"></div>
-                                                    <div class="line"></div>
-                                                    <div class="line"></div>
-                                                </div>
-                                                <p></p>
-                                                <a class="ui blue ribbon label">售后服务</a>
-                                                <div class="ui placeholder">
-                                                    <div class="line"></div>
-                                                    <div class="line"></div>
-                                                    <div class="line"></div>
-                                                    <div class="line"></div>
-                                                    <div class="line"></div>
-                                                    <div class="line"></div>
-                                                    <div class="line"></div>
-                                                    <div class="line"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ui bottom attached tab segment" data-tab="userInfo" style="height: 417px;border: none;width: 96%;">
+<!--                                    <div data-tab="platform" class="ui bottom attached active tab segment" style="height: 417px;border: none;width: 96%;">-->
+<!--                                        <div class="column" style="width: 90%;margin: 0 auto">-->
+<!--                                            <div class="ui raised segment">-->
+<!--                                                <a class="ui red ribbon label">购买须知</a>-->
+<!--                                                <div class="ui placeholder">-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                </div>-->
+<!--                                                <p></p>-->
+<!--                                                <a class="ui blue ribbon label">售后服务</a>-->
+<!--                                                <div class="ui placeholder">-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                    <div class="line"></div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+                                    <div class="ui bottom attached active tab segment" data-tab="userInfo" style="height: 557px;border: none;width: 96%;">
                                         <form class="ui form" style="width: 90%;margin: 0 auto">
                                             <h4 class="ui dividing header" style="width: 100%;background: none;top: 0px;height: 25px">个人信息</h4>
                                             <div class="field">
                                                 <label>账户名称</label>
                                                 <input style="width: 95%" disabled type="text" th:value="${session.user.account}" name="account" placeholder="账户名称">
                                             </div>
+<!--                                            <div class="field">-->
+<!--                                                <label>性 别</label>-->
+<!--                                                <div id="sex" class="ui selection dropdown" style="width: 92%;min-height: auto">-->
+<!--                                                    <input type="hidden" id="sex_value" name="gender">-->
+<!--                                                    <i class="dropdown icon"></i>-->
+<!--                                                    <div class="default text">性别</div>-->
+<!--                                                    <div class="menu">-->
+<!--                                                        <div class="item" data-value="0">男性</div>-->
+<!--                                                        <div class="item" data-value="1">女性</div>-->
+<!--                                                        <div class="item" data-value="2">保密</div>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                                <script type="text/javascript">-->
+<!--                                                    $(".ui.dropdown").dropdown();-->
+<!--                                                </script>-->
+<!--                                            </div>-->
                                             <div class="field">
-                                                <label>所在校院</label>
-                                                <div id="school" class="ui selection dropdown search" style="width: 92%;min-height: auto">
-                                                    <input type="hidden" name="gender" id="school_value" onchange="onChangeHandler(this.value)">
-                                                    <i class="dropdown icon"></i>
-                                                    <div class="default text">请输入学校名称获取</div>
-                                                    <div class="menu" id="school_item"></div>
-                                                </div>
+                                                <label>客户姓名</label>
+                                                <input style="width: 95%" type="text" th:value="${session.user.name}" name="name" id="u-name" placeholder="客户姓名">
                                             </div>
                                             <div class="field">
-                                                <label>性 别</label>
-                                                <div id="sex" class="ui selection dropdown" style="width: 92%;min-height: auto">
-                                                    <input type="hidden" id="sex_value" name="gender">
-                                                    <i class="dropdown icon"></i>
-                                                    <div class="default text">性别</div>
-                                                    <div class="menu">
-                                                        <div class="item" data-value="0">男性</div>
-                                                        <div class="item" data-value="1">女性</div>
-                                                        <div class="item" data-value="2">保密</div>
-                                                    </div>
-                                                </div>
-                                                <script type="text/javascript">
-                                                    $(".ui.dropdown").dropdown();
-                                                </script>
+                                                <label>联系电话</label>
+                                                <input style="width: 95%" type="text" th:value="${session.user.phone}" name="phone" id="u-phone" placeholder="联系电话">
+                                            </div>
+                                            <div class="field">
+                                                <label>收货地址</label>
+                                                <input style="width: 95%" type="text" th:value="${session.user.address}" name="address" id="u-address" placeholder="收货地址">
                                             </div>
                                             <div class="ui button" tabindex="0" style="margin-top: 20px" id="submitUser">
                                                 <i class="fa fa-random" aria-hidden="true"></i> 更 新
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="ui bottom attached tab segment" data-tab="safety" style="height: 417px;border: none;width: 96%;">
-                                        <div style="width: 90%;margin: 0 auto">
-                                            <h4 class="ui dividing header" style="width: 100%;background: none;top: 0px;height: 25px">验证您的账户信息</h4>
-                                            <div class="ui form success" th:if="!${#strings.isEmpty(session.user.phone)}">
-                                                <div class="field">
-                                                    <label>手机号码</label>
-                                                    <input disabled th:value="${session.user.phone}" style="width: 95%">
-                                                </div>
-                                                <div class="ui success message">
-                                                    <p><i class="fa fa-check" aria-hidden="true"></i>手机号码验证成功</p>
-                                                </div>
-                                            </div>
-                                            <div class="ui form warning" style="margin-top: 20px" th:if="${#strings.isEmpty(session.user.phone)}">
-                                                <div class="field">
-                                                    <label>手机号码</label>
-                                                    <div class="ui action input field" style="width: 60%;margin-top: 10px">
-                                                        <input id="phoneValue" type="text" placeholder="手机号码验证">
-                                                        <button class="ui teal right labeled icon button" id="sendVerify">
-                                                            <i class="icon"><i style="line-height: 38px" class="fa fa-paper-plane" aria-hidden="true"></i></i>
-                                                            发送
-                                                        </button>
-                                                    </div>
-                                                    <div class="ui action input field" style="width: 60%">
-                                                        <input id="verifyValue" type="text" placeholder="校验验证码">
-                                                        <button class="ui primary  right labeled icon button" id="checkVerify">
-                                                            <i class="icon"><i style="line-height: 38px" class="fa fa-unlock-alt" aria-hidden="true"></i></i>
-                                                            校验
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="ui warning hidden message" id="messageTip">
-                                                    <p>
-                                                        <i class="fa fa-question-circle-o" aria-hidden="true"></i>
-                                                        <span>请注意短信收到的信息</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+<!--                                    <div class="ui bottom attached tab segment" data-tab="safety" style="height: 417px;border: none;width: 96%;">-->
+<!--                                        <div style="width: 90%;margin: 0 auto">-->
+<!--                                            <h4 class="ui dividing header" style="width: 100%;background: none;top: 0px;height: 25px">验证您的账户信息</h4>-->
+<!--                                            <div class="ui form success" th:if="!${#strings.isEmpty(session.user.phone)}">-->
+<!--                                                <div class="field">-->
+<!--                                                    <label>手机号码</label>-->
+<!--                                                    <input disabled th:value="${session.user.phone}" style="width: 95%">-->
+<!--                                                </div>-->
+<!--                                                <div class="ui success message">-->
+<!--                                                    <p><i class="fa fa-check" aria-hidden="true"></i>手机号码验证成功</p>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="ui form warning" style="margin-top: 20px" th:if="${#strings.isEmpty(session.user.phone)}">-->
+<!--                                                <div class="field">-->
+<!--                                                    <label>手机号码</label>-->
+<!--                                                    <div class="ui action input field" style="width: 60%;margin-top: 10px">-->
+<!--                                                        <input id="phoneValue" type="text" placeholder="手机号码验证">-->
+<!--                                                        <button class="ui teal right labeled icon button" id="sendVerify">-->
+<!--                                                            <i class="icon"><i style="line-height: 38px" class="fa fa-paper-plane" aria-hidden="true"></i></i>-->
+<!--                                                            发送-->
+<!--                                                        </button>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="ui action input field" style="width: 60%">-->
+<!--                                                        <input id="verifyValue" type="text" placeholder="校验验证码">-->
+<!--                                                        <button class="ui primary  right labeled icon button" id="checkVerify">-->
+<!--                                                            <i class="icon"><i style="line-height: 38px" class="fa fa-unlock-alt" aria-hidden="true"></i></i>-->
+<!--                                                            校验-->
+<!--                                                        </button>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                                <div class="ui warning hidden message" id="messageTip">-->
+<!--                                                    <p>-->
+<!--                                                        <i class="fa fa-question-circle-o" aria-hidden="true"></i>-->
+<!--                                                        <span>请注意短信收到的信息</span>-->
+<!--                                                    </p>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                 </div>
                                 <script>
                                     $(".tabular.menu .item").tab();
@@ -250,7 +247,7 @@
                     <p class="ellipsis tel"><span>电话：</span>199XXXX0631</p>
                     <p class="ellipsis mobile"><span>手机：</span>199XXXX0631</p>
                     <p class="ellipsis fax"><span>传真：</span>保密</p>
-                    <p class="ellipsis email"><span>邮箱：</span>doufo_uncle@163.com</p>
+                    <p class="ellipsis email"><span>邮箱：</span>fan1ke2ke@gmail.com</p>
                     <div>
                         <a class="fl" href="javascript:;"><i class="fa fa-weibo"></i></a>
                         <a class="fl" href="javascript:;"><i class="fa fa-qq"></i></a>
@@ -282,16 +279,12 @@
 </div>
 
 <div class="mdui-drawer mdui-drawer-close" id="drawer" style="background: rgb(247,247,247);">
-    <img src="//maps.gstatic.com/tactile/pane/default_geocode-1x.png" alt="" width="100%" height="80px"/>
+    <img th:src="@{/statics/images/default_geocode-1x.png}" alt="" width="100%" height="80px"/>
     <ul class="mdui-list">
         <li class="mdui-list-item">
             <a class="ui teal image label">
                 <img src="https://semantic-ui.com/images/avatar/small/veronika.jpg">
                 <span th:if="${session.user} != null" th:text="${session.user.account}"></span>
-                <div class="detail">
-                    <span th:if="${session.user.invite == 1}">推广人员</span>
-                    <span th:if="${session.user.invite == 2}">普通用户</span>
-                </div>
             </a>
         </li>
         <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/user','_self')">
@@ -304,32 +297,11 @@
         </li>
         <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/system','_self')">
             <div class="icon_awesome"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></i></div>
-            <div class="mdui-list-item-content">我要定制</div>
+            <div class="mdui-list-item-content">缴费记录</div>
         </li>
         <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
             <div class="icon_awesome"><i class="fa fa-list-alt" aria-hidden="true"></i></div>
-            <div class="mdui-list-item-content">我的消息</div>
-        </li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
-            <div class="icon_awesome"><i class="fa fa-share-alt-square" aria-hidden="true"></i></div>
-            <div class="mdui-list-item-content">申请推广人</div>
-        </li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/developer','_self')">
-            <div class="icon_awesome"><i class="fa fa-retweet" aria-hidden="true"></i></div>
-            <div class="mdui-list-item-content">申请开发者</div>
-        </li>
-        <li class="mdui-subheader">运营邀请</li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/money','_self')">
-            <div class="icon_awesome"><i class="fa fa-money" aria-hidden="true"></i></i></div>
-            <div class="mdui-list-item-content">我的余额</div>
-        </li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/withdraw','_self')">
-            <div class="icon_awesome"><i class="fa fa-cubes" aria-hidden="true"></i></div>
-            <div class="mdui-list-item-content">提现申请</div>
-        </li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/record','_self')">
-            <div class="icon_awesome"><i class="fa fa-tasks" aria-hidden="true"></i></div>
-            <div class="mdui-list-item-content">提现记录</div>
+            <div class="mdui-list-item-content">维修记录</div>
         </li>
         <li class="mdui-list-item mdui-ripple" style="position: fixed;bottom: 50px;width: 100%" onclick="window.open('/web/logout','_self')">
             <div class="icon_awesome red"><i class="fa fa-sign-out" aria-hidden="true" style="color: red"></i></div>
@@ -353,7 +325,7 @@
     <div id="olx_head">联系我们<i class="fa fa-times fr" id="online_close"></i></div>
     <ul id="olx_qq">
         <li>
-            <a href="javascript:;" style="font-size: 14px; color: #777">想建站或软件开发?</a>
+            <a href="javascript:;" style="font-size: 14px; color: #777">问题答疑?</a>
         </li>
     </ul>
     <div id="olx_tel">
@@ -366,154 +338,12 @@
 </body>
 <script th:src="@{/statics/js/mdui/mdui.min.js}"></script>
 <script type="text/javascript">
-    let sessionSex = '[[${session.user.sex}]]';
-    let sessionSchool = '[[${session.user.school}]]';
-    let sessionSchoolName = '[[${session.user.schoolName}]]';
-    $(document).ready(function(){
-        schoolSearch(sessionSchoolName)
-    });
     let inst = new mdui.Drawer('#drawer', {overlay: true});
-    function onChangeHandler(val){
-        console.log(val);
-    }
-    function wait() {
-        //禁用按钮
-        var obj = document.getElementById('sendVerify');
-        obj.className += ' disabled';
-        //定时执行
-        var t1 = window.setInterval(refreshCount, 1000);
-        var wait = 60;
-        //循环执行，每隔1秒钟执行一次 1000
-        function refreshCount() {
-            wait--;
-            if(wait > 1){
-                $("#sendVerify").html('<i class="icon"><i style="line-height: 38px" class="fa fa-paper-plane" aria-hidden="true"></i></i>' + wait + '秒');
-            }else{
-                window.clearInterval(t1);
-                $("#sendVerify").html('<i class="icon"><i style="line-height: 38px" class="fa fa-paper-plane" aria-hidden="true"></i></i>发送');
-                $("#sendVerify").removeClass("disabled");
-            }
-        }
-    }
-    function sendVerifyCode(phone) {
-        $.ajax({
-            url:"/business/sendVerify",
-            type: "POST",
-            data: {phone: phone},
-            dataType: "json",
-            success: function(response){
-                if (response.code == 500) {
-                    $("#messageTip p span").text(response.msg);
-                } else {
-                    mdui.snackbar({
-                        message: '发送成功！',
-                        position: 'left-bottom',
-                    });
-                }
-            }
-        });
-    }
-    function checkMobileVerify(phone, verifyCode) {
-        $.ajax({
-            url:"/business/check/mobile",
-            type: "POST",
-            data: {mobile: phone, verifyCode: verifyCode},
-            dataType: "json",
-            success: function(response){
-                if (response.code == 500) {
-                    $("#messageTip p span").text(response.msg);
-                } else {
-                    $("#messageTip").removeClass("warning");
-                    var obj = document.getElementById('messageTip');
-                    obj.className += ' success';
-                    $("#messageTip p span").text("手机号码验证成功!");
-                    mdui.snackbar({
-                        message: '绑定成功！',
-                        position: 'left-bottom',
-                    });
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000)
-                }
-            }
-        });
-    }
-    $('#sendVerify').on('click',function () {
-        let reg = /^1[3-9]\d{9}$/
-        if (!reg.test($('#phoneValue').val())) {
-            // 设置消息提醒
-            $("#messageTip p span").text("手机号码格式错误！");
-            $("#messageTip").removeClass("hidden");
-            var obj = document.getElementById('messageTip');
-            obj.className += ' visible';
-        } else {
-            wait();
-            $("#messageTip").removeClass("hidden");
-            var obj = document.getElementById('messageTip');
-            obj.className += ' visible';
-            $("#messageTip p span").text("请注意短信收到的信息！");
-            sendVerifyCode($('#phoneValue').val())
-        }
-    })
-    $('#checkVerify').on('click',function () {
-        var verifyValue = $('#verifyValue').val();
-        if (verifyValue != '' && verifyValue != null) {
-            checkMobileVerify($('#phoneValue').val(), $('#verifyValue').val());
-        } else {
-            $("#messageTip p span").text("验证码不能为空！");
-        }
-    })
-    $('#school.dropdown').dropdown({
-        apiSettings: {
-            url: '/business/united/{query}',
-            method : 'GET',
-            successTest: function(response) {
-                var str="";
-                let elements = response['data'];
-                for (x in elements) {
-                    str += "<div class='item'" + " data-value=" +
-                        elements[x]['id'] + " text=" + "'" + elements[x]['name'] +
-                        "'" + ">" + elements[x]['name'] + "</div>"
-                    ;
-                }
-                document.getElementById("school_item").innerHTML=str;
-            }
-        }
-    })
-    function schoolSearch(val) {
-        console.log(val)
-        if (val == null || val == '') {
-            val = '北京'
-        }
-        $.ajax({
-            url:"/business/united/"+ val,
-            type: "GET",
-            dataType: "json",
-            contentType: "application/json;charset=UTF-8",
-            success: function(response){
-                var str="";
-                let elements = response['data'];
-                for (x in elements) {
-                    str += "<div class='item'" + " data-value=" +
-                        elements[x]['id'] + " text=" + "'" + elements[x]['name'] +
-                        "'" + ">" + elements[x]['name'] + "</div>"
-                    ;
-                }
-                document.getElementById("school_item").innerHTML=str;
-                if (sessionSchool !== null) {
-                    setTimeout(() => {
-                        $('#school.dropdown').dropdown('set selected', sessionSchool);
-                    }, 500)
-                }
-            }
-        });
-    }
-    $('#sex.dropdown').dropdown('set selected', sessionSex);
     $('#submitUser').on('click',function () {
         $.ajax({
             url:"/business/user/data",
             type: "PUT",
-            data: {sex: $('#sex_value').val(), school: $('#school_value').val()},
+            data: {name: $('#u-name').val(), address: $('#u-address').val(), phone: $('#u-phone').val()},
             dataType: "json",
             // contentType: "application/json;charset=UTF-8",
             success: function(response){

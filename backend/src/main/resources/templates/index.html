@@ -16,7 +16,7 @@
     <script type="text/javascript" th:src="@{/statics/js/jquery-1.11.3.min.js}"></script>
     <script type="text/javascript" th:src="@{/statics/js/org1480746227.js}" data-main="indexMain"></script>
     <script th:src="@{/statics/js/semantic/semantic.min.js}"></script>
-    <title>软件在能够复用前必须先能用</title>
+    <title>显卡售后系统</title>
     <style type="text/css">
         .icon_awesome {
             margin-right: 20px;
@@ -37,15 +37,15 @@
                     <span data-title="产品展示">产品展示</span>
                 </a>
             </li>
-            <li class="navitem">
-                <a class="nav-a " th:href="@{'/web/team.html'}" target="_self"><span data-title="我们团队">我们团队</span></a>
-            </li>
+<!--            <li class="navitem">-->
+<!--                <a class="nav-a " th:href="@{'/web/team.html'}" target="_self"><span data-title="我们团队">我们团队</span></a>-->
+<!--            </li>-->
             <li class="navitem">
                 <a class="nav-a " th:href="@{'/web/news.html/1'}" target="_self"><span data-title="资讯中心">资讯中心</span></a>
             </li>
-            <li class="navitem">
-                <a class="nav-a " th:href="@{'/web/contact.html'}" target="_self"><span data-title="联系我们">联系我们</span></a>
-            </li>
+<!--            <li class="navitem">-->
+<!--                <a class="nav-a " th:href="@{'/web/contact.html'}" target="_self"><span data-title="联系我们">联系我们</span></a>-->
+<!--            </li>-->
             <li class="navitem">
                 <a th:if="${session.user} == null" class="nav-a " th:href="@{'/web/login.html'}" target="_self"><span data-title="登录">登录</span></a>
                 <a th:if="${session.user} != null" class="nav-a" onclick="inst.open()" href="javascript:void(0);" target="_self"><span data-title="个人信息" th:text="${session.user.account}"></span></a>
@@ -70,8 +70,8 @@
         <div class="module" style="height: 550px;margin-top: 80px">
             <div style="width: 1200px;margin: 0 auto">
                 <div class="home-banner-content-wrapper wow" style="width: 600px;float: left;padding-top: 150px">
-                    <h1 style="font-size: 38px;line-height: 46px;margin-bottom: 16px;font-weight: 400;color: rgba(0,0,0,.85);">极简制作，一键呈现</h1>
-                    <p style="font-size: 16px;line-height: 46px;margin-bottom: 16px;font-weight: 400;">为您提供专业的云上毕设服务，满足不同行业的个性化需求</p>
+                    <h1 style="font-size: 38px;line-height: 46px;margin-bottom: 16px;font-weight: 400;color: rgba(0,0,0,.85);">AI 时代的大会</h1>
+                    <p style="font-size: 16px;line-height: 46px;margin-bottom: 16px;font-weight: 400;">GeForce RTX 4080 SUPER 显卡，现已开售</p>
                 </div>
                 <div class="wrapper" id="antD" style="text-align: right;width: 600px;float: right"></div>
                 <script>
@@ -100,16 +100,13 @@
                                        target="_self">
                                         <div class="projectitem_wrapper">
                                             <div class="project_img" style="overflow: hidden;height: 360px"><img
-                                                    th:src="@{'/imagesWeb/'+${project.proPic.split(',')[0]}}"
+                                                    th:src="@{'/imagesWeb/'+${project.images.split(',')[0]}}"
                                                     alt="" width="650" height="385"/></div>
                                             <div class="project_info">
                                                 <div>
-                                                    <p class="title" th:text="${project.proName}"></p>
-                                                    <p class="subtitle" th:if="${project.proType == 1}">仅后台</p>
-                                                    <p class="subtitle" th:if="${project.proType == 2}">前后台</p>
-                                                    <p class="subtitle" th:if="${project.proType == 3}">小程序</p>
-                                                    <p class="subtitle" th:if="${project.proType == 4}">安卓</p>
-                                                    <p class="description hide" th:text="${project.proIntroduce}"></p>
+                                                    <p class="title" th:text="${project.name}"></p>
+<!--                                                    <p class="subtitle" th:if="${project.proType == 1}">仅后台</p>-->
+                                                    <p class="description hide" th:text="${project.model}"></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -120,7 +117,7 @@
                         <!--wrapper-->
                     </div>
                     <!--projectSubList-->
-                    <a href="#project/" class="more wow">MORE<i class="fa fa-angle-right"></i></a>
+                    <a href="/web/product.html?pageNo=1&type=-1" class="more wow">MORE<i class="fa fa-angle-right"></i></a>
                 </div>
                 <!--projectlist-->
                 <div class="clear"></div>
@@ -324,7 +321,7 @@
                         <p class="ellipsis tel"><span>电话：</span>199XXXX0631</p>
                         <p class="ellipsis mobile"><span>手机：</span>199XXXX0631</p>
                         <p class="ellipsis fax"><span>传真：</span>保密</p>
-                        <p class="ellipsis email"><span>邮箱：</span>doufo_uncle@163.com</p>
+                        <p class="ellipsis email"><span>邮箱：</span>fan1ke2ke@gmail.com</p>
                         <div>
                             <a class="fl" href="javascript:;"><i class="fa fa-weibo"></i></a>
                             <a class="fl" href="javascript:;"><i class="fa fa-qq"></i></a>
@@ -366,10 +363,6 @@
             <a class="ui teal image label">
                 <img src="https://semantic-ui.com/images/avatar/small/veronika.jpg">
                 <span th:if="${session.user} != null" th:text="${session.user.account}"></span>
-                <div class="detail" th:if="${session.user} != null">
-                    <span th:if="${session.user.invite == 1}">推广人员</span>
-                    <span th:if="${session.user.invite == 2}">普通用户</span>
-                </div>
             </a>
         </li>
         <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/user','_self')">
@@ -382,32 +375,11 @@
         </li>
         <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/system','_self')">
             <div class="icon_awesome"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></i></div>
-            <div class="mdui-list-item-content">我要定制</div>
+            <div class="mdui-list-item-content">缴费记录</div>
         </li>
         <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
             <div class="icon_awesome"><i class="fa fa-list-alt" aria-hidden="true"></i></div>
-            <div class="mdui-list-item-content">我的消息</div>
-        </li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
-            <div class="icon_awesome"><i class="fa fa-share-alt-square" aria-hidden="true"></i></div>
-            <div class="mdui-list-item-content">申请推广人</div>
-        </li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/developer','_self')">
-            <div class="icon_awesome"><i class="fa fa-retweet" aria-hidden="true"></i></div>
-            <div class="mdui-list-item-content">申请开发者</div>
-        </li>
-        <li class="mdui-subheader">运营邀请</li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/money','_self')">
-            <div class="icon_awesome"><i class="fa fa-money" aria-hidden="true"></i></i></div>
-            <div class="mdui-list-item-content">我的余额</div>
-        </li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/withdraw','_self')">
-            <div class="icon_awesome"><i class="fa fa-cubes" aria-hidden="true"></i></div>
-            <div class="mdui-list-item-content">提现申请</div>
-        </li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/record','_self')">
-            <div class="icon_awesome"><i class="fa fa-tasks" aria-hidden="true"></i></div>
-            <div class="mdui-list-item-content">提现记录</div>
+            <div class="mdui-list-item-content">维修记录</div>
         </li>
         <li class="mdui-list-item mdui-ripple" style="position: fixed;bottom: 50px;width: 100%" onclick="window.open('/web/logout','_self')">
             <div class="icon_awesome red"><i class="fa fa-sign-out" aria-hidden="true" style="color: red"></i></div>
@@ -431,7 +403,7 @@
     <div id="olx_head">联系我们<i class="fa fa-times fr" id="online_close"></i></div>
     <ul id="olx_qq">
         <li>
-            <a href="javascript:;" style="font-size: 14px; color: #777">想建站或软件开发?</a>
+            <a href="javascript:;" style="font-size: 14px; color: #777">问题答疑?</a>
         </li>
     </ul>
     <div id="olx_tel">

@@ -57,4 +57,10 @@ public class PaymentRecord implements Serializable {
     @TableField(exist = false)
     private Integer serverType;
 
+    /**
+     * 客户ID
+     */
+    @TableField(exist = false)
+    private Integer sysUserId;
+
 }

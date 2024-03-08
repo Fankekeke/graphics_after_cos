@@ -2,6 +2,8 @@ package cc.mrbird.febs.cos.controller.information;
 
 import cc.mrbird.febs.common.service.RedisService;
 import cc.mrbird.febs.common.utils.R;
+import cc.mrbird.febs.cos.entity.UserInfo;
+import cc.mrbird.febs.cos.service.IUserInfoService;
 import cc.mrbird.febs.system.domain.User;
 import cc.mrbird.febs.system.service.UserService;
 import cn.hutool.core.util.StrUtil;
@@ -33,8 +35,38 @@ public class InformationController {
     private final UserService userService;
 
     private final RedisService redisService;
+    private final IUserInfoService userInfoService;
 
     private final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy年MM月dd日");
+
+    /**
+     * 更新用户基本信息
+     * @param session
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @PutMapping("/user/data")
+    public R userInfoEdit(HttpSession session, HttpServletRequest request) {
+        UserInfo user = (UserInfo) session.getAttribute("user");
+        if (user != null) {
+            if (!StrUtil.hasEmpty(request.getParameter("name"))) {
+                user.setName(request.getParameter("name"));
+            }
+            if (!StrUtil.hasEmpty(request.getParameter("phone"))) {
+                user.setPhone(request.getParameter("phone"));
+            }
+            if (!StrUtil.hasEmpty(request.getParameter("address"))) {
+                user.setAddress(request.getParameter("address"));
+            }
+            userInfoService.updateById(user);
+            // 更新session
+            session.setAttribute("user", userInfoService.getById(user.getId()));
+            return R.ok(true);
+        } else {
+            return R.ok(false);
+        }
+    }
 
     /**
      * 进入个人信息页面

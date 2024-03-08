@@ -19,7 +19,7 @@
     <script th:src="@{/statics/js/jq-paginator.js}"></script>
     <script th:src="@{/statics/js/semantic/semantic.min.js}"></script>
     <script th:src="@{/statics/js/mdui/mdui.min.js}"></script>
-    <title>软件在能够复用前必须先能用</title>
+    <title>显卡售后系统</title>
     <style type="text/css">
         html {
             background: rgb(247,247,247)
@@ -43,15 +43,15 @@
                     <span data-title="产品展示">产品展示</span>
                 </a>
             </li>
-            <li class="navitem">
-                <a class="nav-a active" th:href="@{'/web/team.html'}" target="_self"><span data-title="我们团队">我们团队</span></a>
-            </li>
+<!--            <li class="navitem">-->
+<!--                <a class="nav-a active" th:href="@{'/web/team.html'}" target="_self"><span data-title="我们团队">我们团队</span></a>-->
+<!--            </li>-->
             <li class="navitem">
                 <a class="nav-a " th:href="@{'/web/news.html/1'}" target="_self"><span data-title="资讯中心">资讯中心</span></a>
             </li>
-            <li class="navitem">
-                <a class="nav-a " th:href="@{'/web/contact.html'}" target="_self"><span data-title="联系我们">联系我们</span></a>
-            </li>
+<!--            <li class="navitem">-->
+<!--                <a class="nav-a " th:href="@{'/web/contact.html'}" target="_self"><span data-title="联系我们">联系我们</span></a>-->
+<!--            </li>-->
             <li class="navitem">
                 <a th:if="${session.user} == null" class="nav-a " th:href="@{'/web/login.html'}" target="_self"><span data-title="登录">登录</span></a>
                 <a th:if="${session.user} != null" class="nav-a " onclick="inst.open()" href="javascript:void(0);" target="_self"><span data-title="个人信息" th:text="${session.user.account}"></span></a>
@@ -135,7 +135,7 @@
                     <p class="ellipsis tel"><span>电话：</span>199XXXX0631</p>
                     <p class="ellipsis mobile"><span>手机：</span>199XXXX0631</p>
                     <p class="ellipsis fax"><span>传真：</span>保密</p>
-                    <p class="ellipsis email"><span>邮箱：</span>doufo_uncle@163.com</p>
+                    <p class="ellipsis email"><span>邮箱：</span>fan1ke2ke@gmail.com</p>
                     <div>
                         <a class="fl" href="javascript:;"><i class="fa fa-weibo"></i></a>
                         <a class="fl" href="javascript:;"><i class="fa fa-qq"></i></a>
@@ -238,7 +238,7 @@
     <div id="olx_head">联系我们<i class="fa fa-times fr" id="online_close"></i></div>
     <ul id="olx_qq">
         <li>
-            <a href="javascript:;" style="font-size: 14px; color: #777">想建站或软件开发?</a>
+            <a href="javascript:;" style="font-size: 14px; color: #777">问题答疑?</a>
         </li>
     </ul>
     <div id="olx_tel">

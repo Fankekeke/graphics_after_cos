@@ -35,6 +35,9 @@
         <if test="paymentRecord.userId != null">
             AND ui.user_id = #{paymentRecord.userId}
         </if>
+        <if test="paymentRecord.sysUserId != null">
+            AND ui.id = #{paymentRecord.sysUserId}
+        </if>
         ORDER BY
         pr.create_date DESC
     </select>

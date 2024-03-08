@@ -4,6 +4,7 @@ import cc.mrbird.febs.common.utils.HttpContextUtil;
 import cc.mrbird.febs.common.utils.MD5Util;
 import cc.mrbird.febs.common.utils.R;
 import cc.mrbird.febs.cos.entity.BulletinInfo;
+import cc.mrbird.febs.cos.entity.PaymentRecord;
 import cc.mrbird.febs.cos.entity.ProductInfo;
 import cc.mrbird.febs.cos.entity.UserInfo;
 import cc.mrbird.febs.cos.service.*;
@@ -53,6 +54,7 @@ public class WebController {
     private final IBulletinInfoService bulletinInfoService;
 
     private final IProductInfoService productInfoService;
+    private final IPaymentRecordService paymentRecordService;
 
     /**
      * 页面跳转
@@ -76,7 +78,7 @@ public class WebController {
     public String init(Model model, HttpSession session) {
         // 添加访问记录
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-        model.addAttribute("proInfo", null);
+        model.addAttribute("proInfo", productInfoService.list());
         return "index";
     }
 
@@ -93,9 +95,7 @@ public class WebController {
         Page pagehelper = new Page();
         pagehelper.setCurrent(pageNo == null ? 1 : pageNo);
         pagehelper.setSize(6);
-        model.addAttribute("messList", bulletinInfoService.page(pagehelper, Wrappers.<BulletinInfo>lambdaQuery()
-                .eq(type != null, BulletinInfo::getType, type)));
-        model.addAttribute("messType", type);
+        model.addAttribute("messList", bulletinInfoService.page(pagehelper, Wrappers.<BulletinInfo>lambdaQuery()));
         return "news";
     }
 
@@ -127,7 +127,9 @@ public class WebController {
         Page pagehelper = new Page();
         pagehelper.setCurrent(pageNo == null ? 1 : pageNo);
         pagehelper.setSize(8);
-//        model.addAttribute("proList", productInfoService.getProjectPage(pagehelper, key, type));
+
+        ProductInfo productInfo = new ProductInfo();
+        model.addAttribute("proList", productInfoService.selectProductPage(pagehelper, productInfo));
         model.addAttribute("key", key);
         model.addAttribute("type", type);
         return "product";
@@ -148,6 +150,26 @@ public class WebController {
         pageHelper.setSize(10);
 //        model.addAttribute("orderList", orderInfoService.orderListByUser(pageHelper, user.getCode()));
         return "order";
+    }
+
+    /**
+     * 缴费记录页面
+     * @param pageNo
+     * @param model
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "system/{pageNo}", method = RequestMethod.GET)
+    public String getRecordList(@PathVariable(value = "pageNo") Integer pageNo, Model model, HttpSession session) {
+        UserInfo user = (UserInfo) session.getAttribute("user");
+        Page pageHelper = new Page();
+        pageHelper.setCurrent(pageNo == null ? 1 : pageNo);
+        pageHelper.setSize(10);
+
+        PaymentRecord paymentRecord = new PaymentRecord();
+        paymentRecord.setSysUserId(user.getId());
+        model.addAttribute("orderList", paymentRecordService.selectPaymentRecordPage(pageHelper, paymentRecord));
+        return "system";
     }
 
     /**

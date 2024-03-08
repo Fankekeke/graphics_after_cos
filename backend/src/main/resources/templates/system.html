@@ -81,20 +81,19 @@
         <div class="content" style="margin-top: 90px;overflow: hidden">
             <div id="newslist" style="width: 100%;margin-top: 50px">
                 <div class="wrapper">
-                    <p style="margin-left: 50px;font-size: 30px;color: #000000;font-style:italic;text-align: left">历史订单</p>
+                    <p style="margin-left: 50px;font-size: 30px;color: #000000;font-style:italic;text-align: left">缴费记录</p>
                     <div class="mdui-container" style="text-align: left;margin-bottom: 45px" th:if="${session.user} != null">
                         <div class="mdui-row" th:if="${orderList.records.size() != 0}">
                             <div class="mdui-col-sm-12 mdui-col-md-12">
                                 <table class="ui celled black table">
                                     <thead>
                                     <tr><th>订单编号</th>
-                                        <th>项目名称</th>
-                                        <th>用户</th>
+                                        <th>订单名称</th>
                                         <th>价格</th>
-                                        <th>需要部署</th>
-                                        <th>订单状态</th>
-                                        <th>支付方式</th>
-                                        <th>下单时间</th>
+                                        <th>服务类型</th>
+                                        <th>用户</th>
+                                        <th>缴费时间</th>
+                                        <th>联系方式</th>
                                     </tr></thead>
                                     <tbody id="orderTable">
                                     <tr>
@@ -107,7 +106,6 @@
                                         <td data-label="device"><a class="ui green mini basic label">是</a></td>
                                         <td data-label="device">已支付</td>
                                         <td data-label="device">微信</td>
-                                        <td data-label="device">2021-11-03 22:17:36</td>
                                     </tr>
                                     <tr>
                                         <td data-label="code"><a>ORD-1606569067018</a></td>
@@ -694,32 +692,6 @@
             }
         });
     })
-    $('#download').on('click',function(event){
-        var url= "/business/download/" + proCode;
-        window.location.href = url;
-    })
-    $('#downloadAnnex').on('click',function(event){
-        var url= "/business/downloadAnnex/" + annexLocal;
-        window.location.href = url;
-    })
-    $('#evaluationUpload').on('click',function(event){
-        let formData = {orderCode: $("#orderCodeField").val(), score: $(".ui.rating").rating("get rating"), content: $("#orderContent").val(), pic: selectFileName === '' ? null : selectFileName}
-        $.ajax({
-            url: "/business/evaluationOrder",
-            type: "post",
-            data: formData,
-            dataType: "json",
-            success: function(data) {
-                mdui.snackbar({
-                    message: '评论成功！',
-                    position: 'left-bottom',
-                });
-                setTimeout(() => {
-                    location.reload();
-                }, 1000)
-            }
-        });
-    })
     $('#orderTable').on('click','.orderCodeCheck',function(event){
         event.stopPropagation();
         event.stopImmediatePropagation();
@@ -740,7 +712,6 @@
             inst.open()
         }
     })
-    let headImgUrl = '[[${session.user.headImgUrl}]]';
     $(document).ready(function(){
         var setCount = 0;
         var message = [[${orderList}]];
@@ -748,16 +719,13 @@
             let orderTable = ''
             message.records.forEach(item => {
                 orderTable += '<tr>\n' +
-                    '    <td data-label="code"><a class="orderCodeCheck">'+item.code+'</a></td>\n' +
-                    '    <td data-label="code"><span class="proNamePopup" data-content='+item.proName+'>'+item.proName.slice(0,5)+'...</span></td>\n' +
-                    '    <td data-label="account">\n' +
-                    '        <img class="ui mini rounded image" src='+headImgUrl+'>\n' +
-                    '    </td>\n' +
-                    '    <td data-label="Job"> <a class="ui tag mini label">￥'+(item.orderPrice).toFixed(1)+'</a></td>\n' +
-                    '    <td data-label="device"><a class="ui '+(item.needDeploy == 0 ? 'red' : 'green')+' mini basic label">'+(item.needDeploy == 0 ? '否' : '是')+'</a></td>\n' +
-                    '    <td data-label="device">'+item.orderStatus+'</td>\n' +
-                    '    <td data-label="device">'+item.paymentType+'</td>\n' +
-                    '    <td data-label="device">'+item.orderTime+'</td>\n' +
+                    '    <td data-label="code"><a class="orderCodeCheck">'+item.orderCode+'</a></td>\n' +
+                    '    <td data-label="code"><span class="proNamePopup" data-content='+item.orderName+'>'+item.orderName.slice(0,5)+'...</span></td>\n' +
+                    '    <td data-label="Job"> <a class="ui tag mini label">￥'+(item.money).toFixed(1)+'</a></td>\n' +
+                    '    <td data-label="device"><a class="ui '+(item.serverType == 0 ? 'red' : 'green')+' mini basic label">'+(item.serverType == 0 ? '否' : '是')+'</a></td>\n' +
+                    '    <td data-label="device">'+item.userName+'</td>\n' +
+                    '    <td data-label="device">'+item.createDate+'</td>\n' +
+                    '    <td data-label="device">'+item.phone+'</td>\n' +
                     '</tr>'
             })
             $("#orderTable").html(orderTable)
@@ -768,7 +736,7 @@
             totalPages: 1,
             visiblePages: 10,
             currentPage: message.current,
-            page: '<li class="page"><a href="/web/order/{{page}}">{{page}}</a></li>',
+            page: '<li class="page"><a href="/web/system/{{page}}">{{page}}</a></li>',
             onPageChange: function(n) {
                 $("#demo1-text").html(n)
                 pageNo = n
