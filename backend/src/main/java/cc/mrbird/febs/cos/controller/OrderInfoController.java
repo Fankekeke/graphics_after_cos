@@ -90,6 +90,17 @@ public class OrderInfoController {
     }
 
     /**
+     * 根据维修编号获取工单信息
+     *
+     * @param orderCode 维修编号
+     * @return 结果
+     */
+    @GetMapping("/detail/order/{orderCode}")
+    public R selectOrderByDetail(@PathVariable("orderCode") String orderCode) {
+        return R.ok(orderInfoService.selectOrderByCodeDetail(orderCode));
+    }
+
+    /**
      * 查询主页信息
      *
      * @param roleId 角色ID

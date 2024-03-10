@@ -216,13 +216,13 @@
         </li>
         <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/order/1','_self')">
             <div class="icon_awesome"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
-            <div class="mdui-list-item-content">历史订单</div>
+            <div class="mdui-list-item-content">我的工单</div>
         </li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/system','_self')">
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/system/1','_self')">
             <div class="icon_awesome"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></i></div>
             <div class="mdui-list-item-content">缴费记录</div>
         </li>
-        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message','_self')">
+        <li class="mdui-list-item mdui-ripple" onclick="window.open('/web/message/1','_self')">
             <div class="icon_awesome"><i class="fa fa-list-alt" aria-hidden="true"></i></div>
             <div class="mdui-list-item-content">维修记录</div>
         </li>
@@ -692,26 +692,26 @@
             }
         });
     })
-    $('#orderTable').on('click','.orderCodeCheck',function(event){
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-        if ($(this).html().search("AORD") != -1) {
-            // $("#example-4").hide()
-            // $("#example-5").show()
-            orderAnnexInfoByCode($(this).html())
-            var inst = new mdui.Dialog("#example-5", {history: false});
-            inst.open()
-        } else {
-            // $("#example-5").hide()
-            // $("#example-4").show()
-            $("#orderContent").val("")
-            selectFileName = ""
-            $("#orderEvaluationPic").attr("src", "https://semantic-ui.com/images/wireframe/white-image.png");
-            orderInfoByCode($(this).html())
-            var inst = new mdui.Dialog("#example-4", {history: false});
-            inst.open()
-        }
-    })
+    // $('#orderTable').on('click','.orderCodeCheck',function(event){
+    //     event.stopPropagation();
+    //     event.stopImmediatePropagation();
+    //     if ($(this).html().search("AORD") != -1) {
+    //         // $("#example-4").hide()
+    //         // $("#example-5").show()
+    //         orderAnnexInfoByCode($(this).html())
+    //         var inst = new mdui.Dialog("#example-5", {history: false});
+    //         inst.open()
+    //     } else {
+    //         // $("#example-5").hide()
+    //         // $("#example-4").show()
+    //         $("#orderContent").val("")
+    //         selectFileName = ""
+    //         $("#orderEvaluationPic").attr("src", "https://semantic-ui.com/images/wireframe/white-image.png");
+    //         orderInfoByCode($(this).html())
+    //         var inst = new mdui.Dialog("#example-4", {history: false});
+    //         inst.open()
+    //     }
+    // })
     $(document).ready(function(){
         var setCount = 0;
         var message = [[${orderList}]];
@@ -719,10 +719,10 @@
             let orderTable = ''
             message.records.forEach(item => {
                 orderTable += '<tr>\n' +
-                    '    <td data-label="code"><a class="orderCodeCheck">'+item.orderCode+'</a></td>\n' +
+                    '    <td data-label="code"><span class="orderCodeCheck">'+item.orderCode+'</span></td>\n' +
                     '    <td data-label="code"><span class="proNamePopup" data-content='+item.orderName+'>'+item.orderName.slice(0,5)+'...</span></td>\n' +
                     '    <td data-label="Job"> <a class="ui tag mini label">￥'+(item.money).toFixed(1)+'</a></td>\n' +
-                    '    <td data-label="device"><a class="ui '+(item.serverType == 0 ? 'red' : 'green')+' mini basic label">'+(item.serverType == 0 ? '否' : '是')+'</a></td>\n' +
+                    '    <td data-label="device">'+item.serverName+'</td>\n' +
                     '    <td data-label="device">'+item.userName+'</td>\n' +
                     '    <td data-label="device">'+item.createDate+'</td>\n' +
                     '    <td data-label="device">'+item.phone+'</td>\n' +

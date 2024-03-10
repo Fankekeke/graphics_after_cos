@@ -3,10 +3,7 @@ package cc.mrbird.febs.cos.controller;
 import cc.mrbird.febs.common.utils.HttpContextUtil;
 import cc.mrbird.febs.common.utils.MD5Util;
 import cc.mrbird.febs.common.utils.R;
-import cc.mrbird.febs.cos.entity.BulletinInfo;
-import cc.mrbird.febs.cos.entity.PaymentRecord;
-import cc.mrbird.febs.cos.entity.ProductInfo;
-import cc.mrbird.febs.cos.entity.UserInfo;
+import cc.mrbird.febs.cos.entity.*;
 import cc.mrbird.febs.cos.service.*;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
@@ -26,6 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -55,6 +54,8 @@ public class WebController {
 
     private final IProductInfoService productInfoService;
     private final IPaymentRecordService paymentRecordService;
+    private final IRepairInfoService repairInfoService;
+    private final IStaffEvaluationService staffEvaluationService;
 
     /**
      * 页面跳转
@@ -136,7 +137,25 @@ public class WebController {
     }
 
     /**
-     * 历史订单页面
+     * 新增员工评价信息
+     *
+     * @param staffEvaluation 员工评价信息
+     * @return 结果
+     */
+    @PostMapping("/evaluate")
+    public R saveEvaluate(StaffEvaluation staffEvaluation, HttpSession session) {
+        OrderInfo orderInfo = orderInfoService.getOne(Wrappers.<OrderInfo>lambdaQuery().eq(OrderInfo::getOrderCode, staffEvaluation.getOrderCode()));
+        UserInfo user = (UserInfo) session.getAttribute("user");
+        staffEvaluation.setStaffId(orderInfo.getStaffId());
+        staffEvaluation.setUserId(user.getId());
+        BigDecimal allScore = staffEvaluation.getRepairScore().add(staffEvaluation.getScheduleScore()).add(staffEvaluation.getServiceScore());
+        staffEvaluation.setScore(allScore.divide(BigDecimal.valueOf(3), 0, RoundingMode.HALF_UP));
+        staffEvaluation.setCreateDate(DateUtil.formatDateTime(new Date()));
+        return R.ok(staffEvaluationService.save(staffEvaluation));
+    }
+
+    /**
+     * 我的工单页面
      * @param pageNo
      * @param model
      * @param session
@@ -148,7 +167,9 @@ public class WebController {
         Page pageHelper = new Page();
         pageHelper.setCurrent(pageNo == null ? 1 : pageNo);
         pageHelper.setSize(10);
-//        model.addAttribute("orderList", orderInfoService.orderListByUser(pageHelper, user.getCode()));
+        OrderInfo orderInfo = new OrderInfo();
+        orderInfo.setSysUserId(2);
+        model.addAttribute("orderList", orderInfoService.selectOrderPage(pageHelper, orderInfo));
         return "order";
     }
 
@@ -170,6 +191,27 @@ public class WebController {
         paymentRecord.setSysUserId(user.getId());
         model.addAttribute("orderList", paymentRecordService.selectPaymentRecordPage(pageHelper, paymentRecord));
         return "system";
+    }
+
+    /**
+     * 维修记录页面
+     * @param pageNo
+     * @param model
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "message/{pageNo}", method = RequestMethod.GET)
+    public String getRepairRecordList(@PathVariable(value = "pageNo") Integer pageNo, Model model, HttpSession session) {
+        UserInfo user = (UserInfo) session.getAttribute("user");
+        Page pageHelper = new Page();
+        pageHelper.setCurrent(pageNo == null ? 1 : pageNo);
+        pageHelper.setSize(10);
+
+        RepairInfo repairInfo = new RepairInfo();
+        repairInfo.setSysUserId(2);
+//        repairInfo.setSysUserId(user.getId());
+        model.addAttribute("orderList", repairInfoService.selectRepairPage(pageHelper, repairInfo));
+        return "message";
     }
 
     /**

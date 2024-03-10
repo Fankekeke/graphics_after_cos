@@ -3,7 +3,7 @@
     <div class="content">
       <div class="top">
         <div class="header">
-          <span class="title">售后服务管理系统</span>
+          <span class="title">显卡售后服务管理系统</span>
         </div>
         <div class="desc"></div>
       </div>

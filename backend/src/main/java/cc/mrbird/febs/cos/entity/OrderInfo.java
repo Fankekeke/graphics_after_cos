@@ -94,4 +94,7 @@ public class OrderInfo implements Serializable {
     @TableField(exist = false)
     private Long userId;
 
+    @TableField(exist = false)
+    private Integer sysUserId;
+
 }

@@ -21,12 +21,14 @@
         ui.name as userName,
         ui.phone,
         ss.name AS serverTypeName,
-        se.id AS evaluationFlag
+        se.id AS evaluationFlag,
+        osi.name as statusName
         FROM
         order_info oi
         LEFT JOIN user_info ui ON ( ui.id = oi.customer_id )
         LEFT JOIN service_sort ss ON (ss.id = oi.server_type)
         LEFT JOIN staff_evaluation se ON (se.order_code = oi.order_code)
+        LEFT JOIN order_status_info osi ON (osi.id = oi.status)
         WHERE
         1 = 1
         <if test="orderInfo.orderCode != null and orderInfo.orderCode != ''">
@@ -43,6 +45,9 @@
         </if>
         <if test="orderInfo.userId != null">
             AND ui.user_id = #{orderInfo.userId}
+        </if>
+        <if test="orderInfo.sysUserId != null">
+            AND ui.id = #{orderInfo.sysUserId}
         </if>
         ORDER BY
         oi.create_date DESC
@@ -109,14 +114,52 @@
         oi.create_date,
         ui.name as userName,
         ui.phone,
-        ss.name AS serverTypeName
+        ss.name AS serverTypeName,
+        si.name as staffName,
+        pi.name as productName
         FROM
         order_info oi
         LEFT JOIN user_info ui ON ( ui.id = oi.customer_id )
         LEFT JOIN service_sort ss ON (ss.id = oi.server_type)
+        LEFT JOIN staff_info si ON (si.id = oi.staff_id)
+        LEFT JOIN product_info pi ON (pi.id = oi.product_id)
         WHERE
         1 = 1
         AND oi.repair_code = #{repairCode}
+    </select>
+
+    <!-- 根据编号获取工单信息 -->
+    <select id="selectOrderByCodeDetail" resultType="java.util.LinkedHashMap">
+        SELECT
+            oi.id,
+            oi.order_name,
+            oi.repair_code,
+            oi.order_code,
+            oi.server_type,
+            oi.money,
+            oi.remark,
+            oi.images,
+            oi.status,
+            oi.customer_id,
+            oi.product_id,
+            oi.staff_id,
+            oi.create_date,
+            ui.name as userName,
+            ui.phone,
+            ss.name AS serverTypeName,
+            si.name as staffName,
+            pi.name as productName,
+            se.id AS evaluationFlag
+        FROM
+            order_info oi
+                LEFT JOIN user_info ui ON ( ui.id = oi.customer_id )
+                LEFT JOIN service_sort ss ON (ss.id = oi.server_type)
+                LEFT JOIN staff_info si ON (si.id = oi.staff_id)
+                LEFT JOIN product_info pi ON (pi.id = oi.product_id)
+                LEFT JOIN staff_evaluation se ON (se.order_code = oi.order_code)
+        WHERE
+            1 = 1
+          AND oi.order_code = #{orderCode}
     </select>
 
     <!-- 本月收益 -->

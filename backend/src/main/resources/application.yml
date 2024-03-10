@@ -99,6 +99,6 @@ febs:
         num: 1000
   shiro:
     # 后端免认证接口 url
-    anonUrl: /login,/logout/**,/regist,/regist/user,/user/check/**,/file/**,/api/**,/imagesWeb/**,/swagger-ui.html/**,/favicon.ico,/web/**,/business/**,/static/**,/inter/**,/css/**,/font/**,/fonts/**,/images/**,/js/**,/json/**,/imagesWeb/**,/videoWeb/**,/statics/**,/file/**,/wechat/**,/socketServer/**,/websocket/**
+    anonUrl: /login,/logout/**,/regist,/regist/user,/user/check/**,/file/**,/api/**,/imagesWeb/**,/swagger-ui.html/**,/favicon.ico,/web/**,/business/**,/static/**,/inter/**,/css/**,/font/**,/fonts/**,/images/**,/js/**,/json/**,/imagesWeb/**,/videoWeb/**,/statics/**,/file/**,/wechat/**,/socketServer/**,/websocket/**,/cos/**
     # token有效期，单位秒
     jwtTimeOut: 3600

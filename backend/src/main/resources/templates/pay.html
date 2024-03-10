@@ -110,24 +110,8 @@
     <div id="newsPage" class="npagePage Pagenews">
         <div class="content">
             <div id="biddingInfo" class="sixteen columns row textblock blogsingle fullblog" style="margin-top: 90px;padding-top: 50px">
-                <p th:text="${message.title}" style="font-size: 25px;color: #000000"></p>
+                <p style="font-size: 25px;color: #000000">支付成功</p>
                 <br/>
-                <div>
-                    发帖时间：<i><span th:text="${message.date}"></span></i>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    发布人：<i><span th:text="${message.publisher}" style="color: red"></span></i>
-                </div>
-                <br/>
-                <br/>
-                <br/>
-                <div class="postbody" style="width: 100%">
-                    <div class="postcontent">
-                        <div id="messContent"
-                             style="margin: 0 auto;width: 70%;word-wrap:break-word;word-break:break-all;overflow: hidden;padding-bottom: 80px"
-                             th:utext="${message.content}">
-                        </div>
-                    </div>
-                </div>
             </div>
 
         </div>
@@ -192,5 +176,16 @@
 </body>
 <script type="text/javascript">
     var inst = new mdui.Drawer('#drawer', {overlay: true});
+    const getUrlKey = (name) => {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
+
+    }
+    $(document).ready(function(){
+        if (getUrlKey('out_trade_no') !== null) {
+            this.$post('/cos/payment-record', { userId: this.currentUser.userId, orderCode: getUrlKey('out_trade_no') }).then((r) => {
+            })
+        }
+    });
+
 </script>
 </html>

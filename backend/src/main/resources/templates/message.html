@@ -81,19 +81,18 @@
         <div class="content" style="margin-top: 90px;overflow: hidden">
             <div id="newslist" style="width: 100%;margin-top: 50px">
                 <div class="wrapper">
-                    <p style="margin-left: 50px;font-size: 30px;color: #000000;font-style:italic;text-align: left">我的工单</p>
+                    <p style="margin-left: 50px;font-size: 30px;color: #000000;font-style:italic;text-align: left">维修记录</p>
                     <div class="mdui-container" style="text-align: left;margin-bottom: 45px" th:if="${session.user} != null">
                         <div class="mdui-row" th:if="${orderList.records.size() != 0}">
                             <div class="mdui-col-sm-12 mdui-col-md-12">
                                 <table class="ui celled black table">
                                     <thead>
-                                    <tr><th>工单编号</th>
+                                    <tr><th>维修单号</th>
                                         <th>工单名称</th>
-                                        <th>客户名称</th>
-                                        <th>联系方式</th>
-                                        <th>服务类型</th>
-                                        <th>工单图片</th>
-                                        <th>工单状态</th>
+                                        <th>维修状态</th>
+                                        <th>所属员工</th>
+                                        <th>产品图片</th>
+                                        <th>产品名称</th>
                                         <th>创建时间</th>
                                     </tr></thead>
                                     <tbody id="orderTable">
@@ -265,13 +264,12 @@
     </div>
     <div style="padding: 25px">
         <h3 class="ui header">
-            订单详情
+            维修详情
             <div class="sub header" id="orderCodeLabel">副标题</div>
         </h3>
         <div id="orderInfoList">
             <div class="ui top attached tabular menu">
-                <div class="active item" data-tab="platform">订单信息</div>
-                <div class="item" data-tab="userInfo" id="evaluateTab">评价</div>
+                <div class="active item" data-tab="platform">工单信息</div>
             </div>
             <div data-tab="platform" class="ui bottom attached active tab segment" style="border: none;width: 96%;">
                 <div class="column" style="margin: 0 auto">
@@ -325,13 +323,12 @@
                             <span style="margin-left: 10px" id="productNameLabel"></span>
                         </div>
                     </div>
-                    <!--                    <div class="mdui-row" style="margin-top: 35px">-->
-                    <!--                        <div class="mdui-col-xs-6">-->
-                    <!--                            <h5 class="ui header" style="display: inline">预计维修时间：</h5>-->
-                    <!--                            <span style="margin-left: 10px" id="reserveDateLabel"></span>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <div class="ui primary submit button" style="float: right;margin-top: 45px" id="evaluationUpload1">支付</div>
+<!--                    <div class="mdui-row" style="margin-top: 35px">-->
+<!--                        <div class="mdui-col-xs-6">-->
+<!--                            <h5 class="ui header" style="display: inline">预计维修时间：</h5>-->
+<!--                            <span style="margin-left: 10px" id="reserveDateLabel"></span>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </div>
             <div data-tab="userInfo" class="ui bottom attached tab segment" style="border: none;width: 96%;">
@@ -342,41 +339,27 @@
                                 <label>订单编号</label>
                                 <input placeholder="订单编号" id="orderCodeField" type="text" style="width: 70%">
                             </div>
-                        </div>
-<!--                        <div class="inline field">-->
-<!--                            <label>评价分数</label>-->
-<!--                            <div class="ui large star rating" data-rating="4" data-max-rating="5"></div>-->
-<!--                        </div>-->
-<!--                        <div class="field" style="margin-top: 20px">-->
-<!--                            <label>评价内容</label>-->
-<!--                            <textarea rows="3" style="width: 96%" id="orderContent"></textarea>-->
-<!--                        </div>-->
-<!--                        <div id="selectPicDiv">-->
-<!--                            <input class="right floated" type="file" name="selectPic" id="selectPic" style="opacity: 0;position: absolute;width: 80px;height: 36px;">-->
-<!--                            <button class="ui teal basic label">上传图片</button>-->
-<!--                        </div>-->
-<!--                        <div style="height: 85px;margin-top: 10px">-->
-<!--                            <img id="orderEvaluationPic" class="ui tiny rounded bordered image" src="https://semantic-ui.com/images/wireframe/white-image.png" style="height: 82px;width: 82px">-->
-<!--                        </div>-->
-                        <div class="two fields">
-                            <div class="inline field">
-                                <label>准时得分</label>
-                                <input placeholder="准时得分" id="scheduleScoreField" type="text" style="width: 70%">
+                            <div class="inline field disabled">
+                                <label>所属项目</label>
+                                <input placeholder="所属项目" id="proNameField" type="text" style="width: 70%">
                             </div>
                         </div>
-                        <div class="two fields">
-                            <div class="inline field">
-                                <label>维修得分</label>
-                                <input placeholder="维修得分" id="repairScoreField" type="text" style="width: 70%">
-                            </div>
+                        <div class="inline field">
+                            <label>评价分数</label>
+                            <div class="ui large star rating" data-rating="4" data-max-rating="5"></div>
                         </div>
-                        <div class="two fields">
-                            <div class="inline field">
-                                <label>服务得分</label>
-                                <input placeholder="服务得分" id="serviceScoreField" type="text" style="width: 70%">
-                            </div>
+                        <div class="field" style="margin-top: 20px">
+                            <label>评价内容</label>
+                            <textarea rows="3" style="width: 96%" id="orderContent"></textarea>
                         </div>
-                        <div class="ui primary submit button" style="float: right;margin-top: 45px" id="evaluationUpload">评价</div>
+                        <div id="selectPicDiv">
+                            <input class="right floated" type="file" name="selectPic" id="selectPic" style="opacity: 0;position: absolute;width: 80px;height: 36px;">
+                            <button class="ui teal basic label">上传图片</button>
+                        </div>
+                        <div style="height: 85px;margin-top: 10px">
+                            <img id="orderEvaluationPic" class="ui tiny rounded bordered image" src="https://semantic-ui.com/images/wireframe/white-image.png" style="height: 82px;width: 82px">
+                        </div>
+                        <div class="ui primary submit button" style="float: right;margin-top: 45px" id="evaluationUpload">上传</div>
                     </div>
                 </div>
             </div>
@@ -573,7 +556,6 @@
 <script th:inline="javascript">
     let selectFileName = ''
     let proCode = ''
-    let orderDetail = null
     let annexLocal = ''
     function orderInfoByCode(orderCode) {
         $("#orderInfoList").hide()
@@ -582,17 +564,11 @@
         $("#md-progress").show()
         $("#orderCodeLabel").text(orderCode)
         $.ajax({
-            url:"/cos/order-info/detail/order/" + orderCode,
+            url:"/cos/order-info/detail/repair/" + orderCode,
             type: "GET",
             dataType: "json",
             success: function(response){
-                if (!(response.status == 4 && response.evaluationFlag == null)) {
-                    $("#evaluateTab").hide()
-                }
-                if (response.status != 2) {
-                    $("#evaluationUpload1").hide()
-                }
-                orderDetail = response
+                proCode = response.proCode;
                 if (response.evaluation !== undefined && response.evaluation !== null) {
                     $("#orderContent").val(response.evaluation.content)
                     if (response.evaluation.pic !== null) {
@@ -604,7 +580,6 @@
                 }
                 $("#orderNameLabel").text(response.orderName)
                 $("#orderCodeLabel1").text(response.orderCode)
-                $("#orderCodeField").val(response.orderCode)
                 $("#userNameLabel").text(response.userName)
                 $("#phoneLabel").text(response.phone)
                 var statusName = ''
@@ -652,6 +627,16 @@
             }
         });
     }
+    function orderInfo1ByCode(orderCode) {
+        $.ajax({
+            url:"/cos/reserve-info/detail/" + orderCode,
+            type: "GET",
+            dataType: "json",
+            success: function(response){
+                $("#reserveDateLabel").text(response.reserveDate)
+            }
+        });
+    }
     function orderAnnexInfoByCode(orderCode) {
         $("#orderAnnexInfoList").hide()
         $("#orderAnnexInfoPar").show()
@@ -696,53 +681,6 @@
             }
         });
     })
-    $('#download').on('click',function(event){
-        var url= "/business/download/" + proCode;
-        window.location.href = url;
-    })
-    $('#downloadAnnex').on('click',function(event){
-        var url= "/business/downloadAnnex/" + annexLocal;
-        window.location.href = url;
-    })
-    $('#evaluationUpload').on('click',function(event){
-        let formData = {orderCode: $("#orderCodeField").val(), scheduleScore: $("#scheduleScoreField").val(), repairScore: $("#repairScoreField").val(), serviceScore: $("#serviceScoreField").val()}
-        $.ajax({
-            url: "/cos/staff-evaluation",
-            type: "post",
-            data: formData,
-            dataType: "json",
-            success: function(data) {
-                mdui.snackbar({
-                    message: '评价成功！',
-                    position: 'left-bottom',
-                });
-                setTimeout(() => {
-                    location.reload();
-                }, 1000)
-            }
-        });
-    })
-    $('#evaluationUpload1').on('click',function(event){
-        let formData = {outTradeNo: $("#orderCodeField").val()}
-        $.ajax({
-            url: "/cos/pay/alipay/inner",
-            type: "post",
-            data: formData,
-            dataType: "json",
-            success: function(data) {
-                const divForm = document.getElementsByTagName('div')
-                if (divForm.length) {
-                    document.body.removeChild(divForm[0])
-                }
-                const div = document.createElement('div')
-                div.innerHTML = r.data.msg // data就是接口返回的form 表单字符串
-                // console.log(div.innerHTML)
-                document.body.appendChild(div)
-                document.forms[0].setAttribute('target', '_self') // 新开窗口跳转
-                document.forms[0].submit()
-            }
-        });
-    })
     $('#orderTable').on('click','.orderCodeCheck',function(event){
         event.stopPropagation();
         event.stopImmediatePropagation();
@@ -756,8 +694,6 @@
             // $("#example-5").hide()
             // $("#example-4").show()
             $("#orderContent").val("")
-            $("#evaluateTab").show()
-            $("#evaluationUpload1").show()
             selectFileName = ""
             $("#orderEvaluationPic").attr("src", "https://semantic-ui.com/images/wireframe/white-image.png");
             orderInfoByCode($(this).html())
@@ -772,15 +708,14 @@
             let orderTable = ''
             message.records.forEach(item => {
                 orderTable += '<tr>\n' +
-                    '    <td data-label="code"><a class="orderCodeCheck">'+item.orderCode+'</a></td>\n' +
+                    '    <td data-label="code"><a class="orderCodeCheck">'+item.repairCode+'</a></td>\n' +
                     '    <td data-label="code"><span class="proNamePopup" data-content='+item.orderName+'>'+item.orderName.slice(0,5)+'...</span></td>\n' +
-                    '    <td data-label="device">'+item.userName+'</td>\n' +
-                    '    <td data-label="device">'+item.phone+'</td>\n' +
-                    '    <td data-label="device">'+item.serverTypeName+'</td>\n' +
+                    '    <td data-label="device">'+item.statusName+'</td>\n' +
+                    '    <td data-label="device">'+item.staffName+'</td>\n' +
                     '    <td data-label="account">\n' +
                     '        <img class="ui mini rounded image" src=http://127.0.0.1:9527/imagesWeb/'+item.images.split(',')[0]+'>\n' +
                     '    </td>\n' +
-                    '    <td data-label="device">'+item.statusName+'</td>\n' +
+                    '    <td data-label="device">'+item.productName+'</td>\n' +
                     '    <td data-label="device">'+item.createDate+'</td>\n' +
                     '</tr>'
             })

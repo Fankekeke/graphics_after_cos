@@ -239,4 +239,15 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     public LinkedHashMap<String, Object> selectOrderDetail(String repairCode) {
         return baseMapper.selectOrderDetail(repairCode);
     }
+
+    /**
+     * 根据编号获取工单信息
+     *
+     * @param orderCode 维修编号
+     * @return 结果
+     */
+    @Override
+    public LinkedHashMap<String, Object> selectOrderByCodeDetail(String orderCode) {
+        return baseMapper.selectOrderByCodeDetail(orderCode);
+    }
 }

@@ -62,5 +62,8 @@ public class RepairInfo implements Serializable {
     private Long userId;
 
     @TableField(exist = false)
+    private Integer sysUserId;
+
+    @TableField(exist = false)
     private Long clientId;
 }
