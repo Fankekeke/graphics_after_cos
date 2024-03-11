@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="show" title="修改产品" @cancel="onClose" :width="800">
+  <a-modal v-model="show" title="修改序列" @cancel="onClose" :width="800">
     <template slot="footer">
       <a-button key="back" @click="onClose">
         取消
@@ -11,41 +11,21 @@
     <a-form :form="form" layout="vertical">
       <a-row :gutter="20">
         <a-col :span="12">
-          <a-form-item label='产品名称' v-bind="formItemLayout">
+          <a-form-item label='序列号' v-bind="formItemLayout">
             <a-input v-decorator="[
-            'name',
-            { rules: [{ required: true, message: '请输入名称!' }] }
+            'serialNumber',
+            { rules: [{ required: true, message: '请输入序列号!' }] }
             ]"/>
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label='型号' v-bind="formItemLayout">
-            <a-input v-decorator="[
-            'model',
-            { rules: [{ required: true, message: '请输入型号!' }] }
-            ]"/>
-          </a-form-item>
-        </a-col>
-        <a-col :span="24">
-          <a-form-item label='产品图片' v-bind="formItemLayout">
-            <a-upload
-              name="avatar"
-              action="http://127.0.0.1:9527/file/fileUpload/"
-              list-type="picture-card"
-              :file-list="fileList"
-              @preview="handlePreview"
-              @change="picHandleChange"
-            >
-              <div v-if="fileList.length < 8">
-                <a-icon type="plus" />
-                <div class="ant-upload-text">
-                  Upload
-                </div>
-              </div>
-            </a-upload>
-            <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-              <img alt="example" style="width: 100%" :src="previewImage" />
-            </a-modal>
+          <a-form-item label='对应产品' v-bind="formItemLayout">
+            <a-select v-decorator="[
+              'productId',
+              { rules: [{ required: true, message: '请选择产品!' }] }
+              ]">
+              <a-select-option v-for="(item, index) in productList" :value="item.value" :key="index">{{ item.label }}</a-select-option>
+            </a-select>
           </a-form-item>
         </a-col>
       </a-row>
@@ -94,10 +74,19 @@ export default {
       loading: false,
       fileList: [],
       previewVisible: false,
-      previewImage: ''
+      previewImage: '',
+      productList: []
     }
   },
+  mounted () {
+    this.getProduct()
+  },
   methods: {
+    getProduct () {
+      this.$get(`/cos/product-info/list`).then((r) => {
+        this.productList = r.data.data
+      })
+    },
     handleCancel () {
       this.previewVisible = false
     },
@@ -122,22 +111,24 @@ export default {
     },
     setFormValues ({...product}) {
       this.rowId = product.id
-      let fields = ['name', 'type', 'model']
+      let fields = ['serialNumber', 'productId']
       let obj = {}
       Object.keys(product).forEach((key) => {
         if (key === 'images') {
           this.fileList = []
           this.imagesInit(product['images'])
         }
-        if (key === 'type') {
-          product[key] = product[key].toString()
-        }
         if (fields.indexOf(key) !== -1) {
           this.form.getFieldDecorator(key)
           obj[key] = product[key]
         }
+        if (key === 'productId') {
+          product[key] = product[key].toString()
+        }
       })
-      this.form.setFieldsValue(obj)
+      setTimeout(() => {
+        this.form.setFieldsValue(obj)
+      }, 200)
     },
     reset () {
       this.loading = false
@@ -162,7 +153,7 @@ export default {
         values.images = images.length > 0 ? images.join(',') : null
         if (!err) {
           this.loading = true
-          this.$put('/cos/product-info', {
+          this.$put('/cos/serial-info', {
             ...values
           }).then((r) => {
             this.reset()

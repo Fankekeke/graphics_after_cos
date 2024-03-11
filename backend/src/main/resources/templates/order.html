@@ -81,7 +81,10 @@
         <div class="content" style="margin-top: 90px;overflow: hidden">
             <div id="newslist" style="width: 100%;margin-top: 50px">
                 <div class="wrapper">
-                    <p style="margin-left: 50px;font-size: 30px;color: #000000;font-style:italic;text-align: left">我的工单</p>
+                    <p style="margin-left: 50px;font-size: 30px;color: #000000;font-style:italic;text-align: left">
+                        我的工单
+                        <span id="addOrderLabel" style="font-size: 12px;font-style: normal">添加工单</span>
+                    </p>
                     <div class="mdui-container" style="text-align: left;margin-bottom: 45px" th:if="${session.user} != null">
                         <div class="mdui-row" th:if="${orderList.records.size() != 0}">
                             <div class="mdui-col-sm-12 mdui-col-md-12">
@@ -91,7 +94,6 @@
                                         <th>工单名称</th>
                                         <th>客户名称</th>
                                         <th>联系方式</th>
-                                        <th>服务类型</th>
                                         <th>工单图片</th>
                                         <th>工单状态</th>
                                         <th>创建时间</th>
@@ -300,10 +302,10 @@
                             <h5 class="ui header" style="display: inline">当前状态：</h5>
                             <span style="margin-left: 10px" id="statusLabel"></span>
                         </div>
-                        <div class="mdui-col-xs-6">
-                            <h5 class="ui header" style="display: inline">服务类型：</h5>
-                            <span style="margin-left: 10px" id="serverTypeNameLabel"></span>
-                        </div>
+<!--                        <div class="mdui-col-xs-6">-->
+<!--                            <h5 class="ui header" style="display: inline">服务类型：</h5>-->
+<!--                            <span style="margin-left: 10px" id="serverTypeNameLabel"></span>-->
+<!--                        </div>-->
                     </div>
                     <div class="mdui-row" style="margin-top: 35px">
                         <div class="mdui-col-xs-6">
@@ -432,6 +434,39 @@
             <div class="paragraph">
                 <div class="line"></div>
             </div>
+        </div>
+    </div>
+</div>
+<!-- 订单详情 -->
+<div class="mdui-dialog" id="example-6">
+    <div class="mdui-progress" id="md-progress1">
+        <div class="mdui-progress-indeterminate"></div>
+    </div>
+    <div style="padding: 25px">
+        <h3 class="ui header">
+            添加工单
+        </h3>
+        <div>
+            <form class="ui form" style="width: 90%;margin: 0 auto">、
+                <div class="field">
+                    <label>序列号</label>
+                    <input style="width: 95%" type="text" name="serialNumber" id="u-serialNumber" placeholder="序列号">
+                </div>
+                <div class="field">
+                    <label>备注</label>
+                    <input style="width: 95%" type="text" name="content" id="u-content" placeholder="备注">
+                </div>
+                <div id="selectPicDiv">
+                    <input class="right floated" type="file" name="selectPic" id="selectPic" style="opacity: 0;position: absolute;width: 80px;height: 36px;">
+                    <button class="ui teal basic label">上传图片</button>
+                </div>
+                <div style="height: 85px;margin-top: 10px">
+                    <img id="orderEvaluationPic" class="ui tiny rounded bordered image" src="https://semantic-ui.com/images/wireframe/white-image.png" style="height: 82px;width: 82px">
+                </div>
+                <div class="ui button" tabindex="0" style="margin-top: 20px" id="submitUser">
+                    <i class="fa fa-random" aria-hidden="true"></i> 提 交
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -638,7 +673,7 @@
                     orderStatus = '异常退回'
                 }
                 $("#orderStatusLabel").text(orderStatus)
-                $("#serverTypeNameLabel").text(response.serverTypeName)
+                // $("#serverTypeNameLabel").text(response.serverTypeName)
                 $("#createDateLabel").text(response.createDate)
                 $("#staffNameLabel").text(response.staffName)
                 $("#productNameLabel").text(response.productName)
@@ -707,7 +742,7 @@
     $('#evaluationUpload').on('click',function(event){
         let formData = {orderCode: $("#orderCodeField").val(), scheduleScore: $("#scheduleScoreField").val(), repairScore: $("#repairScoreField").val(), serviceScore: $("#serviceScoreField").val()}
         $.ajax({
-            url: "/cos/staff-evaluation",
+            url: "/web/evaluate",
             type: "post",
             data: formData,
             dataType: "json",
@@ -729,17 +764,18 @@
             type: "post",
             data: formData,
             dataType: "json",
-            success: function(data) {
-                const divForm = document.getElementsByTagName('div')
-                if (divForm.length) {
-                    document.body.removeChild(divForm[0])
-                }
-                const div = document.createElement('div')
-                div.innerHTML = r.data.msg // data就是接口返回的form 表单字符串
-                // console.log(div.innerHTML)
-                document.body.appendChild(div)
-                document.forms[0].setAttribute('target', '_self') // 新开窗口跳转
-                document.forms[0].submit()
+            success: function(r) {
+                document.write(r.msg)
+                // const divForm = document.getElementsByTagName('form')
+                // if (divForm.length) {
+                //     document.body.removeChild(divForm[0])
+                // }
+                // const div = document.createElement('form')
+                // div.innerHTML = r.msg // data就是接口返回的form 表单字符串
+                // // console.log(div.innerHTML)
+                // document.body.appendChild(div)
+                // document.forms[0].setAttribute('target', '_self') // 新开窗口跳转
+                // document.forms[0].submit()
             }
         });
     })
@@ -765,23 +801,56 @@
             inst.open()
         }
     })
+    $('#addOrderLabel').on('click',function(event){
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        var inst = new mdui.Dialog("#example-6", {history: false});
+        inst.open()
+        $("#md-progress1").hide()
+    })
+    $('#submitUser').on('click',function () {
+        $.ajax({
+            url:"/web/order",
+            type: "POST",
+            data: {serialNumber: $('#u-serialNumber').val(), remark: $('#u-content').val(), images: selectFileName},
+            dataType: "json",
+            // contentType: "application/json;charset=UTF-8",
+            success: function(response){
+                if (response.msg != undefined && response.msg != null) {
+                    mdui.snackbar({
+                        message: response.msg,
+                        position: 'left-bottom',
+                    });
+                }
+                if (response.data != undefined && response.data) {
+                    mdui.snackbar({
+                        message: '添加成功！',
+                        position: 'left-bottom',
+                    });
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000)
+                }
+            }
+        });
+    })
     $(document).ready(function(){
         var setCount = 0;
         var message = [[${orderList}]];
         if (message.records !== 0) {
             let orderTable = ''
+            console.log(message.records)
             message.records.forEach(item => {
                 orderTable += '<tr>\n' +
                     '    <td data-label="code"><a class="orderCodeCheck">'+item.orderCode+'</a></td>\n' +
-                    '    <td data-label="code"><span class="proNamePopup" data-content='+item.orderName+'>'+item.orderName.slice(0,5)+'...</span></td>\n' +
-                    '    <td data-label="device">'+item.userName+'</td>\n' +
-                    '    <td data-label="device">'+item.phone+'</td>\n' +
-                    '    <td data-label="device">'+item.serverTypeName+'</td>\n' +
+                    '    <td data-label="orderName"><span class="proNamePopup" data-content='+item.orderName+'>'+(item.orderName == null ? '- -' : item.orderName.slice(0,5))+'...</span></td>\n' +
+                    '    <td data-label="userName">'+item.userName+'</td>\n' +
+                    '    <td data-label="phone">'+item.phone+'</td>\n' +
                     '    <td data-label="account">\n' +
-                    '        <img class="ui mini rounded image" src=http://127.0.0.1:9527/imagesWeb/'+item.images.split(',')[0]+'>\n' +
+                    '        <img class="ui mini rounded image" src=http://127.0.0.1:9527/imagesWeb/'+(item.images == null ? '' : item.images.split(',')[0])+'>\n' +
                     '    </td>\n' +
-                    '    <td data-label="device">'+item.statusName+'</td>\n' +
-                    '    <td data-label="device">'+item.createDate+'</td>\n' +
+                    '    <td data-label="statusName">'+item.statusName+'</td>\n' +
+                    '    <td data-label="createDate">'+item.createDate+'</td>\n' +
                     '</tr>'
             })
             $("#orderTable").html(orderTable)

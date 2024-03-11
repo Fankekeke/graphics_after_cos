@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.cos.dao.SerialInfoMapper">
+
+    <!-- 分页获取序列信息 -->
+    <select id="selectSerialInfoPage" resultType="java.util.LinkedHashMap">
+        SELECT
+            si.id,
+            si.serial_number,
+            si.product_id,
+            si.create_date,
+            pi.`code`,
+            pi.model,
+            pi.`name`,
+            pi.images
+        FROM
+            serial_info si
+                LEFT JOIN product_info pi ON ( si.product_id = pi.id )
+        WHERE
+            1 = 1
+        <if test="serialInfo.serialNumber != null and serialInfo.serialNumber != ''">
+            AND si.serial_number LIKE CONCAT('%',#{serialInfo.serialNumber},'%')
+        </if>
+        <if test="serialInfo.productName != null and serialInfo.productName != ''">
+            AND pi.`name` LIKE CONCAT('%',#{serialInfo.productName},'%')
+        </if>
+    </select>
+</mapper>

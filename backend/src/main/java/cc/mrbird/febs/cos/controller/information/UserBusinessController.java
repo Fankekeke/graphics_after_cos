@@ -1,5 +1,6 @@
 package cc.mrbird.febs.cos.controller.information;
 
+import cc.mrbird.febs.common.utils.FileUtil;
 import cc.mrbird.febs.common.utils.R;
 import cc.mrbird.febs.cos.entity.UserInfo;
 import cc.mrbird.febs.cos.service.IUserInfoService;
@@ -57,5 +58,31 @@ public class UserBusinessController {
         } else {
             return R.ok(false);
         }
+    }
+
+    /**
+     * 文件
+     * @param file
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/fileUpload")
+    public String upload(@RequestParam("avatar") MultipartFile file){
+        // 1定义要上传文件 的存放路径
+        String localPath = "G:/Project/售后管理系统/file";
+        // 2获得文件名字
+        String fileName = file.getOriginalFilename();
+        // 2上传失败提示
+        String warning = "";
+        String newFileName = FileUtil.upload(file, localPath, fileName);
+        if (newFileName != null) {
+            //上传成功
+            warning = newFileName;
+
+        } else {
+            warning = "上传失败";
+        }
+        System.out.println(warning);
+        return warning;
     }
 }

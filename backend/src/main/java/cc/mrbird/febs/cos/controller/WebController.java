@@ -7,6 +7,7 @@ import cc.mrbird.febs.cos.entity.*;
 import cc.mrbird.febs.cos.service.*;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -56,6 +57,7 @@ public class WebController {
     private final IPaymentRecordService paymentRecordService;
     private final IRepairInfoService repairInfoService;
     private final IStaffEvaluationService staffEvaluationService;
+    private final ISerialInfoService serialInfoService;
 
     /**
      * 页面跳转
@@ -84,6 +86,31 @@ public class WebController {
     }
 
     /**
+     * 新增工单信息
+     *
+     * @param orderInfo 工单信息
+     * @return 结果
+     */
+    @ResponseBody
+    @PostMapping("/order")
+    public R save(OrderInfo orderInfo, HttpSession session) {
+        // 查询用户信息
+        UserInfo user = (UserInfo) session.getAttribute("user");
+        orderInfo.setCustomerId(user.getId());
+
+        // 根据序列号获取产品信息
+        SerialInfo serialInfo = serialInfoService.getOne(Wrappers.<SerialInfo>lambdaQuery().eq(SerialInfo::getSerialNumber, orderInfo.getSerialNumber()));
+        if (serialInfo == null) {
+            return R.error("未找到此序列号");
+        }
+        orderInfo.setProductId(serialInfo.getProductId());
+        orderInfo.setOrderCode("ORD-" + System.currentTimeMillis());
+        orderInfo.setCreateDate(DateUtil.formatDateTime(new Date()));
+        orderInfo.setStatus(0);
+        return R.ok(orderInfoService.save(orderInfo));
+    }
+
+    /**
      * 公告页面
      *
      * @param pageNo
@@ -96,7 +123,7 @@ public class WebController {
         Page pagehelper = new Page();
         pagehelper.setCurrent(pageNo == null ? 1 : pageNo);
         pagehelper.setSize(6);
-        model.addAttribute("messList", bulletinInfoService.page(pagehelper, Wrappers.<BulletinInfo>lambdaQuery()));
+        model.addAttribute("messList", bulletinInfoService.page(pagehelper, Wrappers.<BulletinInfo>lambdaQuery().eq(BulletinInfo::getRackUp, 1)));
         return "news";
     }
 
@@ -142,6 +169,7 @@ public class WebController {
      * @param staffEvaluation 员工评价信息
      * @return 结果
      */
+    @ResponseBody
     @PostMapping("/evaluate")
     public R saveEvaluate(StaffEvaluation staffEvaluation, HttpSession session) {
         OrderInfo orderInfo = orderInfoService.getOne(Wrappers.<OrderInfo>lambdaQuery().eq(OrderInfo::getOrderCode, staffEvaluation.getOrderCode()));
@@ -168,7 +196,7 @@ public class WebController {
         pageHelper.setCurrent(pageNo == null ? 1 : pageNo);
         pageHelper.setSize(10);
         OrderInfo orderInfo = new OrderInfo();
-        orderInfo.setSysUserId(2);
+        orderInfo.setSysUserId(user.getId());
         model.addAttribute("orderList", orderInfoService.selectOrderPage(pageHelper, orderInfo));
         return "order";
     }
@@ -208,8 +236,8 @@ public class WebController {
         pageHelper.setSize(10);
 
         RepairInfo repairInfo = new RepairInfo();
-        repairInfo.setSysUserId(2);
-//        repairInfo.setSysUserId(user.getId());
+//        repairInfo.setSysUserId(2);
+        repairInfo.setSysUserId(user.getId());
         model.addAttribute("orderList", repairInfoService.selectRepairPage(pageHelper, repairInfo));
         return "message";
     }
@@ -363,6 +391,28 @@ public class WebController {
             request.setAttribute("error", "出现错误！");
             return "login";
         }
+    }
+
+    /**
+     * 新增缴费记录信息
+     *
+     * @param paymentRecord 缴费记录信息
+     * @return 结果
+     */
+    @PostMapping("paymentRecord")
+    @Transactional(rollbackFor = Exception.class)
+    @ResponseBody
+    public R save(PaymentRecord paymentRecord, HttpSession session) {
+        UserInfo user = (UserInfo) session.getAttribute("user");
+        paymentRecord.setUserId(user.getId());
+        // 获取工单信息
+        OrderInfo orderInfo = orderInfoService.getOne(Wrappers.<OrderInfo>lambdaQuery().eq(OrderInfo::getOrderCode, paymentRecord.getOrderCode()));
+        paymentRecord.setMoney(orderInfo.getMoney());
+        paymentRecord.setServerType(orderInfo.getServerType());
+        paymentRecord.setCreateDate(DateUtil.formatDateTime(new Date()));
+        // 更新工单状态为正在维修
+        orderInfoService.update(Wrappers.<OrderInfo>lambdaUpdate().set(OrderInfo::getStatus, 3).eq(OrderInfo::getOrderCode, orderInfo.getOrderCode()));
+        return R.ok(paymentRecordService.save(paymentRecord));
     }
 
     /**

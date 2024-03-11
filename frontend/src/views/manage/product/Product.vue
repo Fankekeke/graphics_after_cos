@@ -136,21 +136,6 @@ export default {
         title: '产品名称',
         dataIndex: 'name'
       }, {
-        title: '产品类型',
-        dataIndex: 'type',
-        customRender: (text, row, index) => {
-          switch (text) {
-            case 1:
-              return <a-tag>标准件</a-tag>
-            case 2:
-              return <a-tag>工序外包</a-tag>
-            case 3:
-              return <a-tag>工序外购</a-tag>
-            default:
-              return '- -'
-          }
-        }
-      }, {
         title: '产品图片',
         dataIndex: 'images',
         customRender: (text, record, index) => {

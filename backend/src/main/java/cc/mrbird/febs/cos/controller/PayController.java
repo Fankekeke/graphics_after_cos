@@ -45,10 +45,11 @@ public class PayController {
         subject = orderInfo.getOrderName();
         totalAmount = orderInfo.getMoney().toString();
         AlipayBean alipayBean = new AlipayBean();
+
+
         alipayBean.setOut_trade_no(outTradeNo);
         alipayBean.setSubject(subject);
         alipayBean.setTotal_amount(totalAmount);
-        alipayBean.setBody(body);
         String result = payService.aliPay(alipayBean);
         return R.ok(result);
     }

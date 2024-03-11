@@ -90,7 +90,6 @@
                                     <tr><th>订单编号</th>
                                         <th>订单名称</th>
                                         <th>价格</th>
-                                        <th>服务类型</th>
                                         <th>用户</th>
                                         <th>缴费时间</th>
                                         <th>联系方式</th>
@@ -720,9 +719,8 @@
             message.records.forEach(item => {
                 orderTable += '<tr>\n' +
                     '    <td data-label="code"><span class="orderCodeCheck">'+item.orderCode+'</span></td>\n' +
-                    '    <td data-label="code"><span class="proNamePopup" data-content='+item.orderName+'>'+item.orderName.slice(0,5)+'...</span></td>\n' +
+                    '    <td data-label="code"><span class="proNamePopup" data-content='+item.orderName+'>'+(item.orderName == null ? '- -' : item.orderName.slice(0,5))+'...</span></td>\n' +
                     '    <td data-label="Job"> <a class="ui tag mini label">￥'+(item.money).toFixed(1)+'</a></td>\n' +
-                    '    <td data-label="device">'+item.serverName+'</td>\n' +
                     '    <td data-label="device">'+item.userName+'</td>\n' +
                     '    <td data-label="device">'+item.createDate+'</td>\n' +
                     '    <td data-label="device">'+item.phone+'</td>\n' +

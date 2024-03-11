@@ -122,16 +122,6 @@ export default {
         title: '联系方式',
         dataIndex: 'phone'
       }, {
-        title: '服务类型',
-        dataIndex: 'serverTypeName',
-        customRender: (text, row, index) => {
-          if (text !== null) {
-            return text
-          } else {
-            return '- -'
-          }
-        }
-      }, {
         title: '缴费金额',
         dataIndex: 'money',
         customRender: (text, row, index) => {

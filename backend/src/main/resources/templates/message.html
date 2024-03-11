@@ -298,10 +298,10 @@
                             <h5 class="ui header" style="display: inline">当前状态：</h5>
                             <span style="margin-left: 10px" id="statusLabel"></span>
                         </div>
-                        <div class="mdui-col-xs-6">
-                            <h5 class="ui header" style="display: inline">服务类型：</h5>
-                            <span style="margin-left: 10px" id="serverTypeNameLabel"></span>
-                        </div>
+<!--                        <div class="mdui-col-xs-6">-->
+<!--                            <h5 class="ui header" style="display: inline">服务类型：</h5>-->
+<!--                            <span style="margin-left: 10px" id="serverTypeNameLabel"></span>-->
+<!--                        </div>-->
                     </div>
                     <div class="mdui-row" style="margin-top: 35px">
                         <div class="mdui-col-xs-6">
@@ -613,7 +613,7 @@
                     orderStatus = '异常退回'
                 }
                 $("#orderStatusLabel").text(orderStatus)
-                $("#serverTypeNameLabel").text(response.serverTypeName)
+                // $("#serverTypeNameLabel").text(response.serverTypeName)
                 $("#createDateLabel").text(response.createDate)
                 $("#staffNameLabel").text(response.staffName)
                 $("#productNameLabel").text(response.productName)

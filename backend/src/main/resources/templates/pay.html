@@ -181,9 +181,17 @@
 
     }
     $(document).ready(function(){
+        console.log(1111)
         if (getUrlKey('out_trade_no') !== null) {
-            this.$post('/cos/payment-record', { userId: this.currentUser.userId, orderCode: getUrlKey('out_trade_no') }).then((r) => {
-            })
+            console.log(getUrlKey('out_trade_no'))
+            $.ajax({
+                url: "/web/paymentRecord",
+                type: "post",
+                data: { orderCode: getUrlKey('out_trade_no') },
+                dataType: "json",
+                success: function(r) {
+                }
+            });
         }
     });
 
