@@ -11,7 +11,8 @@
         pi.`type`,
         pi.images,
         pi.model,
-        pi.create_date
+        pi.create_date,
+        pi.content
         FROM
         product_info pi
         WHERE 1 = 1

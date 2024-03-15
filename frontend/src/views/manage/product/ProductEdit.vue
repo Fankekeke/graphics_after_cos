@@ -27,6 +27,14 @@
           </a-form-item>
         </a-col>
         <a-col :span="24">
+          <a-form-item label='备注' v-bind="formItemLayout">
+            <a-textarea :rows="6" v-decorator="[
+            'content',
+             { rules: [{ required: true, message: '请输入备注!' }] }
+            ]"/>
+          </a-form-item>
+        </a-col>
+        <a-col :span="24">
           <a-form-item label='产品图片' v-bind="formItemLayout">
             <a-upload
               name="avatar"
@@ -122,7 +130,7 @@ export default {
     },
     setFormValues ({...product}) {
       this.rowId = product.id
-      let fields = ['name', 'type', 'model']
+      let fields = ['name', 'type', 'model', 'content']
       let obj = {}
       Object.keys(product).forEach((key) => {
         if (key === 'images') {

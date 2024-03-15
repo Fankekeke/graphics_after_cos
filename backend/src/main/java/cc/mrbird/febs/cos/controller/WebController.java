@@ -81,7 +81,7 @@ public class WebController {
     public String init(Model model, HttpSession session) {
         // 添加访问记录
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-        model.addAttribute("proInfo", productInfoService.list());
+        model.addAttribute("proInfo", productInfoService.list(Wrappers.<ProductInfo>lambdaQuery().last("limit 3")));
         return "index";
     }
 
@@ -154,7 +154,7 @@ public class WebController {
     public String goProductInfo(@RequestParam(value = "pageNo") Integer pageNo, @RequestParam(required = false) String key, @RequestParam(required = false) Integer type, Model model) {
         Page pagehelper = new Page();
         pagehelper.setCurrent(pageNo == null ? 1 : pageNo);
-        pagehelper.setSize(8);
+        pagehelper.setSize(9);
 
         ProductInfo productInfo = new ProductInfo();
         model.addAttribute("proList", productInfoService.selectProductPage(pagehelper, productInfo));

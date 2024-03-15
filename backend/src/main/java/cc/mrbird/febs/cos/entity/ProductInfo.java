@@ -56,5 +56,10 @@ public class ProductInfo implements Serializable {
      */
     private String createDate;
 
+    /**
+     * 备注
+     */
+    private String content;
+
 
 }
